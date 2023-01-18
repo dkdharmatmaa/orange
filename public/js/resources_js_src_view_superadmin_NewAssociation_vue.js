@@ -20,6 +20,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       form: new (vform__WEBPACK_IMPORTED_MODULE_0___default())({
+        id: "",
         name: "",
         number: "",
         address1: "",
@@ -30,25 +31,38 @@ __webpack_require__.r(__webpack_exports__);
         email: "",
         password: ""
       }),
-      show: true
+      action: 'Add'
     };
   },
   methods: {
     onSubmit: function onSubmit(evt) {
+      var _this = this;
       evt.preventDefault();
-      _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].post("/superadmin/create-admin", this.form).then(function (_ref) {
-        var data = _ref.data;
-        console.log(data);
-      });
+      if (this.action == 'Add') {
+        _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].post("/superadmin/create-admin", this.form).then(function (_ref) {
+          var data = _ref.data;
+          _this.$router.push('/superadmin/allassociation');
+        })["catch"](function (err) {
+          //   this.openNotification(err);
+        });
+      } else {
+        _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].put("/superadmin/edit-admin/".concat(this.form.id), this.form).then(function (_ref2) {
+          var data = _ref2.data;
+          $('#fade').fadeToggle(1000);
+          $('#fade').fadeToggle(1000);
+        });
+      }
     },
     getData: function getData(id) {
-      _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].get("/superadmin/all-admin/".concat(id)).then(function (_ref2) {
-        var data = _ref2.data;
-        console.log(data);
+      var _this2 = this;
+      _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].get("/superadmin/all-admin/".concat(id)).then(function (_ref3) {
+        var data = _ref3.data;
+        _this2.form.fill(data[0]);
       });
     },
     onReset: function onReset(evt) {
-      var _this = this;
+      var _this3 = this;
+      // alert("hello here");
       evt.preventDefault();
       // Reset our form values
       this.form.name = "";
@@ -63,13 +77,14 @@ __webpack_require__.r(__webpack_exports__);
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(function () {
-        _this.show = true;
+        _this3.show = true;
       });
     }
   },
   mounted: function mounted() {
     if (this.get_item) {
       this.getData(this.get_item);
+      this.action = 'Edit';
     }
   },
   computed: {
@@ -98,11 +113,10 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "mt-10 p-5"
-  }, [_vm.show ? _c("b-form", {
+  }, [_c("b-form", {
     staticClass: "w-md-50 fw-700",
     on: {
-      submit: _vm.onSubmit,
-      reset: _vm.onReset
+      submit: _vm.onSubmit
     }
   }, [_c("h3", {
     staticClass: "fw-700"
@@ -227,7 +241,8 @@ var render = function render() {
       id: "input-3",
       type: "email",
       required: "",
-      placeholder: "Email*"
+      placeholder: "Email*",
+      readonly: _vm.action == "Edit"
     },
     model: {
       value: _vm.form.email,
@@ -236,7 +251,7 @@ var render = function render() {
       },
       expression: "form.email"
     }
-  })], 1), _vm._v(" "), _c("b-form-group", [_c("b-form-input", {
+  })], 1), _vm._v(" "), _vm.action == "Add" ? _c("b-form-group", [_c("b-form-input", {
     staticClass: "ml-1 input-box",
     attrs: {
       id: "input-4",
@@ -251,9 +266,17 @@ var render = function render() {
       },
       expression: "form.password"
     }
-  })], 1), _vm._v(" "), _c("button", {
+  })], 1) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "alert alert-success",
+    attrs: {
+      role: "alert",
+      id: "fade"
+    }
+  }, [_c("span", {
+    staticClass: "font-weight-bolder font-size-h6"
+  }, [_vm._v("Submit successfull...")])]), _vm._v(" "), _c("button", {
     staticClass: "btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white"
-  }, [_vm._v("Add admin")])], 1)]) : _vm._e()], 1);
+  }, [_vm._v(_vm._s(_vm.action) + " admin")])], 1)])], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -278,7 +301,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fw-700[data-v-005190bb]{\r\n    font-weight: 700;\n}\n.input-box[data-v-005190bb]{\r\n    padding: 4%;\r\n    border: 1px silver solid;\n}\n.create_btn[data-v-005190bb]{\r\n    background: #00A1E4;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fw-700[data-v-005190bb]{\r\n    font-weight: 700;\n}\n.input-box[data-v-005190bb]{\r\n    padding: 4%;\r\n    border: 1px silver solid;\n}\n.create_btn[data-v-005190bb]{\r\n    background: #00A1E4;\n}\n#fade[data-v-005190bb]{\r\n  display: none;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

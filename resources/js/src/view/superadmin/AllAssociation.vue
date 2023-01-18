@@ -44,7 +44,7 @@
 <script>
 import ApiService from "@/core/services/api.service";
 export default {
-  name: "AllInvoice",
+  name: "superadminallassociation",
   data() {
     return {
       fields: [
@@ -66,11 +66,10 @@ export default {
   },
   methods: {
     get_admins(){
-      ApiService.get("/superadmin/all-admin")
+      ApiService.get("/superadmin/all-admin/0/all")
         .then(({ data }) => {
           this.items=data;
           this.totalRows=data.length;
-          console.log(data);
         })
     },
      onFiltered(filteredItems) {

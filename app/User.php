@@ -9,6 +9,12 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
+
+
+    public function GetAssosName(){
+        return $this->hasOne('App\Admin', 'id','association_id')->select('id','name');
+    }
+
     use Notifiable;
 
     /**

@@ -1,9 +1,10 @@
 <template>
   <!-- begin:: Aside -->
+  <div>
   <div class="brand flex-column-auto" id="kt_brand" ref="kt_brand">
-    <div class="text-white mt-20 ml-5">
-        <div><h3 class="text-nowrap">John doe</h3></div>
-        <div><h6 class="text-nowrap">Super admin</h6></div>
+    <div class="text-white mt-15 mb-2 ml-5">
+        <div><h3 class="text-nowrap">{{currentUser.name}}</h3></div>
+        <div><h6 class="text-nowrap">Association admin</h6></div>
     </div>
     <div class="brand-tools" v-if="allowMinimize">
       <button
@@ -20,6 +21,8 @@
       </button>
     </div>
   </div>
+    <div><hr></div>
+  </div>
   <!-- end:: Aside -->
 </template>
 
@@ -29,6 +32,14 @@
 }
 .brand{
   height: auto !important;
+}
+.brand {
+    background-color: #1B2134 !important;
+}
+@media (max-width: 991.98px){
+.brand {
+    display: -webkit-box !important;
+}
 }
 </style>
 
@@ -43,18 +54,17 @@ export default {
   mounted() {
     // Init Brand Panel For Logo
     KTLayoutBrand.init(this.$refs["kt_brand"]);
-
     // Init Aside Menu Toggle
     KTLayoutAsideToggle.init(this.$refs["kt_aside_toggle"]);
   },
   methods: {
   },
   computed: {
-    ...mapGetters(["layoutConfig"]),
+    ...mapGetters(["layoutConfig","currentUser"]),
 
     allowMinimize() {
       return !!this.layoutConfig("aside.self.minimize.toggle");
-    }
+    },
   }
 };
 </script>

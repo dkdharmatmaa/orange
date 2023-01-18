@@ -1,6 +1,6 @@
 <template>
   <ul class="menu-nav">
-    <router-link
+    <!-- <router-link
       to="/superadmin/dashboard"
        v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -18,9 +18,9 @@
           &nbsp;&nbsp;&nbsp;<span class="menu-text">Dashboard</span>
         </a>
     </li>
-    </router-link>
+    </router-link> -->
         <router-link
-      to="/superadmin/builder"
+      to="/superadmin/eligibilty-report"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -40,7 +40,7 @@
       </li>
     </router-link>
         <router-link
-      to="/dashboard"
+      to="/superadmin/check-eligibilty"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -80,7 +80,7 @@
       </li>
     </router-link>
         <router-link
-      to="/dashboard"
+      to="/superadmin/all-branches"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -100,7 +100,7 @@
       </li>
     </router-link>
         <router-link
-      to="/dashboard"
+      to="/superadmin/all-users"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -120,7 +120,7 @@
       </li>
     </router-link>
         <router-link
-      to="/dashboard"
+      to="/superadmin/all-matrix"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -140,7 +140,7 @@
       </li>
     </router-link>
         <router-link
-      to="/dashboard"
+      to="/superadmin/account"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -160,7 +160,8 @@
       </li>
     </router-link>
         <router-link
-      to="/dashboard"
+        to=""
+        @click.native="logout"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -183,11 +184,16 @@
 </template>
 
 <script>
+import { LOGOUT} from "@/core/services/store/auth.module";
 export default {
   name: "KTMenu",
   methods: {
     hasActiveChildren(match) {
       return this.$route["path"].indexOf(match) !== -1;
+    },
+    logout(){
+      this.$store.dispatch(LOGOUT)
+          .then(() => this.$router.push('/superadmin/login'));
     }
   }
 };

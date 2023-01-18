@@ -256,11 +256,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _core_services_store_auth_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/core/services/store/auth.module */ "./resources/js/src/core/services/store/auth.module.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "KTMenu",
   methods: {
     hasActiveChildren: function hasActiveChildren(match) {
       return this.$route["path"].indexOf(match) !== -1;
+    },
+    logout: function logout() {
+      var _this = this;
+      this.$store.dispatch(_core_services_store_auth_module__WEBPACK_IMPORTED_MODULE_0__.LOGOUT).then(function () {
+        return _this.$router.push('/superadmin/login');
+      });
     }
   }
 });
@@ -553,28 +561,9 @@ var render = function render() {
       "max-height": "90vh",
       position: "relative"
     }
-  }, [_c("KTMenu")], 1)], 1), _vm._v(" "), _vm._m(0)])], 1);
+  }, [_c("KTMenu")], 1)], 1)])], 1);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "position-absolute w-100",
-    staticStyle: {
-      bottom: "23px"
-    }
-  }, [_c("div", [_c("hr")]), _vm._v(" "), _c("div", {
-    staticClass: "text-center mt-5"
-  }, [_c("img", {
-    staticClass: "img-fluid",
-    attrs: {
-      src: "/media/custome/menu-icons/Group 560.svg",
-      alt: "logo icon",
-      width: "75",
-      height: "75"
-    }
-  })])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -599,7 +588,7 @@ var render = function render() {
     staticClass: "menu-nav"
   }, [_c("router-link", {
     attrs: {
-      to: "/superadmin/dashboard"
+      to: "/superadmin/eligibilty-report"
     },
     scopedSlots: _vm._u([{
       key: "default",
@@ -608,45 +597,6 @@ var render = function render() {
           navigate = _ref.navigate,
           isActive = _ref.isActive,
           isExactActive = _ref.isExactActive;
-        return [_c("li", {
-          staticClass: "menu-item",
-          "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
-          attrs: {
-            "aria-haspopup": "true",
-            "data-menu-toggle": "hover"
-          }
-        }, [_c("a", {
-          staticClass: "menu-link",
-          attrs: {
-            href: href
-          },
-          on: {
-            click: navigate
-          }
-        }, [_c("img", {
-          staticClass: "img-fluid",
-          attrs: {
-            src: "/media/custome/menu-icons/dashboard.svg",
-            alt: "dashboard icon",
-            width: "18",
-            height: "18"
-          }
-        }), _vm._v("\n           "), _c("span", {
-          staticClass: "menu-text"
-        }, [_vm._v("Dashboard")])])])];
-      }
-    }])
-  }), _vm._v(" "), _c("router-link", {
-    attrs: {
-      to: "/superadmin/builder"
-    },
-    scopedSlots: _vm._u([{
-      key: "default",
-      fn: function fn(_ref2) {
-        var href = _ref2.href,
-          navigate = _ref2.navigate,
-          isActive = _ref2.isActive,
-          isExactActive = _ref2.isExactActive;
         return [_c("li", {
           staticClass: "menu-item",
           "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
@@ -677,15 +627,15 @@ var render = function render() {
     }])
   }), _vm._v(" "), _c("router-link", {
     attrs: {
-      to: "/dashboard"
+      to: "/superadmin/check-eligibilty"
     },
     scopedSlots: _vm._u([{
       key: "default",
-      fn: function fn(_ref3) {
-        var href = _ref3.href,
-          navigate = _ref3.navigate,
-          isActive = _ref3.isActive,
-          isExactActive = _ref3.isExactActive;
+      fn: function fn(_ref2) {
+        var href = _ref2.href,
+          navigate = _ref2.navigate,
+          isActive = _ref2.isActive,
+          isExactActive = _ref2.isExactActive;
         return [_c("li", {
           staticClass: "menu-item",
           "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
@@ -720,11 +670,11 @@ var render = function render() {
     },
     scopedSlots: _vm._u([{
       key: "default",
-      fn: function fn(_ref4) {
-        var href = _ref4.href,
-          navigate = _ref4.navigate,
-          isActive = _ref4.isActive,
-          isExactActive = _ref4.isExactActive;
+      fn: function fn(_ref3) {
+        var href = _ref3.href,
+          navigate = _ref3.navigate,
+          isActive = _ref3.isActive,
+          isExactActive = _ref3.isExactActive;
         return [_c("li", {
           staticClass: "menu-item",
           "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
@@ -755,15 +705,15 @@ var render = function render() {
     }])
   }), _vm._v(" "), _c("router-link", {
     attrs: {
-      to: "/dashboard"
+      to: "/superadmin/all-branches"
     },
     scopedSlots: _vm._u([{
       key: "default",
-      fn: function fn(_ref5) {
-        var href = _ref5.href,
-          navigate = _ref5.navigate,
-          isActive = _ref5.isActive,
-          isExactActive = _ref5.isExactActive;
+      fn: function fn(_ref4) {
+        var href = _ref4.href,
+          navigate = _ref4.navigate,
+          isActive = _ref4.isActive,
+          isExactActive = _ref4.isExactActive;
         return [_c("li", {
           staticClass: "menu-item",
           "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
@@ -794,15 +744,15 @@ var render = function render() {
     }])
   }), _vm._v(" "), _c("router-link", {
     attrs: {
-      to: "/dashboard"
+      to: "/superadmin/all-users"
     },
     scopedSlots: _vm._u([{
       key: "default",
-      fn: function fn(_ref6) {
-        var href = _ref6.href,
-          navigate = _ref6.navigate,
-          isActive = _ref6.isActive,
-          isExactActive = _ref6.isExactActive;
+      fn: function fn(_ref5) {
+        var href = _ref5.href,
+          navigate = _ref5.navigate,
+          isActive = _ref5.isActive,
+          isExactActive = _ref5.isExactActive;
         return [_c("li", {
           staticClass: "menu-item",
           "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
@@ -833,15 +783,15 @@ var render = function render() {
     }])
   }), _vm._v(" "), _c("router-link", {
     attrs: {
-      to: "/dashboard"
+      to: "/superadmin/all-matrix"
     },
     scopedSlots: _vm._u([{
       key: "default",
-      fn: function fn(_ref7) {
-        var href = _ref7.href,
-          navigate = _ref7.navigate,
-          isActive = _ref7.isActive,
-          isExactActive = _ref7.isExactActive;
+      fn: function fn(_ref6) {
+        var href = _ref6.href,
+          navigate = _ref6.navigate,
+          isActive = _ref6.isActive,
+          isExactActive = _ref6.isExactActive;
         return [_c("li", {
           staticClass: "menu-item",
           "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
@@ -872,15 +822,15 @@ var render = function render() {
     }])
   }), _vm._v(" "), _c("router-link", {
     attrs: {
-      to: "/dashboard"
+      to: "/superadmin/account"
     },
     scopedSlots: _vm._u([{
       key: "default",
-      fn: function fn(_ref8) {
-        var href = _ref8.href,
-          navigate = _ref8.navigate,
-          isActive = _ref8.isActive,
-          isExactActive = _ref8.isExactActive;
+      fn: function fn(_ref7) {
+        var href = _ref7.href,
+          navigate = _ref7.navigate,
+          isActive = _ref7.isActive,
+          isExactActive = _ref7.isExactActive;
         return [_c("li", {
           staticClass: "menu-item",
           "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
@@ -911,15 +861,20 @@ var render = function render() {
     }])
   }), _vm._v(" "), _c("router-link", {
     attrs: {
-      to: "/dashboard"
+      to: ""
+    },
+    nativeOn: {
+      click: function click($event) {
+        return _vm.logout.apply(null, arguments);
+      }
     },
     scopedSlots: _vm._u([{
       key: "default",
-      fn: function fn(_ref9) {
-        var href = _ref9.href,
-          navigate = _ref9.navigate,
-          isActive = _ref9.isActive,
-          isExactActive = _ref9.isExactActive;
+      fn: function fn(_ref8) {
+        var href = _ref8.href,
+          navigate = _ref8.navigate,
+          isActive = _ref8.isActive,
+          isExactActive = _ref8.isExactActive;
         return [_c("li", {
           staticClass: "menu-item",
           "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],

@@ -98,7 +98,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       })
       // go to which page after successfully login
       .then(function () {
-        return _this.$router.push('/superadmin/dashboard');
+        return _this.$router.push('/superadmin/check-eligibilty');
       })["catch"](function () {});
     });
     this.fv.on("core.form.invalid", function () {
@@ -212,26 +212,7 @@ var render = function render() {
         _vm.$set(_vm.form, "password", $event.target.value);
       }
     }
-  })]), _vm._v(" "), _c("div", {}, [_c("input", {
-    staticStyle: {
-      "margin-top": "4px"
-    },
-    attrs: {
-      type: "checkbox"
-    }
-  }), _vm._v(" "), _c("span", {
-    staticClass: "text-muted font-weight-bolder"
-  }, [_vm._v("Remember me")]), _vm._v(" "), _c("a", {
-    staticClass: "text-muted font-weight-bolder float-right",
-    attrs: {
-      id: "kt_login_forgot"
-    },
-    on: {
-      click: function click($event) {
-        return _vm.showForm("forgot");
-      }
-    }
-  }, [_vm._v("Forgot Password ?")])]), _vm._v(" "), _c("div", [_c("button", {
+  })]), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("div", [_c("button", {
     ref: "kt_login_signin_submit",
     staticClass: "btn font-weight-bolder font-size-h6 py-3 w-100 mt-7 text-white btn-color"
   }, [_vm._v("\n                Login\n              ")])])])]), _vm._v(" "), _c("div", {
@@ -243,7 +224,7 @@ var render = function render() {
       novalidate: "novalidate",
       id: "kt_login_forgot_form"
     }
-  }, [_vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _c("div", {
+  }, [_vm._m(3), _vm._v(" "), _vm._m(4), _vm._v(" "), _c("div", {
     staticClass: "form-group d-flex flex-wrap pb-lg-0"
   }, [_c("button", {
     staticClass: "btn font-weight-bolder font-size-h6 px-12 btn-color text-white py-3 my-3 mr-4",
@@ -290,6 +271,19 @@ var staticRenderFns = [function () {
       height: "100"
     }
   })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {}, [_c("input", {
+    staticStyle: {
+      "margin-top": "4px"
+    },
+    attrs: {
+      type: "checkbox"
+    }
+  }), _vm._v(" "), _c("span", {
+    staticClass: "text-muted font-weight-bolder"
+  }, [_vm._v("Remember me")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;

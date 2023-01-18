@@ -10,22 +10,28 @@ export const SuperAdminLOGIN = "superadminlogin";
 export const LOGOUT = "logout";
 export const REGISTER = "register";
 export const UPDATE_PASSWORD = "updateUser";
+export const UPDATE_BRANCHID ="updateBranchId";
 
 // mutation types
 export const PURGE_AUTH = "logOut";
 export const SET_AUTH = "setUser";
 export const SET_PASSWORD = "setPassword";
+export const SET_BRANCHID = "setBranchId";
 export const SET_ERROR = "setError";
 
 const state = {
   errors: null,
   user: {},
+  branchId: JwtService.getBranchId(),
   isAuthenticated: !!JwtService.getToken()
 };
 
 const getters = {
   currentUser(state) {
     return state.user;
+  },
+  SelectedBranch(state) {
+    return state.branchId;
   },
   isAuthenticated(state) {
     return state.isAuthenticated;
@@ -102,6 +108,10 @@ const actions = {
       context.commit(SET_PASSWORD, data);
       return data;
     });
+  },
+  [UPDATE_BRANCHID](context, branch_id) {
+      JwtService.saveBranchId(branch_id);
+      context.commit(SET_BRANCHID, branch_id);
   }
 };
 
@@ -117,11 +127,16 @@ const mutations = {
   [SET_PASSWORD](state, password) {
     state.user.password = password;
   },
+  [SET_BRANCHID](state, branch_id) {
+    state.branchId = branch_id;
+  },
   [PURGE_AUTH](state) {
     state.isAuthenticated = false;
     state.user = {};
     state.errors = {};
+    state.branchId='';
     JwtService.destroyToken();
+    JwtService.destroyBranchId();
   }
 };
 

@@ -12,10 +12,7 @@
     <!-- end:: Aside -->
 
     <!-- begin:: Aside Menu -->
-    <div
-      class="aside-menu-wrapper flex-column-fluid"
-      id="kt_aside_menu_wrapper"
-    >
+    <div class="aside-menu-wrapper flex-column-fluid position-relative" id="kt_aside_menu_wrapper" >
       <div
         ref="kt_aside_menu"
         id="kt_aside_menu"
@@ -32,6 +29,12 @@
           <KTMenu></KTMenu>
         </perfect-scrollbar>
       </div>
+
+      <div class="position-absolute w-100" style="bottom: 23px;">
+        <div><hr></div>
+        <div class="text-center mt-5"><img src="/media/custome/menu-icons/Group 560.svg" alt="logo icon" class="img-fluid" width="75" height="75"></div>
+      </div>
+
     </div>
   </div>
   <!-- end:: Aside -->
@@ -133,9 +136,17 @@ export default {
 </script>
 <style>
 .aside {
-    background-color: #1a1a27 !important;
+    background-color: #1B2134 !important;
+    width: 220px !important;
 }
 .aside-menu .menu-nav {
   padding: 0 !important;
+}
+.aside-menu {
+    background-color: #1B2134 !important;
+}
+hr{
+    background: gray;
+    margin: 0px 5px;
 }
 </style>

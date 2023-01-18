@@ -1281,7 +1281,7 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("h1", [_vm._v("hello i am in Admins side")]), _vm._v(" "), _c("div", {
+  return _c("div", [_c("h1", [_vm._v("hello i am in superadmin side")]), _vm._v(" "), _c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-xxl-4"

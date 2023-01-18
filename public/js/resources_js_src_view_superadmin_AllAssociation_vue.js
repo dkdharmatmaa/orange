@@ -14,7 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_services_api_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/core/services/api.service */ "./resources/js/src/core/services/api.service.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "AllInvoice",
+  name: "superadminallassociation",
   data: function data() {
     return {
       fields: [{
@@ -53,11 +53,10 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     get_admins: function get_admins() {
       var _this = this;
-      _core_services_api_service__WEBPACK_IMPORTED_MODULE_0__["default"].get("/superadmin/all-admin").then(function (_ref) {
+      _core_services_api_service__WEBPACK_IMPORTED_MODULE_0__["default"].get("/superadmin/all-admin/0/all").then(function (_ref) {
         var data = _ref.data;
         _this.items = data;
         _this.totalRows = data.length;
-        console.log(data);
       });
     },
     onFiltered: function onFiltered(filteredItems) {

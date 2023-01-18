@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\SuperAdmin;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 class SuperAdminController extends Controller
 {
     public function register(Request $request){
@@ -48,5 +49,23 @@ class SuperAdminController extends Controller
             'token_type' =>  'bearer',
             // 'expires_in' => auth()->factory()->getTTL() * 60,
         ]);
+    }
+
+    public function update(Request $request){
+        $id=auth()->guard('superAdmin-api')->user()->id;
+        SuperAdmin::where('id',$id)->update(['name'=>$request->name]);
+        return json_encode(['status'=>true,'message'=>"Data updated successful"]);
+    }
+    public function update_password(Request $request){
+        $validator = Validator::make($request->all(), [
+            'password' => ['required', 'confirmed','min:6'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $id=auth()->guard('superAdmin-api')->user()->id;
+        SuperAdmin::where('id', $id)->update(['password'=>Hash::make($request->password)]);
+        return json_encode(['status'=>true,'message'=>"Password updated successful"]);
     }
 }

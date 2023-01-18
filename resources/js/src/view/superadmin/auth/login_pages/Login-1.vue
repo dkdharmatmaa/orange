@@ -46,7 +46,7 @@
               </div>
               <div class="">
                   <input type="checkbox" style="margin-top: 4px;" /> <span class="text-muted font-weight-bolder">Remember me</span>
-                  <a class="text-muted font-weight-bolder float-right" id="kt_login_forgot" @click="showForm('forgot')">Forgot Password ?</a>
+                  <!-- <a class="text-muted font-weight-bolder float-right" id="kt_login_forgot" @click="showForm('forgot')">Forgot Password ?</a> -->
               </div>
               <div>
                 <button ref="kt_login_signin_submit" class="btn font-weight-bolder font-size-h6 py-3 w-100 mt-7 text-white btn-color">
@@ -192,7 +192,7 @@ export default {
         this.$store
           .dispatch(SuperAdminLOGIN, { email, password })
           // go to which page after successfully login
-          .then(() => this.$router.push('/superadmin/dashboard'))
+          .then(() => this.$router.push('/superadmin/check-eligibilty'))
           .catch(() => {});
     });
 

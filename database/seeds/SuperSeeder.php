@@ -14,7 +14,7 @@ class SuperSeeder extends Seeder
     public function run()
     {
         DB::table('super_admins')->insert([
-            'name' => Str::random(10),
+            'name' => 'dhiraj superadmin',
             'email' => 'superadmin@gmail.com',
             'password' => Hash::make('123456'),
         ]);

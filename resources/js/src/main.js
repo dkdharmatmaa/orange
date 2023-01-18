@@ -1,13 +1,15 @@
 import Vue from "vue";
+import VueExcelXlsx from "vue-excel-xlsx";
 import App from "./App.vue";
 import router from "./router";
+window.$ = window.jQuery = require("jquery");
 import store from "@/core/services/store";
 import ApiService from "@/core/services/api.service";
 import { VERIFY_AUTH } from "@/core/services/store/auth.module";
 import { RESET_LAYOUT_CONFIG } from "@/core/services/store/config.module";
 
 Vue.config.productionTip = false;
-
+Vue.use(VueExcelXlsx);
 // Global 3rd party plugins
 import "popper.js";
 import "tooltip.js";
@@ -47,7 +49,7 @@ router.beforeEach((to, from, next) => {
  }
   // reset config to initial state
   store.dispatch(RESET_LAYOUT_CONFIG);
-
+  
   // Scroll page to top on every route change
   setTimeout(() => {
     window.scrollTo(0, 0);

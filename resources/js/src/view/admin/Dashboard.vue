@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--begin::Dashboard-->
-    <h1>hello i am in Admins side</h1>
+    <h1>hello i am in superadmin side</h1>
     <div class="row">
       <div class="col-xxl-4">
         <MixedWidget1></MixedWidget1>

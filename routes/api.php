@@ -1,11 +1,19 @@
 <?php
-
+// auth()->guard('admin-api')->user()->id;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\user\UserController;
 use App\Http\Controllers\superAdmin\SuperAdminController;
-
+use App\Http\Controllers\superAdmin\EligibiltyRangeController as SuperAdminEligibiltyRangeController;
+use App\Http\Controllers\superAdmin\BranchController as SuperAdminBranchController;
+use App\Http\Controllers\superAdmin\IncomebindController as SuperAdminIncomebindController;
+use App\Http\Controllers\admin\EligibiltyRangeController as AdminEligibiltyRangeController;
+use App\Http\Controllers\admin\IncomebindController as AdminIncomebindController;
+use App\Http\Controllers\admin\BranchController as AdminBranchController;
+use App\Http\Controllers\user\EligibiltyRangeController as UserEligibiltyRangeController;
+use App\Http\Controllers\user\IncomebindController as UserIncomebindController;
+use App\Http\Controllers\user\BranchController as UserBranchController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,6 +36,26 @@ Route::post('admin/login', [AdminController::class,'login']);
 Route::group(['middleware' => 'auth:admin-api','prefix' => 'admin'], function () {
     Route::post('logout', [AdminController::class,'logout']);
     Route::post('verify', [AdminController::class,'me']);
+    Route::put('upadte-detail/{id}', [AdminController::class,'update']);
+    Route::put('update-password', [AdminController::class,'update_password']);
+    Route::get('admin-report', [AdminController::class,'detail_report']);
+    Route::post('/check-eligibilty', [AdminEligibiltyRangeController::class,'check_eligibilty']);
+    Route::post('/add-eligibilty-comment/{id}', [AdminEligibiltyRangeController::class,'add_comment']);
+    Route::post('/eligibilty-report', [AdminEligibiltyRangeController::class,'index']);
+    //user related work by admin
+    Route::post('/create-user/{assoc_id?}', [UserController::class,'register']);
+    Route::put('/edit-user/{id}', [UserController::class,'update']);
+    Route::get('/all-user/{id?}/{assoc_id?}', [UserController::class,'index']);
+    //branch related work by admin
+    Route::post('/create-branch', [AdminBranchController::class,'store']);
+    Route::put('/edit-branch/{id}', [AdminBranchController::class,'update']);
+    Route::get('/all-branch/{id?}/{all_data?}', [AdminBranchController::class,'index']);
+    //matrix opertaion
+    Route::post('/create-matrix/{branch_id}', [AdminIncomebindController::class,'store']);
+    Route::put('/edit-matrix/{branch_id}/{minmum_range}/{maximum_range}', [AdminIncomebindController::class,'update']);
+    Route::delete('/delete-matrix/{matrix_id}', [AdminIncomebindController::class,'delete']);
+    Route::get('/all-matrix/{branch_id}', [AdminIncomebindController::class,'index']);
+    Route::get('/single-matrix/{branch_id}/{minmum_range}/{maximum_range}', [AdminIncomebindController::class,'single_matrix']);
 });
 
 // =================user section==========================
@@ -37,6 +65,19 @@ Route::post('/login', [UserController::class,'login']);
 Route::group(['middleware' => 'auth:user-api','prefix' => 'user'], function () {
     Route::post('logout', [UserController::class,'logout']);
     Route::post('verify', [UserController::class,'me']);
+    Route::put('upadte-detail', [UserController::class,'personal_update']);
+    Route::put('update-password', [UserController::class,'update_password']);
+    Route::post('/check-eligibilty', [UserEligibiltyRangeController::class,'check_eligibilty']);
+    Route::post('/add-eligibilty-comment/{id}', [UserEligibiltyRangeController::class,'add_comment']);
+    Route::post('/eligibilty-report', [UserEligibiltyRangeController::class,'index']);
+    //user related work by admin
+    Route::post('/create-user', [UserController::class,'register']);
+    Route::put('/edit-user/{id}', [UserController::class,'update']);
+    Route::get('/all-user/{id?}/{assoc_id?}', [UserController::class,'index']);
+    //branch related work by admin
+    Route::get('/all-branch/{id?}/{all_data?}', [UserBranchController::class,'index']);
+    //matrix opertaion
+    Route::get('/all-matrix/{branch_id}', [UserIncomebindController::class,'index']);
 });
 
 // =================superAdmin section==========================
@@ -46,9 +87,30 @@ Route::post('superadmin/login', [SuperAdminController::class,'login']);
 Route::group(['middleware' => 'auth:superAdmin-api','prefix' => 'superadmin'], function () {
     Route::post('logout', [SuperAdminController::class,'logout']);
     Route::post('verify', [SuperAdminController::class,'me']);
+    Route::put('upadte-detail', [SuperAdminController::class,'update']);
+    Route::put('update-password', [SuperAdminController::class,'update_password']);
+    Route::post('/check-eligibilty', [SuperAdminEligibiltyRangeController::class,'check_eligibilty']);
+    Route::post('/add-eligibilty-comment/{id}', [SuperAdminEligibiltyRangeController::class,'add_comment']);
+    Route::post('/eligibilty-report', [SuperAdminEligibiltyRangeController::class,'index']);
     //admin related work by superadmin
     Route::post('/create-admin', [AdminController::class,'register']);
-    Route::get('/all-admin/{id?}', [AdminController::class,'index']);
+    Route::put('/edit-admin/{id}', [AdminController::class,'update']);
+    Route::get('/all-admin/{id?}/{all_data?}', [AdminController::class,'index']);
+    //user related work by superadmin
+    Route::post('/create-user/{assoc_id?}', [UserController::class,'register']);
+    Route::put('/edit-user/{id}', [UserController::class,'update']);
+    Route::get('/all-user/{id?}/{assoc_id?}', [UserController::class,'index']);
+    //branch related work by superadmin
+    Route::post('/create-branch', [SuperAdminBranchController::class,'store']);
+    Route::put('/edit-branch/{id}', [SuperAdminBranchController::class,'update']);
+    Route::get('/all-branch/{id?}/{assos_id?}', [SuperAdminBranchController::class,'index']);
+    //matrix opertaion
+    Route::post('/create-matrix/{assos_id}/{branch_id}', [SuperAdminIncomebindController::class,'store']);
+    Route::put('/edit-matrix/{association_id}/{branch_id}/{minmum_range}/{maximum_range}', [SuperAdminIncomebindController::class,'update']);
+    Route::delete('/delete-matrix/{matrix_id}', [SuperAdminIncomebindController::class,'delete']);
+    Route::get('/all-matrix/{assos_id}/{branch_id}', [SuperAdminIncomebindController::class,'index']);
+    Route::get('/single-matrix/{association_id}/{branch_id}/{minmum_range}/{maximum_range}', [SuperAdminIncomebindController::class,'single_matrix']);
 });
+
 
 

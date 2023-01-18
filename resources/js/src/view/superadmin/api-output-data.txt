@@ -1,0 +1,187 @@
+Array
+(
+    [status] => Array
+        (
+            [message] => success
+            [status_code] => 200
+            [env] => prod
+        )
+
+    [data] => Array
+        (
+            [meta] => Array
+                (
+                    [position_id] => 1
+                    [first] => ROBIN
+                    [last] => FRAZIER
+                    [match_type] => individual
+                    [ru] => 1
+                    [rc] => 0
+                    [match] => 1
+                )
+
+            [time] => 0.2699
+            [match] => Array
+                (
+                    [lu_inc_model_v6_amt] => 070
+                    [POC_V3_CODE] => 5N
+                    [REC_ADULTCNT] => 3
+                    [REC_CHILDCNT] => 0
+                    [ECHV] => 0000000
+                    [LATITUDE] => 042318866
+                    [LONGITUDE] => -071084184
+                    [MOSAIC_HH] => S69
+                    [MOSAIC_Z4] => S69
+                    [DWELLING_TYPE] => S
+                    [LNGTH_OF_RES] => 10
+                    [COMBINED_HOMEOWNER] => T
+                    [HH_COMPOSITION_CODE] => H
+                    [BDAT_BDAT] => 196407
+                    [COMBINED_AGE] => E58
+                    [MRTL_MODEL] => 5S
+                    [EDUC_MODEL] => 13
+                )
+
+        )
+
+)
+
+
+Array
+(
+    [status] => Array
+        (
+            [message] => success
+            [status_code] => 200
+            [env] => prod
+        )
+
+    [data] => Array
+        (
+            [meta] => Array
+                (
+                    [position_id] => 2
+                    [first] => SALIM
+                    [last] => RABBANIAN
+                    [match_type] => individual
+                    [ru] => 1
+                    [rc] => 0
+                    [match] => 1
+                )
+
+            [time] => 0.2633
+            [match] => Array
+                (
+                    [lu_inc_model_v6_amt] => 250
+                    [POC_V3_CODE] => 5U
+                    [REC_ADULTCNT] => 4
+                    [REC_CHILDCNT] => 0
+                    [ECHV] => 3231413
+                    [LATITUDE] => 034069946
+                    [LONGITUDE] => -118396080
+                    [MOSAIC_HH] => A01
+                    [MOSAIC_Z4] => A01
+                    [DWELLING_TYPE] => S
+                    [LNGTH_OF_RES] => 25
+                    [COMBINED_HOMEOWNER] => H
+                    [HH_COMPOSITION_CODE] => G
+                    [BDAT_BDAT] => 194912
+                    [COMBINED_AGE] => E72
+                    [MRTL_MODEL] => 0U
+                    [EDUC_MODEL] => 54
+                )
+
+        )
+
+)
+
+
+Array
+(
+    [status] => Array
+        (
+            [message] => success
+            [status_code] => 200
+            [env] => prod
+        )
+
+    [data] => Array
+        (
+            [meta] => Array
+                (
+                    [match_type] => address
+                    [ru] => 1
+                    [rc] => 0
+                    [match] => 1
+                )
+
+            [time] => 0.1797
+            [match] => Array
+                (
+                    [lu_inc_model_v6_amt] => 108
+                    [POC_V3_CODE] => 5Y
+                    [REC_ADULTCNT] => 1
+                    [REC_CHILDCNT] => 0
+                    [ECHV] => 0000000
+                    [LATITUDE] => 042281356
+                    [LONGITUDE] => -071078165
+                    [MOSAIC_HH] => O52
+                    [MOSAIC_Z4] => P57
+                    [DWELLING_TYPE] => S
+                    [LNGTH_OF_RES] => 00
+                    [COMBINED_HOMEOWNER] => T
+                    [HH_COMPOSITION_CODE] => U
+                )
+
+        )
+
+)
+
+
+Array
+(
+    [status] => Array
+        (
+            [message] => success
+            [status_code] => 200
+            [env] => prod
+        )
+
+    [data] => Array
+        (
+            [meta] => Array
+                (
+                    [position_id] => 3
+                    [first] => MARGARET
+                    [last] => WOGBEH
+                    [match_type] => individual
+                    [ru] => 1
+                    [rc] => 0
+                    [match] => 1
+                )
+
+            [time] => 0.2377
+            [match] => Array
+                (
+                    [lu_inc_model_v6_amt] => 098
+                    [POC_V3_CODE] => 1Y
+                    [REC_ADULTCNT] => 3
+                    [REC_CHILDCNT] => 2
+                    [ECHV] => 0000000
+                    [LATITUDE] => 042312465
+                    [LONGITUDE] => -071080284
+                    [MOSAIC_HH] => P57
+                    [MOSAIC_Z4] => P57
+                    [DWELLING_TYPE] => A
+                    [LNGTH_OF_RES] => 12
+                    [COMBINED_HOMEOWNER] => H
+                    [HH_COMPOSITION_CODE] => J
+                    [BDAT_BDAT] => 199305
+                    [COMBINED_AGE] => E29
+                    [MRTL_MODEL] => 0U
+                    [EDUC_MODEL] => 51
+                )
+
+        )
+
+)

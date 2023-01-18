@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\admin\EligibiltyRangeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('generate-pdf/{main_message}/{plans}/{user_details}/{comment?}', [EligibiltyRangeController::class, 'print_eligibilty']);
 Route::get('{any}', function () {
     return view('welcome');
-})->where('any', '.*');
+})->where('any', '(?!generate-pdf).*$');

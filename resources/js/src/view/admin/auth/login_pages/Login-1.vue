@@ -10,12 +10,12 @@
       id="kt_login"
     >
       <!--begin::Aside-->
-      <div class="login-aside d-flex flex-column flex-row-auto">
-       <img src="/media/custome/login/login-image.png" alt="login image" class="img-fluid">
+      <div class="login-aside mt-1">
+       <img src="/media/custome/login/login-image.png" alt="login image" class="img-fluid1">
       </div>
       <!--begin::Aside-->
       <!--begin::Content-->
-      <div class="login-content flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-5 mx-auto">
+        <div class="login-content flex-row-fluid d-flex flex-column justify-content-center position-relative p-8">
         <div class="d-flex flex-column-fluid flex-center">
           <!--begin::Signin-->
           <div class="login-form login-signin">
@@ -45,12 +45,12 @@
                   />
               </div>
               <div class="">
-                  <input type="checkbox" /> Remember me
-                  <a class="text-dark font-weight-bolder float-right" id="kt_login_forgot" @click="showForm('forgot')">Forgot Password ?</a>
+                  <input type="checkbox" style="margin-top: 4px;" /> <span class="text-muted font-weight-bolder">Remember me</span>
+                  <!-- <a class="text-muted font-weight-bolder float-right" id="kt_login_forgot" @click="showForm('forgot')">Forgot Password ?</a> -->
               </div>
-              <div class="">
-                <button ref="kt_login_signin_submit" class="btn btn-primary font-weight-bolder font-size-h6 px-15 py-4 my-3 mr-3">
-                  Sign In
+              <div>
+                <button ref="kt_login_signin_submit" class="btn font-weight-bolder font-size-h6 py-3 w-100 mt-7 text-white btn-color">
+                  Login
                 </button>
               </div>
             </form>
@@ -66,12 +66,12 @@
               ref="kt_login_forgot_form"
             >
               <div class="pb-5 pt-lg-0 pt-5">
-                <h3
+                <h4
                   class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg"
                 >
                   Forgotten Password ?
-                </h3>
-                <p class="text-muted font-weight-bold font-size-h4">
+                </h4>
+                <p class="text-muted font-weight-bold font-size-h5">
                   Enter your email to reset your password
                 </p>
               </div>
@@ -88,14 +88,14 @@
                 <button
                   type="button"
                   id="kt_login_forgot_submit"
-                  class="btn btn-primary font-weight-bolder font-size-h6 px-15 py-3 my-3 mr-4"
+                  class="btn font-weight-bolder font-size-h6 px-12 btn-color text-white py-3 my-3 mr-4"
                 >
                   Submit
                 </button>
                 <button
                   type="button"
                   id="kt_login_forgot_cancel"
-                  class="btn btn-light-primary font-weight-bolder font-size-h6 px-15 py-3 my-3"
+                  class="btn font-weight-bolder font-size-h6 px-12 btn-color text-white py-3 my-3"
                   @click="showForm('signin')"
                 >
                   Cancel
@@ -108,7 +108,7 @@
         <!--begin::Content footer-->
         
         <!--end::Content footer-->
-      </div>
+        </div>
       <!--end::Content-->
     </div>
   </div>
@@ -192,7 +192,7 @@ export default {
         this.$store
           .dispatch(AdminLOGIN, { email, password })
           // go to which page after successfully login
-          .then(() => this.$router.push('/admin/dashboard'))
+          .then(() => this.$router.push('/admin/check-eligibilty'))
           .catch(() => {});
     });
 
@@ -218,3 +218,24 @@ export default {
   }
 };
 </script>
+<style scoped>
+.btn-color{
+  background:#00A1E4;
+}
+@media (min-width: 720px){
+ .login-content{
+   margin: auto;
+ }
+ .img-fluid1{
+   max-width: 116% !important;
+ }
+}
+@media (max-width: 720px){
+ .img-fluid1{
+   max-width: 108% !important;
+ }
+ .login-aside{
+  margin-left: -10%;
+}
+}
+</style>

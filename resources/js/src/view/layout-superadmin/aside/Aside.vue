@@ -30,11 +30,6 @@
         </perfect-scrollbar>
       </div>
 
-      <div class="position-absolute w-100" style="bottom: 23px;">
-        <div><hr></div>
-        <div class="text-center mt-5"><img src="/media/custome/menu-icons/Group 560.svg" alt="logo icon" class="img-fluid" width="75" height="75"></div>
-      </div>
-
     </div>
   </div>
   <!-- end:: Aside -->

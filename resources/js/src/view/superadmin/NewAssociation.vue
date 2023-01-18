@@ -2,8 +2,6 @@
   <div class="mt-10 p-5">
     <b-form
       @submit="onSubmit"
-      @reset="onReset"
-      v-if="show"
       class="w-md-50 fw-700"
     >
       <h3 class="fw-700">Add association</h3>
@@ -91,10 +89,11 @@
             required
             placeholder="Email*"
             class="ml-1 input-box"
+            :readonly="action=='Edit'"
           ></b-form-input>
           <!-- <has-error :form="form" field="email"></has-error> -->
         </b-form-group>
-        <b-form-group>
+        <b-form-group v-if="action=='Add'">
           <b-form-input
             id="input-4"
             v-model="form.password"
@@ -103,9 +102,12 @@
             placeholder="Password*"
             class="ml-1 input-box"
           ></b-form-input>
-          <!-- <has-error :form="form" field="password"></has-error> -->
         </b-form-group>
-         <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white">Add admin</button>
+        <!-- <has-error :form="form" field="password"></has-error> -->
+        <div class="alert alert-success" role="alert" id="fade">
+          <span class="font-weight-bolder font-size-h6">Submit successfull...</span>
+        </div>
+         <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white">{{action}} admin</button>
       </div>
     </b-form>
   </div>
@@ -117,6 +119,7 @@ export default {
   data() {
     return {
       form:new Form({  
+        id:"",
         name: "",
         number: "",
         address1: "",
@@ -127,24 +130,37 @@ export default {
         email: "",
         password: "",
       }),
-      show: true,
+      action: 'Add',
     };
   },
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
-      ApiService.post("/superadmin/create-admin", this.form)
+      if(this.action=='Add'){
+        ApiService.post("/superadmin/create-admin", this.form)
         .then(({ data }) => {
-          console.log(data);
+          this.$router.push('/superadmin/allassociation');
         })
+        .catch(err => {
+          //   this.openNotification(err);
+        });
+      }
+      else{
+        ApiService.put(`/superadmin/edit-admin/${this.form.id}`, this.form)
+        .then(({ data }) => {
+           $('#fade').fadeToggle(1000);
+           $('#fade').fadeToggle(1000);
+        })
+      }
     },
     getData(id){
       ApiService.get(`/superadmin/all-admin/${id}`)
         .then(({ data }) => {
-           console.log(data);
+          this.form.fill(data[0])
         })
     },
     onReset(evt) {
+      // alert("hello here");
       evt.preventDefault();
       // Reset our form values
       this.form.name = "";
@@ -166,6 +182,7 @@ export default {
   mounted(){
    if(this.get_item){
       this.getData(this.get_item);
+      this.action='Edit';
    }
   },
   computed: {
@@ -188,5 +205,8 @@ export default {
 }
 .create_btn{
     background: #00A1E4;
+}
+#fade{
+  display: none;
 }
 </style>

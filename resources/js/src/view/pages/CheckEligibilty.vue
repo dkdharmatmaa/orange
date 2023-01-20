@@ -1,6 +1,6 @@
 <template>
   <div class="mt-10 p-5">
-    <b-form @submit="onSubmit" class="w-md-50 fw-700">
+    <div class="w-md-50 fw-700">
       <h3 class="fw-700">Check eligibilty</h3>
       <div class="bg-white p-10 rounded">
         <b-form-group>
@@ -11,8 +11,10 @@
             required
             placeholder="First name"
             class="ml-1 input-box"
-          ></b-form-input>
-          <!-- <has-error :form="form" field="address2"></has-error> -->
+            :class="{ 'is-invalid': eligiblity_form.errors.has('first_name') }"
+          >
+          <has-error :form="eligiblity_form" field="first_name"></has-error>
+          </b-form-input>
         </b-form-group>
         <b-form-group>
           <b-form-input
@@ -22,12 +24,18 @@
             required
             placeholder="Last name"
             class="ml-1 input-box"
-          ></b-form-input>
-          <!-- <has-error :form="form" field="address2"></has-error> -->
+            :class="{ 'is-invalid': eligiblity_form.errors.has('last_name') }"
+          >
+          <has-error :form="eligiblity_form" field="last_name"></has-error>
+          </b-form-input>
         </b-form-group>
         <b-form-group>
-           <b-form-select id="input-9" v-model="eligiblity_form.total_people" :options="options_people" class="ml-1 input-box text-seconday" required></b-form-select>
-          <!-- <has-error :form="form" field="address2"></has-error> -->
+           <b-form-select id="input-9" v-model="eligiblity_form.total_people" :options="options_people" class="ml-1 input-box text-seconday" 
+           required
+           :class="{ 'is-invalid': eligiblity_form.errors.has('total_people') }"
+          >
+          <has-error :form="eligiblity_form" field="total_people"></has-error>
+          </b-form-select>
         </b-form-group>
         <b-form-group>
           <b-form-input
@@ -37,8 +45,10 @@
             required
             placeholder="Email Id"
             class="ml-1 input-box"
-          ></b-form-input>
-          <!-- <has-error :form="form" field="address2"></has-error> -->
+          :class="{ 'is-invalid': eligiblity_form.errors.has('email') }"
+          >
+          <has-error :form="eligiblity_form" field="email"></has-error>
+          </b-form-input>
         </b-form-group>
         <div class="d-flex mb-7">
           <b-form-input
@@ -48,8 +58,10 @@
             required
             placeholder="Phone"
             class="mx-1 input-box"
-          ></b-form-input>
-          <!-- <has-error :form="form" field="name"></has-error> -->
+            :class="{ 'is-invalid': eligiblity_form.errors.has('phone') }"
+          >
+          <has-error :form="eligiblity_form" field="phone"></has-error>
+          </b-form-input>
           <b-form-input
             id="input-6"
             type="text"
@@ -57,8 +69,10 @@
             required
             placeholder="Birthday - MM/DD/YYYY"
             class="ml-1 input-box"
-          ></b-form-input>
-          <!-- <has-error :form="form" field="number"></has-error> -->
+            :class="{ 'is-invalid': eligiblity_form.errors.has('birthday') }"
+          >
+          <has-error :form="eligiblity_form" field="birthday"></has-error>
+          </b-form-input>
         </div>
         <b-form-group>
           <b-form-input
@@ -68,8 +82,10 @@
             required
             placeholder="Street address"
             class="ml-1 input-box"
-          ></b-form-input>
-          <!-- <has-error :form="form" field="address2"></has-error> -->
+            :class="{ 'is-invalid': eligiblity_form.errors.has('street_address') }"
+          >
+          <has-error :form="eligiblity_form" field="street_address"></has-error>
+          </b-form-input>
         </b-form-group>
         <b-form-group>
           <b-form-input
@@ -78,8 +94,10 @@
             v-model="eligiblity_form.address"
             placeholder="Address (optional)"
             class="ml-1 input-box"
-          ></b-form-input>
-          <!-- <has-error :form="form" field="address2"></has-error> -->
+          :class="{ 'is-invalid': eligiblity_form.errors.has('address') }"
+          >
+          <has-error :form="eligiblity_form" field="address"></has-error>
+          </b-form-input>
         </b-form-group>
         <div class="d-flex mb-7">
           <b-form-input
@@ -88,25 +106,30 @@
             type="text"
             placeholder="City"
             class="mx-1 input-box"
-          ></b-form-input>
-          <!-- <has-error :form="form" field="name"></has-error> -->
+            :class="{ 'is-invalid': eligiblity_form.errors.has('city') }"
+          >
+          <has-error :form="eligiblity_form" field="city"></has-error>
+          </b-form-input>
           <b-form-input
             id="input-12"
             type="text"
             v-model="eligiblity_form.state"
             placeholder="State"
             class="ml-1 input-box"
-          ></b-form-input>
-          <!-- <has-error :form="form" field="number"></has-error> -->
+            :class="{ 'is-invalid': eligiblity_form.errors.has('state') }"
+          >
+          <has-error :form="eligiblity_form" field="state"></has-error>
+          </b-form-input>
           <b-form-input
             id="input-13"
             type="number"
             v-model="eligiblity_form.zip_code"
-            required
             placeholder="Zip"
             class="ml-1 input-box"
-          ></b-form-input>
-          <!-- <has-error :form="form" field="number"></has-error> -->
+            :class="{ 'is-invalid': eligiblity_form.errors.has('zip_code') }"
+          >
+          <has-error :form="eligiblity_form" field="zip_code"></has-error>
+          </b-form-input>
         </div>
         <b-form-group>
           <b-form-input
@@ -116,16 +139,18 @@
             required
             placeholder="Contact/Lead Id"
             class="ml-1 input-box"
-          ></b-form-input>
+            :class="{ 'is-invalid': eligiblity_form.errors.has('lead_id') }"
+          >
+          <has-error :form="eligiblity_form" field="lead_id"></has-error>
+          </b-form-input>
           <!-- <has-error :form="form" field="address2"></has-error> -->
         </b-form-group>
-        <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white">Submit details</button>
+        <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-on:click="onSubmit">Submit details</button>
       </div>
-    </b-form>
+    </div>
   </div>
 </template>
 <script>
-import Form from "vform";
 import ApiService from "@/core/services/api.service";
 import { mapGetters } from 'vuex';
 export default {
@@ -151,13 +176,12 @@ export default {
     };
   },
   methods: {
-    onSubmit(evt) {
-      evt.preventDefault();
+    onSubmit() {
       if(this.eligiblity_form.total_people=='Number of people in household'){
         alert("Select number of peoples in household ")
     }
     else{
-      ApiService.post("/user/check-eligibilty", this.eligiblity_form)
+      this.eligiblity_form.post("/user/check-eligibilty")
               .then(({ data }) => {
                 this.$router.push({ name: 'user-eligibiltystatus', params: { main_data: data } })
               })
@@ -166,7 +190,6 @@ export default {
     }
     },
     onReset(evt) {
-      // alert("hello here");
       evt.preventDefault();
       // Reset our form values
       this.eligiblity_form.first_name = "";

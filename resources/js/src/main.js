@@ -18,6 +18,11 @@ window.PerfectScrollbar = PerfectScrollbar;
 import ClipboardJS from "clipboard";
 window.ClipboardJS = ClipboardJS;
 
+import { Form, HasError, AlertError } from "vform";
+window.Form = Form;
+Vue.component(HasError.name, HasError);
+Vue.component(AlertError.name, AlertError);
+
 // Vue 3rd party plugins
 import i18n from "@/core/plugins/vue-i18n";
 import vuetify from "@/core/plugins/vuetify";

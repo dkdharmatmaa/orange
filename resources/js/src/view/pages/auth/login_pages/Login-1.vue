@@ -30,7 +30,7 @@
                     name="email"
                     ref="email"
                     v-model="form.email"
-                    placeholder="Username"
+                    placeholder="Email"
                   />
               </div>
               <div class="form-group">

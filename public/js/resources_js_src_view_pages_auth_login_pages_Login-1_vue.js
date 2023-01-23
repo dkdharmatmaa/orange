@@ -175,7 +175,7 @@ var render = function render() {
     attrs: {
       type: "text",
       name: "email",
-      placeholder: "Username"
+      placeholder: "Email"
     },
     domProps: {
       value: _vm.form.email

@@ -58,15 +58,13 @@ class EligibiltyRangeController extends Controller
             'first_name' => ['required', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
             'total_people' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'email', 'max:50'],
-            'phone' => ['required', 'string', 'max:20'],
+            'phone' => ['required','regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
             'birthday' => ['required', 'string', 'max:20'],
             'street_address' => ['required','string','max:100'],
             'address' => ['nullable','string','max:100'],
             'city' => ['required','string','max:100'],
             'state' => ['required','string','max:100'],
             'zip_code' => ['required','regex:/\b\d{5}\b/'],
-            'lead_id' => ['required','string','max:50'],
             'branch_id' => ['required','string','max:100']
         ]);
 

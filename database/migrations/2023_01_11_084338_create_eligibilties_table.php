@@ -18,7 +18,7 @@ class CreateEligibiltiesTable extends Migration
             $table->string('first_name',100);
             $table->string('last_name',100);
             $table->string('no_of_people',20);
-            $table->string('email_id',50);
+            $table->string('email_id',50)->nullable();
             $table->string('phone',20);
             $table->string('birthday',20);
             $table->string('street_address',100);

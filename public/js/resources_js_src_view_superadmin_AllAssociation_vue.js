@@ -177,7 +177,7 @@ var render = function render() {
           attrs: {
             to: "/superadmin/newassociation/" + data.item["id"]
           }
-        }, [_vm._v("Edit")])], 1)];
+        }, [_vm._v("Info")])], 1)];
       }
     }])
   }), _vm._v(" "), _c("div", {

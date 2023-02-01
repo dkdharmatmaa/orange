@@ -57,10 +57,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     }
   },
   mounted: function mounted() {
-    if (this.selected_branch_id) {
-      this.branch_id = this.selected_branch_id;
-      this.get_plans();
-    } else alert("Select Branch");
+    this.branch_id = this.selected_branch_id;
+    this.get_plans();
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
     selected_branch_id: 'SelectedBranch'
@@ -85,18 +83,7 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "mt-5"
-  }, [_c("div", {
-    staticClass: "d-flex ml-2 justify-content-between"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "d-flex"
-  }, [_c("div", [_c("button", {
-    staticClass: "btn create_btn font-weight-bold py-2 ml-2"
-  }, [_c("router-link", {
-    staticClass: "text-white",
-    attrs: {
-      to: "/admin/new-matrix"
-    }
-  }, [_vm._v("Add plans")])], 1)])])]), _vm._v(" "), _c("div", {
     staticClass: "mt-2",
     attrs: {
       id: "table_data"
@@ -122,9 +109,13 @@ var render = function render() {
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("h2", {
+  return _c("div", {
+    staticClass: "d-flex ml-2 justify-content-between"
+  }, [_c("div", [_c("h2", {
     staticClass: "font-weight-bolder"
-  }, [_vm._v("Financial aid matrix")])]);
+  }, [_vm._v("Financial aid matrix")])]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex"
+  }, [_c("div")])]);
 }];
 render._withStripped = true;
 

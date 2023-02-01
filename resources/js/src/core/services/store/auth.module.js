@@ -44,11 +44,13 @@ const actions = {
       ApiService.post("/login", credentials)
         .then(({ data }) => {
           context.commit(SET_AUTH, data);
-          JwtService.saveToken(data.token);
+          JwtService.saveToken(data.token); 
+          JwtService.saveBranchId(data.user.branch_id);
+          context.commit(SET_BRANCHID, data.user.branch_id);
           resolve(data);
         })
         .catch(({ response }) => {
-          context.commit(SET_ERROR, response.data.errors);
+          context.commit(SET_ERROR, response.data.error);
         });
     });
   },

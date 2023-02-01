@@ -107,7 +107,7 @@
         <div class="alert alert-success" role="alert" id="fade">
           <span class="font-weight-bolder font-size-h6">Submit successfull...</span>
         </div>
-         <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white">{{action}} admin</button>
+         <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-if="action=='Add'">{{action}} admin</button>
       </div>
     </b-form>
   </div>

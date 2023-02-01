@@ -116,7 +116,6 @@ import Form from 'vform';
 import ApiService from "@/core/services/api.service";
 import { mapGetters } from "vuex";
 import { LOGOUT} from "@/core/services/store/auth.module";
-import axios from 'axios';
 export default {
   data() {        
     return {
@@ -133,12 +132,6 @@ export default {
     };
   },
   methods: {
-    get_suggestion_keyword(){
-      console.log("hello i am in function");
-      axios.get(`http://suggestqueries.google.com/complete/search?client=chrome&q=payment+gateway+india`).then(res=>{
-        console.log(res);
-      });
-    },
     onSubmit(evt) {
       evt.preventDefault();
       ApiService.put(`/user/upadte-detail`, this.user_form)
@@ -165,14 +158,8 @@ export default {
   mounted(){
       this.user_form.name=this.current_user.name;
       this.user_form.email=this.current_user.email;
-      if(this.selected_branch_id){
       this.branch_id=this.selected_branch_id;
       this.getBranch();
-      }
-      else
-      alert("Select branch");
-      
-      this.get_suggestion_keyword();
   },
 computed: {
     ...mapGetters({ current_user: 'currentUser' }),

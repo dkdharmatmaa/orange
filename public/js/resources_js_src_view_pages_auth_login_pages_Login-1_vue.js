@@ -98,7 +98,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       })
       // go to which page after successfully login
       .then(function () {
-        return _this.$router.push('/check-eligibilty');
+        return _this.$router.push({
+          name: 'user-checkeligibilty'
+        });
       })["catch"](function () {});
     });
     this.fv.on("core.form.invalid", function () {
@@ -161,7 +163,11 @@ var render = function render() {
       novalidate: "novalidate",
       id: "kt_login_signin_form"
     }
-  }, [_vm._m(1), _vm._v(" "), _c("div", {
+  }, [_vm._m(1), _vm._v(" "), _vm.errors == "Unauthorized" ? _c("div", {
+    staticClass: "p-3 text-center"
+  }, [_c("span", {
+    staticClass: "text-danger h6"
+  }, [_vm._v("Invalid email or password")])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("input", {
     directives: [{
@@ -249,7 +255,7 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "login-aside mt-1"
+    staticClass: "login-aside"
   }, [_c("img", {
     staticClass: "img-fluid1",
     attrs: {
@@ -1309,7 +1315,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.btn-color[data-v-46011a81]{\r\n  background:#00A1E4;\n}\n@media (min-width: 720px){\n.login-content[data-v-46011a81]{\r\n   margin: auto;\n}\n.img-fluid1[data-v-46011a81]{\r\n   max-width: 116% !important;\n}\n}\n@media (max-width: 720px){\n.img-fluid1[data-v-46011a81]{\r\n   max-width: 108% !important;\n}\n.login-aside[data-v-46011a81]{\r\n  margin-left: -10%;\n}\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.btn-color[data-v-46011a81]{\r\n  background:#00A1E4;\n}\n@media (min-width: 720px){\n.login-content[data-v-46011a81]{\r\n   margin: auto;\n}\n.img-fluid1[data-v-46011a81]{\r\n   max-width: 116% !important;\n}\n}\n@media (max-width: 720px){\n.img-fluid1[data-v-46011a81]{\r\n   max-width: 109% !important;\n}\n.login-aside[data-v-46011a81]{\r\n  margin-left: -10%;\n}\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

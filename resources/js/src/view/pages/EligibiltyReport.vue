@@ -126,12 +126,8 @@ export default {
     },
   },
   mounted(){
-    if(this.selected_branch_id){
     this.condition_arr.branch_id=this.selected_branch_id;
     this.get_report();
-    }
-    else
-    alert("Select branch");
   },
   components: {
       Datepicker

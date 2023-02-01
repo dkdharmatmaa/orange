@@ -1,6 +1,5 @@
 const ID_TOKEN_KEY = "id_token";
-const selected_branch_id="";
-const userType = "";
+const selected_branch_id="selected_branch_id";
 
 export const getToken = () => {
   return window.localStorage.getItem(ID_TOKEN_KEY);

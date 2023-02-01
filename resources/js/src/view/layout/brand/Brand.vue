@@ -65,11 +65,11 @@ export default {
     KTLayoutBrand.init(this.$refs["kt_brand"]);
     // Init Aside Menu Toggle
     KTLayoutAsideToggle.init(this.$refs["kt_aside_toggle"]);
-    this.getBranches();
     if(this.selected_branch_id)
     this.branch_id=this.selected_branch_id;
     else
     this.branch_id=null;
+    this.getBranches();
   },
   methods: {
     getBranches(){

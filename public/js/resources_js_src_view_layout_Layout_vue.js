@@ -327,8 +327,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     _assets_js_layout_base_brand_js__WEBPACK_IMPORTED_MODULE_3__["default"].init(this.$refs["kt_brand"]);
     // Init Aside Menu Toggle
     _assets_js_layout_base_aside_toggle_js__WEBPACK_IMPORTED_MODULE_4__["default"].init(this.$refs["kt_aside_toggle"]);
-    this.getBranches();
     if (this.selected_branch_id) this.branch_id = this.selected_branch_id;else this.branch_id = null;
+    this.getBranches();
   },
   methods: {
     getBranches: function getBranches() {

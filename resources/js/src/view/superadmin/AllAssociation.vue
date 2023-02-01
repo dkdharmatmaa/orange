@@ -28,7 +28,7 @@
                 {{data.item['address1']}}, <span v-if="data.item['address2']">{{data.item['address2']}},</span> {{data.item['city']}}, {{data.item['state']}}
               </template>
               <template #cell(action)="data">
-              <b-button variant="success"><router-link :to="'/superadmin/newassociation/'+data.item['id']" class="text-white">Edit</router-link></b-button>
+              <b-button variant="success"><router-link :to="'/superadmin/newassociation/'+data.item['id']" class="text-white">Info</router-link></b-button>
               </template>
            </b-table>
           <!-- for pagination -->

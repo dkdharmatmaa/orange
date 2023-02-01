@@ -123,10 +123,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     }
   },
   mounted: function mounted() {
-    if (this.selected_branch_id) {
-      this.condition_arr.branch_id = this.selected_branch_id;
-      this.get_report();
-    } else alert("Select branch");
+    this.condition_arr.branch_id = this.selected_branch_id;
+    this.get_report();
   },
   components: {
     Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__["default"]

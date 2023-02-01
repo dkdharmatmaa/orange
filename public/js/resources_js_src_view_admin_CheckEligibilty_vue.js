@@ -220,7 +220,7 @@ var render = function render() {
     },
     attrs: {
       id: "input-5",
-      type: "number",
+      type: "text",
       required: "",
       placeholder: "Phone"
     },

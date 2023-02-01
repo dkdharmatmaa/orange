@@ -10,7 +10,7 @@
       id="kt_login"
     >
       <!--begin::Aside-->
-      <div class="login-aside mt-1">
+      <div class="login-aside">
        <img src="/media/custome/login/login-image.png" alt="login image" class="img-fluid1">
       </div>
       <!--begin::Aside-->
@@ -23,6 +23,7 @@
               <div class="pb-5 pt-lg-0 pt-5 text-center">
                  <img src="/media/custome/login/main-login.svg" alt="main login image" class="img-fluid" width="100" height="100">
               </div>
+              <div class="p-3 text-center" v-if="errors=='Unauthorized'"><span class="text-danger h6">Invalid email or password</span></div>
               <div class="form-group">
                   <input
                     class="form-control form-control-solid h-auto py-4 px-2"
@@ -232,7 +233,7 @@ export default {
 }
 @media (max-width: 720px){
  .img-fluid1{
-   max-width: 108% !important;
+   max-width: 109% !important;
  }
  .login-aside{
   margin-left: -10%;

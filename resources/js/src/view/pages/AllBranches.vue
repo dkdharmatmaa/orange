@@ -75,6 +75,9 @@ export default {
   mounted(){
      this.get_branches();
   },
+  computed:{
+    ...mapGetters({selected_branch_id:"SelectedBranch"}),
+  }
 };
 </script>
 

@@ -110,7 +110,7 @@ class UserController extends Controller
         if (! $token = auth()->guard('user-api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        return $this->respondWithToken($token);
+        return json_encode(['token'=>$token,'user'=>auth()->guard('user-api')->user()]);
     }
 
     public function me()

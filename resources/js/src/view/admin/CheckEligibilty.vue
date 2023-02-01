@@ -54,7 +54,7 @@
           <b-form-input
             id="input-5"
             v-model="eligiblity_form.phone"
-            type="number"
+            type="text"
             required
             placeholder="Phone"
             class="mx-1 input-box"

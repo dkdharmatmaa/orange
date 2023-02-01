@@ -6,7 +6,7 @@
           </div>
           <div class="d-flex">
              <div>
-               <button class="btn create_btn font-weight-bold py-2 ml-2"><router-link class="text-white" to="/admin/new-matrix">Add plans</router-link></button>
+               <!-- <button class="btn create_btn font-weight-bold py-2 ml-2"><router-link class="text-white" to="/new-matrix">Add plans</router-link></button> -->
              </div>
           </div>
     </div>
@@ -64,12 +64,8 @@ export default {
     },
   },
   mounted(){
-    if(this.selected_branch_id){
       this.branch_id=this.selected_branch_id;
       this.get_plans();
-    }
-    else
-    alert("Select Branch");
   },
   computed:{
     ...mapGetters({selected_branch_id:'SelectedBranch'})

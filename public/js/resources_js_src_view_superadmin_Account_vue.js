@@ -134,7 +134,7 @@ var render = function render() {
     }
   }, [_c("span", {
     staticClass: "font-weight-bolder font-size-h6"
-  }, [_vm._v("Submit successfull...")])]), _vm._v(" "), _c("button", {
+  }, [_vm._v("Saved Successfully")])]), _vm._v(" "), _c("button", {
     staticClass: "btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white"
   }, [_vm._v("Save details")])], 1)]), _vm._v(" "), _c("b-form", {
     staticClass: "w-md-50 fw-700",
@@ -183,7 +183,7 @@ var render = function render() {
     }
   }, [_c("span", {
     staticClass: "font-weight-bolder font-size-h6"
-  }, [_vm._v("Submit successfull...")])]), _vm._v(" "), _c("button", {
+  }, [_vm._v("Saved Successfully")])]), _vm._v(" "), _c("button", {
     staticClass: "btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white"
   }, [_vm._v("Save password")])], 1)])], 1);
 };

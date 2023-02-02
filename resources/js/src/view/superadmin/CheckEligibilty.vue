@@ -55,7 +55,7 @@
             v-model="eligiblity_form.phone"
             type="text"
             required
-            placeholder="Phone"
+            placeholder="123-456-7891"
             class="mx-1 input-box"
             :class="{ 'is-invalid': eligiblity_form.errors.has('phone') }"
              >
@@ -193,6 +193,7 @@ export default {
   methods: {
     onSubmit(e) {
       e.preventDefault();
+      this.submit_spinner=true;
       if(this.eligiblity_form.total_people=='Number of people in household'){
         alert("Select number of peoples in household ")
     }

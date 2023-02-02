@@ -217,7 +217,7 @@ var render = function render() {
       id: "input-5",
       type: "text",
       required: "",
-      placeholder: "Phone"
+      placeholder: "123-456-7891"
     },
     model: {
       value: _vm.eligiblity_form.phone,

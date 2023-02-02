@@ -195,7 +195,7 @@ var render = function render() {
         return _vm.save_comment();
       }
     }
-  }, [_vm._v("Save details")]), _vm._v("    \n           "), _c("b-button", {
+  }, [_vm._v("Save details")]), _vm._v("    \n          "), _c("b-button", {
     staticClass: "print_btn border border-secondary",
     attrs: {
       variant: "white"
@@ -235,7 +235,7 @@ var staticRenderFns = [function () {
     }
   }, [_c("span", {
     staticClass: "font-weight-bolder font-size-h6"
-  }, [_vm._v("Save successfull...")])]);
+  }, [_vm._v("Saved Successfully")])]);
 }];
 render._withStripped = true;
 

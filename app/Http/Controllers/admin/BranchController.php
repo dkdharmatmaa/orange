@@ -86,4 +86,7 @@ class BranchController extends Controller
            return response()->json(['status'=>false]);
         }
     }
+    public function delete($id){
+        
+    }
 }

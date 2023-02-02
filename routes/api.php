@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth:admin-api','prefix' => 'admin'], function ()
     Route::post('/create-user/{assoc_id?}', [UserController::class,'register']);
     Route::put('/edit-user/{id}', [UserController::class,'update']);
     Route::get('/all-user/{id?}/{assoc_id?}', [UserController::class,'index']);
+    Route::delete('/user/{id?}', [UserController::class,'delete']);
     //branch related work by admin
     Route::post('/create-branch', [AdminBranchController::class,'store']);
     Route::put('/edit-branch/{id}', [AdminBranchController::class,'update']);
@@ -101,6 +102,7 @@ Route::group(['middleware' => 'auth:superAdmin-api','prefix' => 'superadmin'], f
     Route::post('/create-user/{assoc_id?}', [UserController::class,'register']);
     Route::put('/edit-user/{id}', [UserController::class,'update']);
     Route::get('/all-user/{id?}/{assoc_id?}', [UserController::class,'index']);
+    Route::delete('/user/{id?}', [UserController::class,'delete']);
     //branch related work by superadmin
     Route::post('/create-branch', [SuperAdminBranchController::class,'store']);
     Route::put('/edit-branch/{id}', [SuperAdminBranchController::class,'update']);

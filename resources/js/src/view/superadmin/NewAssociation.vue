@@ -105,7 +105,7 @@
         </b-form-group>
         <!-- <has-error :form="form" field="password"></has-error> -->
         <div class="alert alert-success" role="alert" id="fade">
-          <span class="font-weight-bolder font-size-h6">Submit successfull...</span>
+          <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
         </div>
          <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-if="action=='Add'">{{action}} admin</button>
       </div>

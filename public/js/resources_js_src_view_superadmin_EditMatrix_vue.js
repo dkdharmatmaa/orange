@@ -347,7 +347,7 @@ var staticRenderFns = [function () {
     }
   }, [_c("span", {
     staticClass: "font-weight-bolder font-size-h6"
-  }, [_vm._v("Submit successfull...")])]);
+  }, [_vm._v("Saved Successfully")])]);
 }];
 render._withStripped = true;
 

@@ -57,12 +57,22 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     };
   },
   methods: {
-    get_users: function get_users() {
+    delete_user: function delete_user(id) {
       var _this = this;
-      _core_services_api_service__WEBPACK_IMPORTED_MODULE_0__["default"].get("/admin/all-user/0/".concat(this.association_id)).then(function (_ref) {
-        var data = _ref.data;
-        _this.items = data;
-        _this.totalRows = data.length;
+      var proceed = confirm("Are you sure you want to proceed?");
+      if (proceed) {
+        _core_services_api_service__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"]("/admin/user/".concat(id)).then(function (_ref) {
+          var data = _ref.data;
+          _this.get_users();
+        });
+      }
+    },
+    get_users: function get_users() {
+      var _this2 = this;
+      _core_services_api_service__WEBPACK_IMPORTED_MODULE_0__["default"].get("/admin/all-user/0/".concat(this.association_id)).then(function (_ref2) {
+        var data = _ref2.data;
+        _this2.items = data;
+        _this2.totalRows = data.length;
       });
     },
     onFiltered: function onFiltered(filteredItems) {
@@ -187,7 +197,16 @@ var render = function render() {
           attrs: {
             to: "/admin/new-users/" + data.item["id"]
           }
-        }, [_vm._v("Edit")])], 1)];
+        }, [_vm._v("Edit")])], 1), _vm._v(" "), _c("b-button", {
+          attrs: {
+            variant: "danger"
+          },
+          on: {
+            click: function click($event) {
+              return _vm.delete_user(data.item["id"]);
+            }
+          }
+        }, [_vm._v("Delete")])];
       }
     }])
   }), _vm._v(" "), _c("div", {

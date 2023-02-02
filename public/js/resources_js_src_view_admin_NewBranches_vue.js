@@ -62,7 +62,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     if (this.get_item) {
       this.getData(this.get_item);
-      this.action = 'Edit';
+      this.action = 'Save';
     }
   },
   computed: {
@@ -216,7 +216,7 @@ var render = function render() {
     }
   }, [_c("span", {
     staticClass: "font-weight-bolder font-size-h6"
-  }, [_vm._v("Submit successfull...")])]), _vm._v(" "), _c("button", {
+  }, [_vm._v("Saved Successfully")])]), _vm._v(" "), _c("button", {
     staticClass: "btn font-weight-bolder font-size-h6 py-3 mt-5 w-100 create_btn text-white"
   }, [_vm._v(_vm._s(_vm.action) + " branch")])], 1)])], 1);
 };

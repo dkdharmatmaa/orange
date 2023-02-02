@@ -26,11 +26,11 @@
               <input type="radio" name="convert" v-model="status_arr.status" class="bg-white p-2 font-weight-bolder opacity-75" value="Deferred" required> Deferred
             </div>
              <div class="alert alert-success mt-3" role="alert" id="fade">
-              <span class="font-weight-bolder font-size-h6">Save successfull...</span>
+              <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
              </div>
             <div class="my-5">
               <b-button variant="primary" class="px-5 h5" v-on:click="save_comment()">Save details</b-button>&nbsp;&nbsp;&nbsp;&nbsp;
-               <b-button variant="white" class="print_btn border border-secondary"><a :href="'/generate-pdf/'+main_message+'/'+JSON.stringify(items)+'/'+JSON.stringify(user_details)+'/'+status_arr.comment" target="_blank" class="h5">Print details</a></b-button>
+              <b-button variant="white" class="print_btn border border-secondary"><a :href="'/generate-pdf/'+main_message+'/'+JSON.stringify(items)+'/'+JSON.stringify(user_details)+'/'+status_arr.comment" target="_blank" class="h5">Print details</a></b-button>
             </div>
         </div>
       </div>

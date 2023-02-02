@@ -41,6 +41,7 @@ __webpack_require__.r(__webpack_exports__);
     onSubmit: function onSubmit(e) {
       var _this = this;
       e.preventDefault();
+      this.submit_spinner = true;
       if (this.eligiblity_form.total_people == 'Number of people in household') {
         alert("Select number of peoples in household ");
       } else {
@@ -225,7 +226,7 @@ var render = function render() {
       id: "input-5",
       type: "text",
       required: "",
-      placeholder: "Phone"
+      placeholder: "123-456-7891"
     },
     model: {
       value: _vm.eligiblity_form.phone,

@@ -37,7 +37,7 @@
       </div>
 
     <div class="alert alert-success mt-3" role="alert" id="fade">
-        <span class="font-weight-bolder font-size-h6">Submit successfull...</span>
+        <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
     </div>
     <!-- submit button -->
     <div class="my-10 text-center">

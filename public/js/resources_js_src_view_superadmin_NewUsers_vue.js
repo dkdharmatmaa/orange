@@ -274,7 +274,7 @@ var render = function render() {
     }
   }, [_c("span", {
     staticClass: "font-weight-bolder font-size-h6"
-  }, [_vm._v("Submit successfull...")])]), _vm._v(" "), _c("button", {
+  }, [_vm._v("Saved Successfully")])]), _vm._v(" "), _c("button", {
     staticClass: "btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white mt-3"
   }, [_vm._v(_vm._s(_vm.action) + " user")])], 1)])], 1);
 };

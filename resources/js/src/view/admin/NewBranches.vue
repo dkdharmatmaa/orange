@@ -78,7 +78,7 @@
           <!-- <has-error :form="form" field="zip_code"></has-error> -->
         </div>
         <div class="alert alert-success my-3" role="alert" id="fade">
-          <span class="font-weight-bolder font-size-h6">Submit successfull...</span>
+          <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
         </div>
         <button  class="btn font-weight-bolder font-size-h6 py-3 mt-5 w-100 create_btn text-white">{{action}} branch</button>
       </div>
@@ -134,7 +134,7 @@ export default {
   mounted(){
    if(this.get_item){
       this.getData(this.get_item);
-      this.action='Edit';
+      this.action='Save';
    }
   },
   computed: {

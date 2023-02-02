@@ -132,4 +132,9 @@ class UserController extends Controller
             // 'expires_in' => auth()->factory()->getTTL() * 60,
         ]);
     }
+    public function delete($id){
+        $user = User::find($id);
+        $user->delete();
+        return "User deleted";
+    }
 }

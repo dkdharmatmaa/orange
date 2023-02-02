@@ -26,7 +26,7 @@
               <input type="radio" name="convert" v-model="status_arr.status" class="bg-white p-2 font-weight-bolder opacity-75" value="Deferred" required> Deferred
             </div>
              <div class="alert alert-success mt-3" role="alert" id="fade">
-              <span class="font-weight-bolder font-size-h6">Save successfull...</span>
+              <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
              </div>
             <div class="my-5">
               <b-button variant="primary" class="px-5 h5" v-on:click="save_comment()">Save details</b-button>&nbsp;&nbsp;&nbsp;&nbsp;

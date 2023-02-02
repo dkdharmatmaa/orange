@@ -32,6 +32,7 @@
               </template>
               <template #cell(action)="data">
               <b-button variant="success"><router-link :to="'/superadmin/new-users/'+data.item['id']" class="text-white">Edit</router-link></b-button>
+               <b-button variant="danger" v-on:click="delete_user(data.item['id'])">Delete</b-button>
               </template>
            </b-table>
           <!-- for pagination -->
@@ -69,6 +70,15 @@ export default {
     };
   },
   methods: {
+    delete_user(id){
+      var proceed = confirm("Are you sure you want to proceed?");
+      if(proceed){
+        ApiService.delete(`/superadmin/user/${id}`)
+        .then(({ data }) => {
+          this.get_users();
+        })
+      }
+    },
     get_users(){
       ApiService.get(`/superadmin/all-user/0/${this.association_id}`)
         .then(({ data }) => {

@@ -39,21 +39,27 @@
                 <h5>Submission details</h5>
                 <div class="mb-5">
                     <div class="bg-white p-3 rounded" style="width:40%;float:left;">
-                        <span>Branch name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date</span><br>
-                        <span class="fw">{{$branch_name}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ date('d/M/y', strtotime($user_details['created_at'])) }}</span>
-                        {{-- <div>
-                            <span>Branch name</span><br>
-                            <span>Teterboro</span>
-                        </div>
-                        <div>
-                            <span>Date</span><br>
-                            <span>MM/DD/YYYY</span>
-                        </div> --}}
-                        
+                        <table>
+                            <tr>
+                                <td>Branch name</td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                <td>Date</td>
+                            </tr>
+                            <tr>
+                                <td>{{$branch_name}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ date('d/M/y', strtotime($user_details['created_at'])) }}</td>
+                            </tr>
+                        </table>
                     </div>
-                    {{-- <div style="width:60%;text-align: right;">
-                        <img src="/media/custome/login/main-login.svg" alt="main login image" class="img-fluid" width="100" height="100">
-                    </div> --}}
                 </div>
                 <br>
                 <h5 class="mb-1 mt-3">Personal details</h5>

@@ -56,7 +56,7 @@
             v-model="eligiblity_form.phone"
             type="text"
             required
-            placeholder="Phone"
+            placeholder="123-456-7891"
             class="mx-1 input-box"
             :class="{ 'is-invalid': eligiblity_form.errors.has('phone') }"
           >

@@ -50,18 +50,28 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    get_users: function get_users() {
+    delete_user: function delete_user(id) {
       var _this = this;
-      _core_services_api_service__WEBPACK_IMPORTED_MODULE_0__["default"].get("/superadmin/all-user/0/".concat(this.association_id)).then(function (_ref) {
-        var data = _ref.data;
-        _this.items = data;
-        _this.totalRows = data.length;
+      var proceed = confirm("Are you sure you want to proceed?");
+      if (proceed) {
+        _core_services_api_service__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"]("/superadmin/user/".concat(id)).then(function (_ref) {
+          var data = _ref.data;
+          _this.get_users();
+        });
+      }
+    },
+    get_users: function get_users() {
+      var _this2 = this;
+      _core_services_api_service__WEBPACK_IMPORTED_MODULE_0__["default"].get("/superadmin/all-user/0/".concat(this.association_id)).then(function (_ref2) {
+        var data = _ref2.data;
+        _this2.items = data;
+        _this2.totalRows = data.length;
       });
     },
     getAssociation: function getAssociation() {
-      var _this2 = this;
-      _core_services_api_service__WEBPACK_IMPORTED_MODULE_0__["default"].get("/superadmin/all-admin").then(function (_ref2) {
-        var data = _ref2.data;
+      var _this3 = this;
+      _core_services_api_service__WEBPACK_IMPORTED_MODULE_0__["default"].get("/superadmin/all-admin").then(function (_ref3) {
+        var data = _ref3.data;
         var association_option = [];
         association_option.push({
           value: "",
@@ -73,7 +83,7 @@ __webpack_require__.r(__webpack_exports__);
             text: data[i]['name']
           });
         }
-        _this2.options_association = association_option;
+        _this3.options_association = association_option;
       });
     },
     onFiltered: function onFiltered(filteredItems) {
@@ -215,7 +225,16 @@ var render = function render() {
           attrs: {
             to: "/superadmin/new-users/" + data.item["id"]
           }
-        }, [_vm._v("Edit")])], 1)];
+        }, [_vm._v("Edit")])], 1), _vm._v(" "), _c("b-button", {
+          attrs: {
+            variant: "danger"
+          },
+          on: {
+            click: function click($event) {
+              return _vm.delete_user(data.item["id"]);
+            }
+          }
+        }, [_vm._v("Delete")])];
       }
     }])
   }), _vm._v(" "), _c("div", {

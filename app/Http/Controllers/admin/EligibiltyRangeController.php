@@ -134,7 +134,7 @@ class EligibiltyRangeController extends Controller
         $branch_id=$user_details['branch_id'];
         $branch_name=Branch::where('id',$branch_id)->select('name')->first()->toArray()['name'];
         $pdf = PDF::loadView('eligibiltyStatus',compact('plans','user_details','main_message','comment','branch_name'));
-        return $pdf->download('EligibiltyStatus.pdf');
+        return $pdf->stream('EligibiltyStatus.pdf');
         // return view('eligibiltyStatus',compact('plans','user_details','main_message','comment','branch_name')); 
     }
 }

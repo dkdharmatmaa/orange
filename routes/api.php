@@ -70,6 +70,7 @@ Route::group(['middleware' => 'auth:user-api','prefix' => 'user'], function () {
     Route::post('/check-eligibilty', [UserEligibiltyRangeController::class,'check_eligibilty']);
     Route::post('/add-eligibilty-comment/{id}', [UserEligibiltyRangeController::class,'add_comment']);
     Route::post('/eligibilty-report', [UserEligibiltyRangeController::class,'index']);
+    Route::get('/user-sumission-detail/{id}', [UserEligibiltyRangeController::class,'user_sumission_detail']);
     //user related work by admin
     Route::post('/create-user', [UserController::class,'register']);
     Route::put('/edit-user/{id}', [UserController::class,'update']);

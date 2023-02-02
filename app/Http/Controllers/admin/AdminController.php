@@ -79,6 +79,7 @@ class AdminController extends Controller
         $admin->state=$request->state;
         $admin->zip_code=$request->zip_code;
         $admin->save();
+        Branch::where('association_id',$id)->update(['association_name'=>$request->name]);
         if($admin){
             return response()->json(['status'=>true]);
         }

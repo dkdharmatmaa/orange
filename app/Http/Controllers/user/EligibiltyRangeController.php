@@ -105,8 +105,14 @@ class EligibiltyRangeController extends Controller
 
         if($total_income){
             Eligibilty::where('id',$eligibilty->id)->update(['api_status'=>"Qualified",'api_incomebind'=>$total_income]);
-            $palns=Incomebind::where([['association_id','=',$eligibilty->association_id],['branch_id','=',$eligibilty->branch_id],['no_of_people','=',$eligibilty->no_of_people],['minmum_range','<=',$total_income],['maximum_range','>',$total_income]])->select('id','minmum_range','maximum_range','plans')->first()->toArray();
+            $palns=Incomebind::where([['association_id','=',$eligibilty->association_id],['branch_id','=',$eligibilty->branch_id],['no_of_people','=',$eligibilty->no_of_people],['minmum_range','<=',$total_income],['maximum_range','>',$total_income]])->select('id','minmum_range','maximum_range','plans')->first();
+            if($palns){
             $data['plans']=$palns;
+            }
+            else{
+                $palns_exception=Incomebind::where([['association_id','=',$eligibilty->association_id],['branch_id','=',$eligibilty->branch_id],['minmum_range','<=',$total_income],['maximum_range','>',$total_income]])->select('id','minmum_range','maximum_range','plans')->orderBy('no_of_people','desc')->take(1)->first();
+                $data['plans']=$palns_exception;
+            }
             $data['details']=$eligibilty;
             return json_encode(['status'=>true,'message'=>"Data get from API",'data'=>$data],true);
         }
@@ -119,5 +125,8 @@ class EligibiltyRangeController extends Controller
     public function add_comment(Request $request,$id){
         Eligibilty::where('id',$id)->update(['comment'=>$request->comment,'user_status'=>$request->status]);
         return json_encode(['status'=>true,'message'=>"Data updated successful"]);
+    }
+    public function user_sumission_detail($id){
+        return $id;
     }
 }

@@ -54,6 +54,12 @@ export default new Router({
           meta: { userType: 'user' }
         },
         {
+          path: "user-details/:id?",
+          name: "user-user-details",
+          component: () => import("@/view/pages/UserDetails.vue"),
+          meta: { userType: 'user' }
+        },
+        {
           path: "account",
           name: "user-account",
           component: () => import("@/view/pages/Account.vue"),

@@ -15,7 +15,6 @@
             placeholder="Enter branch name"
             class="mx-1 input-box"
           ></b-form-input>
-          <!-- <has-error :form="form" field="name"></has-error> -->
           <b-form-input
             id="input-2"
             type="text"
@@ -24,11 +23,9 @@
             placeholder="Enter branch id"
             class="ml-1 input-box"
           ></b-form-input>
-          <!-- <has-error :form="form" field="number"></has-error> -->
         </div>
         <b-form-group>
           <b-form-select id="input-3" v-model="branch_form.association_id" :options="options" class="ml-1 input-box text-seconday" required></b-form-select>
-          <!-- <has-error :form="form" field="address2"></has-error> -->
         </b-form-group>
         <b-form-group>
           <b-form-input
@@ -39,7 +36,6 @@
             placeholder="Address 1"
             class="ml-1 input-box"
           ></b-form-input>
-          <!-- <has-error :form="form" field="address2"></has-error> -->
         </b-form-group>
         <b-form-group>
           <b-form-input
@@ -50,7 +46,6 @@
             placeholder="Address 2"
             class="ml-1 input-box"
           ></b-form-input>
-          <!-- <has-error :form="form" field="address2"></has-error> -->
         </b-form-group>
         <div class="d-flex">
           <b-form-input
@@ -61,7 +56,6 @@
             placeholder="City"
             class="mx-1 input-box"
           ></b-form-input>
-          <!-- <has-error :form="form" field="city"></has-error> -->
           <b-form-input
             id="input-7"
             v-model="branch_form.state"
@@ -70,7 +64,6 @@
             placeholder="State"
             class="mx-1 input-box"
           ></b-form-input>
-          <!-- <has-error :form="form" field="state"></has-error> -->
           <b-form-input
             id="input-8"
             v-model="branch_form.zip_code"
@@ -79,7 +72,6 @@
             placeholder="Zip code"
             class="ml-1 input-box"
           ></b-form-input>
-          <!-- <has-error :form="form" field="zip_code"></has-error> -->
         </div>
         <div class="alert alert-success my-3" role="alert" id="fade">
           <span class="font-weight-bolder font-size-h6">Submit successfull...</span>

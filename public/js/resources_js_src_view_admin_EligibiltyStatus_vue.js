@@ -42,7 +42,8 @@ __webpack_require__.r(__webpack_exports__);
       this.user_details = this.$route.params.main_data.data.details;
       if (this.$route.params.main_data.status) {
         this.plans = this.$route.params.main_data.data.plans;
-        this.main_message = "".concat(this.user_details.first_name, " is qualified for following membership rates for income band $").concat(this.plans.minmum_range, " - $").concat(this.plans.maximum_range);
+        // for income band $${this.plans.minmum_range} - $${this.plans.maximum_range}
+        this.main_message = "".concat(this.user_details.first_name, " is qualified for following membership rates");
         var all_plans = Object.entries(JSON.parse(this.plans.plans));
         all_plans.splice(0, 3);
         this.items = all_plans;
@@ -234,7 +235,7 @@ var staticRenderFns = [function () {
     }
   }, [_c("span", {
     staticClass: "font-weight-bolder font-size-h6"
-  }, [_vm._v("Submit successfull...")])]);
+  }, [_vm._v("Save successfull...")])]);
 }];
 render._withStripped = true;
 

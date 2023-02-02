@@ -40,15 +40,18 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         lead_id: "",
         branch_id: ''
       }),
-      options_people: ["Number of people in household", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10+"]
+      options_people: ["Number of people in household", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10+"],
+      submit_spinner: false
     };
   },
   methods: {
-    onSubmit: function onSubmit() {
+    onSubmit: function onSubmit(e) {
       var _this = this;
+      e.preventDefault();
       if (this.eligiblity_form.total_people == 'Number of people in household') {
         alert("Select number of peoples in household ");
       } else {
+        this.submit_spinner = true;
         this.eligiblity_form.post("/user/check-eligibilty").then(function (_ref) {
           var data = _ref.data;
           _this.$router.push({
@@ -57,6 +60,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
               main_data: data
             }
           });
+          _this.submit_spinner = false;
         })["catch"](function (err) {});
       }
     },
@@ -391,7 +395,9 @@ var render = function render() {
     on: {
       click: _vm.onSubmit
     }
-  }, [_vm._v("Submit details")])], 1)])]);
+  }, [_vm.submit_spinner ? _c("div", {
+    staticClass: "spinner-border text-white"
+  }) : _c("div", [_vm._v("Submit details")])])], 1)])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;

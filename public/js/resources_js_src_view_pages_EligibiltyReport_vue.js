@@ -294,7 +294,11 @@ var render = function render() {
     }, {
       key: "cell(first_name)",
       fn: function fn(data) {
-        return [_vm._v("\n              " + _vm._s(data.item.first_name) + " " + _vm._s(data.item.last_name) + "\n            ")];
+        return [_c("router-link", {
+          attrs: {
+            to: "/user-details/" + data.item.id
+          }
+        }, [_vm._v(_vm._s(data.item.first_name) + " " + _vm._s(data.item.last_name))])];
       }
     }, {
       key: "cell(created_at)",

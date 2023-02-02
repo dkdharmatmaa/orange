@@ -46,7 +46,7 @@
                 {{ data.index + 1 }}
               </template>
               <template #cell(first_name)="data">
-                {{data.item.first_name}} {{data.item.last_name}}
+              <router-link :to="'/user-details/'+data.item.id">{{data.item.first_name}} {{data.item.last_name}}</router-link>
               </template>
               <template #cell(created_at)="data">
                 {{data.item.created_at}}

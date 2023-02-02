@@ -35,12 +35,14 @@ __webpack_require__.r(__webpack_exports__);
       }),
       options_association: [],
       options_branch: [],
-      options_people: ["Number of people in household", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10+"]
+      options_people: ["Number of people in household", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10+"],
+      submit_spinner: false
     };
   },
   methods: {
-    onSubmit: function onSubmit() {
+    onSubmit: function onSubmit(e) {
       var _this = this;
+      e.preventDefault();
       if (this.eligiblity_form.total_people == 'Number of people in household') {
         alert("Select number of peoples in household ");
       } else {
@@ -52,6 +54,7 @@ __webpack_require__.r(__webpack_exports__);
               main_data: data
             }
           });
+          _this.submit_spinner = false;
         })["catch"](function (err) {});
       }
     },
@@ -331,55 +334,6 @@ var render = function render() {
     }
   })], 1)], 1), _vm._v(" "), _c("div", {
     staticClass: "d-flex mb-7"
-  }, [_c("b-form-select", {
-    staticClass: "ml-1 input-box text-seconday",
-    "class": {
-      "is-invalid": _vm.eligiblity_form.errors.has("association_id")
-    },
-    attrs: {
-      id: "input-9",
-      options: _vm.options_association
-    },
-    on: {
-      change: function change($event) {
-        return _vm.getBranches();
-      }
-    },
-    model: {
-      value: _vm.eligiblity_form.association_id,
-      callback: function callback($$v) {
-        _vm.$set(_vm.eligiblity_form, "association_id", $$v);
-      },
-      expression: "eligiblity_form.association_id"
-    }
-  }, [_c("has-error", {
-    attrs: {
-      form: _vm.eligiblity_form,
-      field: "association_id"
-    }
-  })], 1), _vm._v(" "), _c("b-form-select", {
-    staticClass: "ml-1 input-box text-seconday",
-    "class": {
-      "is-invalid": _vm.eligiblity_form.errors.has("branch_id")
-    },
-    attrs: {
-      id: "input-10",
-      options: _vm.options_branch
-    },
-    model: {
-      value: _vm.eligiblity_form.branch_id,
-      callback: function callback($$v) {
-        _vm.$set(_vm.eligiblity_form, "branch_id", $$v);
-      },
-      expression: "eligiblity_form.branch_id"
-    }
-  }, [_c("has-error", {
-    attrs: {
-      form: _vm.eligiblity_form,
-      field: "branch_id"
-    }
-  })], 1)], 1), _vm._v(" "), _c("div", {
-    staticClass: "d-flex mb-7"
   }, [_c("b-form-input", {
     staticClass: "mx-1 input-box",
     "class": {
@@ -447,6 +401,55 @@ var render = function render() {
       form: _vm.eligiblity_form,
       field: "zip_code"
     }
+  })], 1)], 1), _vm._v(" "), _c("div", {
+    staticClass: "d-flex mb-7"
+  }, [_c("b-form-select", {
+    staticClass: "ml-1 input-box text-seconday",
+    "class": {
+      "is-invalid": _vm.eligiblity_form.errors.has("association_id")
+    },
+    attrs: {
+      id: "input-9",
+      options: _vm.options_association
+    },
+    on: {
+      change: function change($event) {
+        return _vm.getBranches();
+      }
+    },
+    model: {
+      value: _vm.eligiblity_form.association_id,
+      callback: function callback($$v) {
+        _vm.$set(_vm.eligiblity_form, "association_id", $$v);
+      },
+      expression: "eligiblity_form.association_id"
+    }
+  }, [_c("has-error", {
+    attrs: {
+      form: _vm.eligiblity_form,
+      field: "association_id"
+    }
+  })], 1), _vm._v(" "), _c("b-form-select", {
+    staticClass: "ml-1 input-box text-seconday",
+    "class": {
+      "is-invalid": _vm.eligiblity_form.errors.has("branch_id")
+    },
+    attrs: {
+      id: "input-10",
+      options: _vm.options_branch
+    },
+    model: {
+      value: _vm.eligiblity_form.branch_id,
+      callback: function callback($$v) {
+        _vm.$set(_vm.eligiblity_form, "branch_id", $$v);
+      },
+      expression: "eligiblity_form.branch_id"
+    }
+  }, [_c("has-error", {
+    attrs: {
+      form: _vm.eligiblity_form,
+      field: "branch_id"
+    }
   })], 1)], 1), _vm._v(" "), _c("b-form-group", [_c("b-form-input", {
     staticClass: "ml-1 input-box",
     "class": {
@@ -475,7 +478,9 @@ var render = function render() {
     on: {
       click: _vm.onSubmit
     }
-  }, [_vm._v("Submit details")])], 1)])]);
+  }, [_vm.submit_spinner ? _c("div", {
+    staticClass: "spinner-border text-white"
+  }) : _c("div", [_vm._v("Submit details")])])], 1)])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;

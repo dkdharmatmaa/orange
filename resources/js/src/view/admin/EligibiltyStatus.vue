@@ -26,7 +26,7 @@
               <input type="radio" name="convert" v-model="status_arr.status" class="bg-white p-2 font-weight-bolder opacity-75" value="Deferred" required> Deferred
             </div>
              <div class="alert alert-success mt-3" role="alert" id="fade">
-              <span class="font-weight-bolder font-size-h6">Submit successfull...</span>
+              <span class="font-weight-bolder font-size-h6">Save successfull...</span>
              </div>
             <div class="my-5">
               <b-button variant="primary" class="px-5 h5" v-on:click="save_comment()">Save details</b-button>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -67,7 +67,8 @@ export default {
         this.user_details=this.$route.params.main_data.data.details;
       if(this.$route.params.main_data.status){  
       this.plans=this.$route.params.main_data.data.plans;
-      this.main_message=`${this.user_details.first_name} is qualified for following membership rates for income band $${this.plans.minmum_range} - $${this.plans.maximum_range}`;
+      // for income band $${this.plans.minmum_range} - $${this.plans.maximum_range}
+      this.main_message=`${this.user_details.first_name} is qualified for following membership rates`;
       let all_plans=Object.entries(JSON.parse(this.plans.plans));
       all_plans.splice(0, 3);
       this.items=all_plans;

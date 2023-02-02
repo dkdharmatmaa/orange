@@ -143,9 +143,8 @@
           >
           <has-error :form="eligiblity_form" field="lead_id"></has-error>
           </b-form-input>
-          <!-- <has-error :form="form" field="address2"></has-error> -->
         </b-form-group>
-        <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-on:click="onSubmit">Submit details</button>
+        <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-on:click="onSubmit"><div class="spinner-border text-white" v-if="submit_spinner"></div><div v-else>Submit details</div></button>
       </div>
     </div>
   </div>
@@ -173,17 +172,21 @@ export default {
         branch_id:'',
       }),
      options_people:["Number of people in household","1","2","3","4","5","6","7","8","9","10+"],
+     submit_spinner:false,
     };
   },
   methods: {
-    onSubmit() {
+    onSubmit(e) {
+      e.preventDefault();
       if(this.eligiblity_form.total_people=='Number of people in household'){
         alert("Select number of peoples in household ")
     }
     else{
+      this.submit_spinner=true;
       this.eligiblity_form.post("/user/check-eligibilty")
               .then(({ data }) => {
                 this.$router.push({ name: 'user-eligibiltystatus', params: { main_data: data } })
+                this.submit_spinner=false;
               })
               .catch((err) => {
               });

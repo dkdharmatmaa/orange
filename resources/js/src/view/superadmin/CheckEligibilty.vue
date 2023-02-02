@@ -99,19 +99,6 @@
           </b-form-input>
         </b-form-group>
         <div class="d-flex mb-7">
-            <b-form-select id="input-9" v-model="eligiblity_form.association_id" :options="options_association" @change="getBranches()" class="ml-1 input-box text-seconday" 
-            :class="{ 'is-invalid': eligiblity_form.errors.has('association_id') }"
-             >
-            <has-error :form="eligiblity_form" field="association_id"></has-error>
-            </b-form-select>
-          <b-form-select id="input-10" v-model="eligiblity_form.branch_id" :options="options_branch" 
-          class="ml-1 input-box text-seconday"
-           :class="{ 'is-invalid': eligiblity_form.errors.has('branch_id') }"
-          >
-          <has-error :form="eligiblity_form" field="branch_id"></has-error>
-           </b-form-select> 
-        </div>
-        <div class="d-flex mb-7">
           <b-form-input
             id="input-11"
             v-model="eligiblity_form.city"
@@ -144,6 +131,19 @@
           <has-error :form="eligiblity_form" field="zip_code"></has-error>
           </b-form-input>
         </div>
+        <div class="d-flex mb-7">
+            <b-form-select id="input-9" v-model="eligiblity_form.association_id" :options="options_association" @change="getBranches()" class="ml-1 input-box text-seconday" 
+            :class="{ 'is-invalid': eligiblity_form.errors.has('association_id') }"
+             >
+            <has-error :form="eligiblity_form" field="association_id"></has-error>
+            </b-form-select>
+          <b-form-select id="input-10" v-model="eligiblity_form.branch_id" :options="options_branch" 
+          class="ml-1 input-box text-seconday"
+           :class="{ 'is-invalid': eligiblity_form.errors.has('branch_id') }"
+          >
+          <has-error :form="eligiblity_form" field="branch_id"></has-error>
+           </b-form-select> 
+        </div>
         <b-form-group>
           <b-form-input
             id="input-14"
@@ -156,9 +156,8 @@
           >
           <has-error :form="eligiblity_form" field="lead_id"></has-error>
           </b-form-input>
-          
         </b-form-group>
-        <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-on:click="onSubmit">Submit details</button>
+        <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-on:click="onSubmit"><div class="spinner-border text-white" v-if="submit_spinner"></div><div v-else>Submit details</div></button>
       </div>
     </div>
   </div>
@@ -188,10 +187,12 @@ export default {
      options_association:[],
      options_branch:[],
      options_people:["Number of people in household","1","2","3","4","5","6","7","8","9","10+"],
+     submit_spinner:false,
     };
   },
   methods: {
-    onSubmit() {
+    onSubmit(e) {
+      e.preventDefault();
       if(this.eligiblity_form.total_people=='Number of people in household'){
         alert("Select number of peoples in household ")
     }
@@ -199,6 +200,7 @@ export default {
        this.eligiblity_form.post("/superadmin/check-eligibilty")
               .then(({ data }) => {
                 this.$router.push({ name: 'superadmin-eligibiltystatus', params: { main_data: data } })
+                this.submit_spinner=false;
               })
               .catch((err) => {
               });

@@ -61,7 +61,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
             }
           });
           _this.submit_spinner = false;
-        })["catch"](function (err) {});
+        })["catch"](function (err) {
+          _this.submit_spinner = false;
+        });
       }
     },
     onReset: function onReset(evt) {

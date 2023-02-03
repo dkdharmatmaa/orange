@@ -65,7 +65,7 @@ class EligibiltyRangeController extends Controller
             'city' => ['required','string','max:100'],
             'state' => ['required','string','max:100'],
             'zip_code' => ['required','regex:/\b\d{5}\b/'],
-            'branch_id' => ['required','string','max:100']
+            'branch_id' => ['required','max:100']
         ]);
 
         if ($validator->fails()) {
@@ -79,7 +79,7 @@ class EligibiltyRangeController extends Controller
         $eligibilty->no_of_people=$request->total_people;
         $eligibilty->email_id=$request->email;
         $eligibilty->phone=$request->phone;
-        $eligibilty->birthday=$request->birthday;
+        $eligibilty->birthday=str_replace('/','-',$request->birthday);
         $eligibilty->street_address=$request->street_address;
         $eligibilty->address=$request->address;
         $eligibilty->city=$request->city;

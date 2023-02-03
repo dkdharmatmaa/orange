@@ -47,7 +47,7 @@
               </div>
               <div class="">
                   <input type="checkbox" style="margin-top: 4px;" /> <span class="text-muted font-weight-bolder">Remember me</span>
-                  <!-- <a class="text-muted font-weight-bolder float-right" id="kt_login_forgot" @click="showForm('forgot')">Forgot Password ?</a> -->
+                  <a class="text-muted font-weight-bolder float-right" id="kt_login_forgot" @click="showForm('forgot')">Forgot Password ?</a>
               </div>
               <div>
                 <button ref="kt_login_signin_submit" class="btn font-weight-bolder font-size-h6 py-3 w-100 mt-7 text-white btn-color">
@@ -65,6 +65,7 @@
               novalidate="novalidate"
               id="kt_login_forgot_form"
               ref="kt_login_forgot_form"
+              @submit.prevent="requestResetPassword"
             >
               <div class="pb-5 pt-lg-0 pt-5">
                 <h4
@@ -76,6 +77,8 @@
                   Enter your email to reset your password
                 </p>
               </div>
+              <div class="text-success mt-2 ml-2 h4" v-if="email_send">Reset Email is send successfully, please check your inbox.</div>
+              <div class="text-danger mt-2 ml-2" v-if="check_email">Invalid email.</div>
               <div class="form-group">
                 <input
                   class="form-control form-control-solid h-auto py-3 px-2 rounded-lg font-size-h6"
@@ -83,15 +86,16 @@
                   placeholder="Email"
                   name="email"
                   autocomplete="off"
+                  v-model="email"
                 />
               </div>
               <div class="form-group d-flex flex-wrap pb-lg-0">
                 <button
-                  type="button"
+                  type="submit"
                   id="kt_login_forgot_submit"
                   class="btn font-weight-bolder font-size-h6 px-12 btn-color text-white py-3 my-3 mr-4"
                 >
-                  Submit
+                  Send Password Reset Link
                 </button>
                 <button
                   type="button"
@@ -122,7 +126,7 @@
 
 <script>
 import formValidation from "@/assets/plugins/formvalidation/dist/es6/core/Core";
-
+import axios from 'axios';
 // FormValidation plugins
 import Trigger from "@/assets/plugins/formvalidation/dist/es6/plugins/Trigger";
 import Bootstrap from "@/assets/plugins/formvalidation/dist/es6/plugins/Bootstrap";
@@ -138,6 +142,9 @@ export default {
   data() {
     return {
       state: "signin",
+      email_send: false,
+      check_email:false,
+      email:'',
       // Remove this dummy login info
       form: {
         email: "",
@@ -215,7 +222,17 @@ export default {
         KTUtil.getById(form_name),
         "animate__animated animate__backInUp"
       );
-    }
+    },
+    requestResetPassword() {
+        axios.post("/Forgotpassword/users", {email: this.email}).then(result => {
+            this.email_send=true;
+            this.check_email=false;
+        })
+        .catch(err=>{
+          this.check_email=true;
+          this.email_send=false;
+        })
+    }  
   },
 };
 </script>

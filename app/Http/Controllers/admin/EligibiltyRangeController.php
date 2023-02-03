@@ -79,7 +79,7 @@ class EligibiltyRangeController extends Controller
         $eligibilty->no_of_people=$request->total_people;
         $eligibilty->email_id=$request->email;
         $eligibilty->phone=$request->phone;
-        $eligibilty->birthday=$request->birthday;
+        $eligibilty->birthday=str_replace('/','-',$request->birthday);
         $eligibilty->street_address=$request->street_address;
         $eligibilty->address=$request->address;
         $eligibilty->city=$request->city;

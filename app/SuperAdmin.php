@@ -10,7 +10,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class SuperAdmin extends Authenticatable implements JWTSubject
 {
     use  Notifiable;
-
+    // protected $guard = 'superAdmin-api';
     /**
      * The attributes that are mass assignable.
      *

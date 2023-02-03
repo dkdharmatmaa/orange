@@ -189,6 +189,7 @@ export default {
                 this.submit_spinner=false;
               })
               .catch((err) => {
+                this.submit_spinner=false;
               });
     }
     },

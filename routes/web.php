@@ -12,7 +12,7 @@ use App\Http\Controllers\admin\EligibiltyRangeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('generate-pdf/{main_message}/{plans}/{user_details}/{comment?}', [EligibiltyRangeController::class, 'print_eligibilty']);
+Route::get('generate-pdf/{main_message}/{plans}/{user_details}/{comment}', [EligibiltyRangeController::class, 'print_eligibilty']);
 Route::get('{any}', function () {
     return view('welcome');
 })->where('any', '(?!generate-pdf).*$');

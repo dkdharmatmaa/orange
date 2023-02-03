@@ -54,7 +54,9 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
           _this.submit_spinner = false;
-        })["catch"](function (err) {});
+        })["catch"](function (err) {
+          _this.submit_spinner = false;
+        });
       }
     },
     onReset: function onReset(evt) {

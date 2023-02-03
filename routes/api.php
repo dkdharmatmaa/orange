@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\user\UserController;
 use App\Http\Controllers\superAdmin\SuperAdminController;
+use App\Http\Controllers\PasswordResetRequestController;
 use App\Http\Controllers\superAdmin\EligibiltyRangeController as SuperAdminEligibiltyRangeController;
 use App\Http\Controllers\superAdmin\BranchController as SuperAdminBranchController;
 use App\Http\Controllers\superAdmin\IncomebindController as SuperAdminIncomebindController;
@@ -114,6 +115,10 @@ Route::group(['middleware' => 'auth:superAdmin-api','prefix' => 'superadmin'], f
     Route::get('/all-matrix/{assos_id}/{branch_id}', [SuperAdminIncomebindController::class,'index']);
     Route::get('/single-matrix/{association_id}/{branch_id}/{minmum_range}/{maximum_range}', [SuperAdminIncomebindController::class,'single_matrix']);
 });
+
+Route::post('/Forgotpassword/{User}',[PasswordResetRequestController::class,'sendEmail']);
+Route::post('/check-forgot-token',[PasswordResetRequestController::class,'check_token']);
+Route::post('ForgotpasswordActual',[PasswordResetRequestController::class,'forgot_password_actual']);
 
 
 

@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-
 Vue.use(Router);
 
 export default new Router({
@@ -248,6 +247,11 @@ export default new Router({
           component: () => import("@/view/pages/auth/login_pages/Login-1"),
         },
       ]
+    },
+    {
+      path: '/PasswordForgotForm/:token?/:email?/:userType?',
+      name: "Password Forgot Form",
+      component: () => import("@/view/PasswordForgotForm"),
     },
     //-----------for admin login-------------------
     {

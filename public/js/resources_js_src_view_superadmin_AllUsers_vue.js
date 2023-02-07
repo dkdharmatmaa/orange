@@ -24,7 +24,7 @@ __webpack_require__.r(__webpack_exports__);
         label: 'Name',
         key: "name"
       }, {
-        label: 'Email',
+        label: 'Email address',
         key: "email"
       }, {
         label: 'Association Name',
@@ -75,7 +75,7 @@ __webpack_require__.r(__webpack_exports__);
         var association_option = [];
         association_option.push({
           value: "",
-          text: "Assign association"
+          text: "Select association"
         });
         for (var i = 0; i < data.length; i++) {
           association_option.push({

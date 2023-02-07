@@ -19,7 +19,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      form: new (vform__WEBPACK_IMPORTED_MODULE_0___default())({
+      association_form: new (vform__WEBPACK_IMPORTED_MODULE_0___default())({
         id: "",
         name: "",
         number: "",
@@ -28,70 +28,23 @@ __webpack_require__.r(__webpack_exports__);
         city: "",
         state: "",
         zip_code: "",
-        email: "",
-        password: ""
-      }),
-      action: 'Add'
+        admin_name: '',
+        email: '',
+        password: ''
+      })
     };
   },
   methods: {
     onSubmit: function onSubmit(evt) {
       var _this = this;
       evt.preventDefault();
-      if (this.action == 'Add') {
-        _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].post("/superadmin/create-admin", this.form).then(function (_ref) {
-          var data = _ref.data;
-          _this.$router.push('/superadmin/allassociation');
-        })["catch"](function (err) {
-          //   this.openNotification(err);
-        });
-      } else {
-        _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].put("/superadmin/edit-admin/".concat(this.form.id), this.form).then(function (_ref2) {
-          var data = _ref2.data;
-          $('#fade').fadeToggle(1000);
-          $('#fade').fadeToggle(1000);
-        });
-      }
-    },
-    getData: function getData(id) {
-      var _this2 = this;
-      _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].get("/superadmin/all-admin/".concat(id)).then(function (_ref3) {
-        var data = _ref3.data;
-        _this2.form.fill(data[0]);
-      });
-    },
-    onReset: function onReset(evt) {
-      var _this3 = this;
-      // alert("hello here");
-      evt.preventDefault();
-      // Reset our form values
-      this.form.name = "";
-      this.form.number = "";
-      this.form.address1 = "";
-      this.form.address2 = "";
-      this.form.city = "";
-      this.form.state = "";
-      this.form.zip_code = "";
-      this.form.email = "";
-      this.form.password = "";
-      // Trick to reset/clear native browser form validation state
-      this.show = false;
-      this.$nextTick(function () {
-        _this3.show = true;
-      });
+      _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].post("/superadmin/create-admin", this.association_form).then(function (_ref) {
+        var data = _ref.data;
+        _this.$router.push('/superadmin/allassociation');
+      })["catch"](function (err) {});
     }
   },
-  mounted: function mounted() {
-    if (this.get_item) {
-      this.getData(this.get_item);
-      this.action = 'Edit';
-    }
-  },
-  computed: {
-    get_item: function get_item() {
-      if (this.$route.params.id) return this.$route.params.id;else return 0;
-    }
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -132,11 +85,11 @@ var render = function render() {
       placeholder: "Association name*"
     },
     model: {
-      value: _vm.form.name,
+      value: _vm.association_form.name,
       callback: function callback($$v) {
-        _vm.$set(_vm.form, "name", $$v);
+        _vm.$set(_vm.association_form, "name", $$v);
       },
-      expression: "form.name"
+      expression: "association_form.name"
     }
   }), _vm._v(" "), _c("b-form-input", {
     staticClass: "ml-1 input-box",
@@ -147,11 +100,11 @@ var render = function render() {
       placeholder: "Association number*"
     },
     model: {
-      value: _vm.form.number,
+      value: _vm.association_form.number,
       callback: function callback($$v) {
-        _vm.$set(_vm.form, "number", $$v);
+        _vm.$set(_vm.association_form, "number", $$v);
       },
-      expression: "form.number"
+      expression: "association_form.number"
     }
   })], 1), _vm._v(" "), _c("b-form-group", [_c("b-form-input", {
     staticClass: "ml-1 input-box",
@@ -162,26 +115,25 @@ var render = function render() {
       placeholder: "Address 1*"
     },
     model: {
-      value: _vm.form.address1,
+      value: _vm.association_form.address1,
       callback: function callback($$v) {
-        _vm.$set(_vm.form, "address1", $$v);
+        _vm.$set(_vm.association_form, "address1", $$v);
       },
-      expression: "form.address1"
+      expression: "association_form.address1"
     }
   })], 1), _vm._v(" "), _c("b-form-group", [_c("b-form-input", {
     staticClass: "ml-1 input-box",
     attrs: {
       id: "input-4",
       type: "text",
-      required: "",
       placeholder: "Address 2"
     },
     model: {
-      value: _vm.form.address2,
+      value: _vm.association_form.address2,
       callback: function callback($$v) {
-        _vm.$set(_vm.form, "address2", $$v);
+        _vm.$set(_vm.association_form, "address2", $$v);
       },
-      expression: "form.address2"
+      expression: "association_form.address2"
     }
   })], 1), _vm._v(" "), _c("div", {
     staticClass: "d-flex"
@@ -194,11 +146,11 @@ var render = function render() {
       placeholder: "City*"
     },
     model: {
-      value: _vm.form.city,
+      value: _vm.association_form.city,
       callback: function callback($$v) {
-        _vm.$set(_vm.form, "city", $$v);
+        _vm.$set(_vm.association_form, "city", $$v);
       },
-      expression: "form.city"
+      expression: "association_form.city"
     }
   }), _vm._v(" "), _c("b-form-input", {
     staticClass: "mx-1 input-box",
@@ -209,11 +161,11 @@ var render = function render() {
       placeholder: "State*"
     },
     model: {
-      value: _vm.form.state,
+      value: _vm.association_form.state,
       callback: function callback($$v) {
-        _vm.$set(_vm.form, "state", $$v);
+        _vm.$set(_vm.association_form, "state", $$v);
       },
-      expression: "form.state"
+      expression: "association_form.state"
     }
   }), _vm._v(" "), _c("b-form-input", {
     staticClass: "ml-1 input-box",
@@ -224,11 +176,11 @@ var render = function render() {
       placeholder: "Zip code*"
     },
     model: {
-      value: _vm.form.zip_code,
+      value: _vm.association_form.zip_code,
       callback: function callback($$v) {
-        _vm.$set(_vm.form, "zip_code", $$v);
+        _vm.$set(_vm.association_form, "zip_code", $$v);
       },
-      expression: "form.zip_code"
+      expression: "association_form.zip_code"
     }
   })], 1)], 1), _vm._v(" "), _c("h3", {
     staticClass: "font-weight-bolder mt-10"
@@ -237,20 +189,34 @@ var render = function render() {
   }, [_c("b-form-group", [_c("b-form-input", {
     staticClass: "ml-1 input-box",
     attrs: {
+      id: "input-4",
+      type: "text",
+      required: "",
+      placeholder: "Name*"
+    },
+    model: {
+      value: _vm.association_form.admin_name,
+      callback: function callback($$v) {
+        _vm.$set(_vm.association_form, "admin_name", $$v);
+      },
+      expression: "association_form.admin_name"
+    }
+  })], 1), _vm._v(" "), _c("b-form-group", [_c("b-form-input", {
+    staticClass: "ml-1 input-box",
+    attrs: {
       id: "input-3",
       type: "email",
       required: "",
-      placeholder: "Email*",
-      readonly: _vm.action == "Edit"
+      placeholder: "Email address*"
     },
     model: {
-      value: _vm.form.email,
+      value: _vm.association_form.email,
       callback: function callback($$v) {
-        _vm.$set(_vm.form, "email", $$v);
+        _vm.$set(_vm.association_form, "email", $$v);
       },
-      expression: "form.email"
+      expression: "association_form.email"
     }
-  })], 1), _vm._v(" "), _vm.action == "Add" ? _c("b-form-group", [_c("b-form-input", {
+  })], 1), _vm._v(" "), _c("b-form-group", [_c("b-form-input", {
     staticClass: "ml-1 input-box",
     attrs: {
       id: "input-4",
@@ -259,13 +225,13 @@ var render = function render() {
       placeholder: "Password*"
     },
     model: {
-      value: _vm.form.password,
+      value: _vm.association_form.password,
       callback: function callback($$v) {
-        _vm.$set(_vm.form, "password", $$v);
+        _vm.$set(_vm.association_form, "password", $$v);
       },
-      expression: "form.password"
+      expression: "association_form.password"
     }
-  })], 1) : _vm._e(), _vm._v(" "), _c("div", {
+  })], 1), _vm._v(" "), _c("div", {
     staticClass: "alert alert-success",
     attrs: {
       role: "alert",
@@ -273,9 +239,9 @@ var render = function render() {
     }
   }, [_c("span", {
     staticClass: "font-weight-bolder font-size-h6"
-  }, [_vm._v("Saved Successfully")])]), _vm._v(" "), _vm.action == "Add" ? _c("button", {
+  }, [_vm._v("Saved Successfully")])]), _vm._v(" "), _c("button", {
     staticClass: "btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white"
-  }, [_vm._v(_vm._s(_vm.action) + " admin")]) : _vm._e()], 1)])], 1);
+  }, [_vm._v("Add association")])], 1)])], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;

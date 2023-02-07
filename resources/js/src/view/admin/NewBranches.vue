@@ -42,7 +42,6 @@
             id="input-5"
             v-model="branch_form.address2"
             type="text"
-            required
             placeholder="Address 2"
             class="ml-1 input-box"
           ></b-form-input>

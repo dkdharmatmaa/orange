@@ -203,7 +203,7 @@ var render = function render() {
   }, [_c("a", {
     staticClass: "h5",
     attrs: {
-      href: "/generate-pdf/" + _vm.main_message + "/" + JSON.stringify(_vm.items) + "/" + JSON.stringify(_vm.user_details) + "/" + _vm.status_arr.comment,
+      href: "/generate-pdf/" + _vm.user_details.id,
       target: "_blank"
     }
   }, [_vm._v("Print details")])])], 1)])])]);

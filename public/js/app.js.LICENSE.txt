@@ -95,3 +95,7 @@ PERFORMANCE OF THIS SOFTWARE.
  * @author Chris Ferdinandi
  * @license MIT
  */
+
+//! moment.js
+
+//! moment.js locale configuration

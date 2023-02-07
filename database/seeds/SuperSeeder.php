@@ -18,5 +18,9 @@ class SuperSeeder extends Seeder
             'email' => 'superadmin@gmail.com',
             'password' => Hash::make('123456'),
         ]);
+        DB::table('roles')->insert([
+            'email' => 'superadmin@gmail.com',
+            'role'  => 'superAdmin',
+        ]);
     }
 }

@@ -45,8 +45,15 @@ const actions = {
         .then(({ data }) => {
           context.commit(SET_AUTH, data);
           JwtService.saveToken(data.token); 
+          if(data.role=='user'){
           JwtService.saveBranchId(data.user.branch_id);
           context.commit(SET_BRANCHID, data.user.branch_id);
+          router.push(`/check-eligibilty`);
+          }
+          else if(data.role=='admin')
+          router.push(`/admin/check-eligibilty`);
+          else if(data.role=='superAdmin')
+          router.push(`/superadmin/check-eligibilty`);
           resolve(data);
         })
         .catch(({ response }) => {
@@ -94,7 +101,7 @@ const actions = {
         .catch(({ response }) => {
           if (response.status == 401) {
               context.dispatch(LOGOUT)
-                  .then(() => router.push({ name: `${userType.userType}login` }));
+                  .then(() => router.push({ name: `userlogin` }));
           } else {
               context.commit(SET_ERROR, response.data.errors);
           }

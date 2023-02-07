@@ -69,7 +69,7 @@ export default {
             ApiService.get(`/admin/all-branch`)
             .then(({ data }) => {
                 let branch_option=[];
-                branch_option.push({value:"",text:"Assign branch"})
+                branch_option.push({value:"",text:"Select branch"})
                 for(let i=0;i<data.length;i++){
                     branch_option.push({value:data[i]['id'],text:data[i]['name']});  
                 }

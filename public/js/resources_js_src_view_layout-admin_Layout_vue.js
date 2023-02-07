@@ -267,7 +267,7 @@ __webpack_require__.r(__webpack_exports__);
     logout: function logout() {
       var _this = this;
       this.$store.dispatch(_core_services_store_auth_module__WEBPACK_IMPORTED_MODULE_0__.LOGOUT).then(function () {
-        return _this.$router.push('/admin/login');
+        return _this.$router.push('/login');
       });
     }
   }

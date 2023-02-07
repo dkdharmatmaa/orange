@@ -138,6 +138,12 @@ export default new Router({
           meta: { userType: 'admin' }
         },
         {
+          path: "user-details/:id?",
+          name: "admin-user-details",
+          component: () => import("@/view/admin/UserDetails.vue"),
+          meta: { userType: 'admin' }
+        },
+        {
           path: "account",
           name: "admin-account",
           component: () => import("@/view/admin/Account.vue"),
@@ -163,9 +169,15 @@ export default new Router({
           meta: { userType: 'superadmin' }
         },
         {
-          path: "newassociation/:id?",
+          path: "newassociation",
           name: "superadminnewassociation",
           component: () => import("@/view/superadmin/NewAssociation.vue"),
+          meta: { userType: 'superadmin' }
+        },
+        {
+          path: "editassociation/:id?",
+          name: "superadmineditassociation",
+          component: () => import("@/view/superadmin/EditAssociation.vue"),
           meta: { userType: 'superadmin' }
         },
         {
@@ -229,6 +241,12 @@ export default new Router({
           meta: { userType: 'superadmin' }
         },
         {
+          path: "user-details/:id?",
+          name: "superadmin-user-details",
+          component: () => import("@/view/superadmin/UserDetails.vue"),
+          meta: { userType: 'superadmin' }
+        },
+        {
           path: "account",
           name: "superadmin-account",
           component: () => import("@/view/superadmin/Account.vue"),
@@ -254,29 +272,29 @@ export default new Router({
       component: () => import("@/view/PasswordForgotForm"),
     },
     //-----------for admin login-------------------
-    {
-      path: "/admin/",
-      component: () => import("@/view/admin/auth/login_pages/Login-1"),
-      children: [
-        {
-          name: "adminlogin",
-          path: "login",
-          component: () => import("@/view/admin/auth/login_pages/Login-1"),
-        },
-      ]
-    },
+    // {
+    //   path: "/admin/",
+    //   component: () => import("@/view/admin/auth/login_pages/Login-1"),
+    //   children: [
+    //     {
+    //       name: "adminlogin",
+    //       path: "login",
+    //       component: () => import("@/view/admin/auth/login_pages/Login-1"),
+    //     },
+    //   ]
+    // },
     //-----------for super admin login-------------------
-    {
-      path: "/superadmin/",
-      component: () => import("@/view/superadmin/auth/login_pages/Login-1"),
-      children: [
-        {
-          name: "superadminlogin",
-          path: "login",
-          component: () => import("@/view/superadmin/auth/login_pages/Login-1"),
-        },
-      ]
-    },
+    // {
+    //   path: "/superadmin/",
+    //   component: () => import("@/view/superadmin/auth/login_pages/Login-1"),
+    //   children: [
+    //     {
+    //       name: "superadminlogin",
+    //       path: "login",
+    //       component: () => import("@/view/superadmin/auth/login_pages/Login-1"),
+    //     },
+    //   ]
+    // },
     {
       path: "*",
       redirect: "/404"

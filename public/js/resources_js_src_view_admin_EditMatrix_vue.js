@@ -320,7 +320,7 @@ var render = function render() {
         return _vm.add_no_of_people();
       }
     }
-  }, [_vm._v("+Add peoples")])])], 1), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("div", {
+  }, [_vm._v("+Add people")])])], 1), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("div", {
     staticClass: "my-10 text-center"
   }, [_c("button", {
     staticClass: "btn create_btn font-weight-bolder text-white w-50 h3",

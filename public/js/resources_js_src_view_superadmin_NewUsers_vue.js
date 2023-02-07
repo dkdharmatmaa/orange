@@ -29,7 +29,7 @@ __webpack_require__.r(__webpack_exports__);
         is_admin: false
       }),
       options_association: null,
-      options_branch: null,
+      options_branch: [],
       action: 'Add'
     };
   },
@@ -68,7 +68,7 @@ __webpack_require__.r(__webpack_exports__);
         var association_option = [];
         association_option.push({
           value: "",
-          text: "Assign association"
+          text: "Select association"
         });
         for (var i = 0; i < data.length; i++) {
           association_option.push({
@@ -77,6 +77,10 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
         _this3.options_association = association_option;
+        _this3.options_branch.push({
+          value: "",
+          text: "Select branch"
+        });
       });
     },
     getBranches: function getBranches() {
@@ -164,7 +168,7 @@ var render = function render() {
       id: "input-2",
       type: "email",
       required: "",
-      placeholder: "Email",
+      placeholder: "Email address",
       readonly: _vm.action == "Edit"
     },
     model: {

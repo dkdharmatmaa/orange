@@ -378,7 +378,7 @@ var render = function render() {
       id: "input-14",
       type: "text",
       required: "",
-      placeholder: "Contact/Lead Id"
+      placeholder: "Member/lead id"
     },
     model: {
       value: _vm.eligiblity_form.lead_id,

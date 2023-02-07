@@ -17,15 +17,9 @@ class CreateAdminsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->integer('association_id');
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('number',50);
-            $table->string('address1',100);
-            $table->string('address2',100)->nullable();
-            $table->string('city',50);
-            $table->string('state',50);
-            $table->integer('zip_code');
             $table->string('password');
-            $table->boolean('is_active')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

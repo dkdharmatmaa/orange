@@ -99,14 +99,14 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var _this2 = this;
       this.options_branch.push({
         value: "",
-        text: "Assign branch"
+        text: "Select branch"
       });
       _core_services_api_service__WEBPACK_IMPORTED_MODULE_0__["default"].get("/superadmin/all-admin").then(function (_ref2) {
         var data = _ref2.data;
         var association_option = [];
         association_option.push({
           value: "",
-          text: "Assign association"
+          text: "Select association"
         });
         for (var i = 0; i < data.length; i++) {
           association_option.push({
@@ -125,7 +125,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           var branch_option = [];
           branch_option.push({
             value: "",
-            text: "Assign branch"
+            text: "Select branch"
           });
           for (var i = 0; i < data.length; i++) {
             branch_option.push({
@@ -468,7 +468,7 @@ var render = function render() {
           return _vm.add_no_of_people(index_main);
         }
       }
-    }, [_vm._v("+Add peoples")]), _vm._v(" "), _c("span", {
+    }, [_vm._v("+Add people")]), _vm._v(" "), _c("span", {
       staticClass: "glyphicon glyphicon-folder-open bg-success float-right py-1 px-3 text-white rounded",
       on: {
         click: function click($event) {

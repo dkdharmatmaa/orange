@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Branch;
 use App\User;
+use App\Association;
 use Illuminate\Support\Facades\Validator;
 class BranchController extends Controller
 {
     //
     public function index($id=0,$all_data=null){
-        $assoc_id=auth()->guard('admin-api')->user()->id;
+        $assoc_id=auth()->guard('admin-api')->user()->association_id;
         if($id)
           $data=Branch::where('id',$id)->take(1)->get()->toArray();
         elseif($all_data=='all'){
@@ -28,7 +29,7 @@ class BranchController extends Controller
             'name' => ['required', 'string', 'max:100'],
             'branch_id' => ['required','string','max:100'],
             'address1' => ['required','string','max:100'],
-            'address2' => ['nullable','string','max:100'],
+            'address2' => ['max:100'],
             'city' => ['required','string','max:100'],
             'state' => ['required','string','max:100'],
             'zip_code' => ['required','integer'],
@@ -37,8 +38,8 @@ class BranchController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        $assoc_id=auth()->guard('admin-api')->user()->id;
-        $assoc_name=auth()->guard('admin-api')->user()->name;
+        $assoc_id=auth()->guard('admin-api')->user()->association_id;
+        $assoc_name=Association::where('id',$assoc_id)->select('name')->first()->toArray()['name'];
         $branch=new Branch();
         $branch->name=$request->name;
         $branch->branch_id=$request->branch_id;

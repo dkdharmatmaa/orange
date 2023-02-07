@@ -1,80 +1,81 @@
 <template>
-  <div class="row">
-            <div class="col-sm-12">
-                <h5>Submission details</h5>
+    <div class="row" v-if="data_loded">
+        <h2 class="ml-5">{{branch_detail['association']['association_name']}}</h2>
+            <div class="col-sm-12 mt-3">
+                <h3>Submission details</h3>
                 <div class="mb-5">
-                    <div class="bg-white p-3 rounded" style="width:40%;float:left;">
-                        <span>Branch name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date</span><br>
-                        <span class="fw">Branch Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Visited Date</span>
+                    <div class="bg-white p-5 rounded" style="width:auto;float:left;">
+                        <h4>{{branch_detail['association']['name']}}</h4>
+                        <h4>{{ moment(branch_detail['created_at']).format('YYYY-MM-DD HH:mm:ss') }}</h4>
                     </div>
                 </div>
-                <br>
-                <h5 class="mb-1 mt-3">Personal details</h5>
+                <br><br><br><br><br>
+                <h3 class="mb-1 mt-3">Personal details</h3>
                 <div class="bg-white p-3 rounded" style="margin-right: 2%">
                     <div class="" style="width:48%; float: right;">
                         <span>Last name</span><br>
-                        <h6>Last Name</h6>
-                        <hr>
+                        <h5>{{branch_detail['last_name']}}</h5>
+                        
                     </div>
                     <div class="" style="width:48%;">
                         <span>First name</span><br>
-                        <h6>First  Name</h6>
-                        <hr>
+                        <h5>{{branch_detail['first_name']}}</h5>
+                        
                     </div>
                     <div style="width:48%;float: right;">
                         <span>Number of people in household</span><br>
-                        <h6>4</h6>
-                        <hr>
+                        <h5>{{branch_detail['no_of_people']}}</h5>
+                        
                     </div>
                     <div style="width:48%;">
                         <span>Email id</span><br>
-                        <h6>jhvhhgvh</h6>
-                        <hr>
+                        <h5>{{branch_detail['email_id']}}</h5>
+                        
                     </div>
                     <div style="width:48%;float: right;">
                         <span>Birthday</span><br>
-                        <h6>jhvhgch</h6>
-                        <hr>
+                        <h5>{{branch_detail['birthday']}}</h5>
+                        
                     </div>
                     <div style="width:48%;">
                         <span>Phone number</span><br>
-                        <h6>356114654</h6>
-                        <hr>
+                        <h5>{{branch_detail['phone']}}</h5>
+                        
                     </div>
                     <div>
                         <span>Address</span><br>
-                        <h6>jhvhvgvdcvjv1535</h6>
-                        <hr>
+                        <h5>{{branch_detail['street_address']}} {{branch_detail['address']}}</h5>
+                        
                     </div>
                     <div style="width:31%;float: right;">
                         <span>Zip code</span><br>
-                        <h6>nvhgvsdc</h6>
-                        <hr>
+                        <h5>{{branch_detail['zip_code']}}</h5>
+                        
                     </div>
                     <div style="width:31%;float: right;padding-right: 4%;">
                         <span>State</span><br>
-                        <h6>jhvjhvjd</h6>
-                        <hr>
+                        <h5>{{branch_detail['state']}}</h5>
+                        
                     </div>
                     <div style="width:31%;">
                         <span>City</span><br>
-                        <h6>jhvhjhdv</h6>
-                        <hr>
+                        <h5>{{branch_detail['city']}}</h5>
+                        
                     </div>
                 </div>
-                <div class="bg-white px-3 pb-1 mt-2 rounded" style="margin-right: 2%">
+                <div class="bg-white px-3 pb-1 mt-2 rounded" style="margin-right: 2%" v-if="branch_detail['comment']">
                     <span>Comments</span><br>
-                    <h6>hello i am dhiraj</h6>
-                    <hr>
+                    <h5>{{branch_detail['comment']}}</h5>
+                    
                 </div>
-                <p class="fw mt-1" style="font-size: 18px;"></p>
+                <p class="fw mt-1" style="font-size: 18px;">{{branch_detail['first_name']}} is qualified for following membership rates</p>
                 <div class="table-responsive text-center bg-white" style="width: 50%">
                     <table class="table table-striped p-2">
                         <tbody>
-                            <tr class='m-2'>
-                            <td>hello i am here</td>
-                            <td>what will you do</td>
-                            </tr>
+                        <tr v-for="(key,value) in plans">
+                            <td>{{value}}</td>
+                            <td>{{key}}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -88,13 +89,21 @@ export default {
     return {
       user_id:'',  
       branch_detail:[],
+      plans:null,
+      data_loded:false,
     };
   },
   methods: {
     getUserSumissionDetail(){
         ApiService.get(`/user/user-sumission-detail/${this.user_id}`)
           .then(({ data }) => {
-              console.log(data);
+              this.branch_detail=data;
+              let plan_data=JSON.parse(data['plans']['plans']);
+              delete plan_data.index;
+              delete plan_data.action;
+              delete plan_data.no_of_peoples;
+              this.plans=plan_data;
+              this.data_loded=true;
           })
     },
   },
@@ -105,6 +114,11 @@ export default {
 };
 </script>
 <style scoped>
+.col-sm-12{
+    margin-left: 7px;
+    background: #F0F2F5;
+    color: black;
+}
 .table-striped>tbody>tr:nth-child(even)>td {
    background-color: #00A1E4; 
    opacity: 60%;

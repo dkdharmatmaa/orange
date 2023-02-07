@@ -68,7 +68,7 @@ __webpack_require__.r(__webpack_exports__);
         var association_option = [];
         association_option.push({
           value: "",
-          text: "Assign association"
+          text: "Select association"
         });
         for (var i = 0; i < data.length; i++) {
           association_option.push({
@@ -187,7 +187,6 @@ var render = function render() {
     attrs: {
       id: "input-5",
       type: "text",
-      required: "",
       placeholder: "Address 2"
     },
     model: {

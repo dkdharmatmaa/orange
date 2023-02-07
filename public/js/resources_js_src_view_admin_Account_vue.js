@@ -31,13 +31,17 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     return {
       user_form: new (vform__WEBPACK_IMPORTED_MODULE_0___default())({
         name: "",
-        email: "",
+        email: ""
+      }),
+      association_form: new (vform__WEBPACK_IMPORTED_MODULE_0___default())({
+        name: "",
         number: "",
         address1: "",
         address2: "",
         city: "",
         state: "",
-        zip_code: ""
+        zip_code: "",
+        pre_text: ""
       }),
       id: "",
       password_form: new (vform__WEBPACK_IMPORTED_MODULE_0___default())({
@@ -51,41 +55,44 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   methods: {
     onSubmit: function onSubmit(evt) {
       evt.preventDefault();
-      _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].put("/admin/upadte-detail/".concat(this.id), this.user_form).then(function (_ref) {
+      _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].put("/admin/upadte-detail", this.user_form).then(function (_ref) {
         var data = _ref.data;
         $('#fade1').fadeToggle(1000);
         $('#fade1').fadeToggle(1000);
       });
     },
+    submitAssociation: function submitAssociation(evt) {
+      evt.preventDefault();
+      _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].put("/admin/update-association/".concat(this.id), this.association_form).then(function (_ref2) {
+        var data = _ref2.data;
+        $('#fade2').fadeToggle(1000);
+        $('#fade2').fadeToggle(1000);
+      });
+    },
     submitPassword: function submitPassword(evt) {
       var _this = this;
       evt.preventDefault();
-      _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].put("/admin/update-password", this.password_form).then(function (_ref2) {
-        var data = _ref2.data;
+      _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].put("/admin/update-password", this.password_form).then(function (_ref3) {
+        var data = _ref3.data;
         _this.$store.dispatch(_core_services_store_auth_module__WEBPACK_IMPORTED_MODULE_2__.LOGOUT).then(function () {
-          return _this.$router.push('/admin/login');
+          return _this.$router.push('/login');
         });
       });
     },
     get_report: function get_report() {
       var _this2 = this;
-      _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].get("/admin/admin-report").then(function (_ref3) {
-        var data = _ref3.data;
+      _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].get("/admin/admin-report").then(function (_ref4) {
+        var data = _ref4.data;
         _this2.user_count = data.user_count;
         _this2.branch_count = data.branch_count;
+        _this2.association_form.fill(data.association);
       });
     }
   },
   mounted: function mounted() {
-    this.id = this.current_user.id;
+    this.id = this.current_user.association_id;
     this.user_form.name = this.current_user.name;
     this.user_form.email = this.current_user.email;
-    this.user_form.number = this.current_user.number;
-    this.user_form.address1 = this.current_user.address1;
-    this.user_form.address2 = this.current_user.address2;
-    this.user_form.city = this.current_user.city;
-    this.user_form.state = this.current_user.state;
-    this.user_form.zip_code = this.current_user.zip_code;
     this.get_report();
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)({
@@ -156,6 +163,43 @@ var render = function render() {
       },
       expression: "user_form.email"
     }
+  })], 1), _vm._v(" "), _c("div", {
+    staticClass: "alert alert-success",
+    attrs: {
+      role: "alert",
+      id: "fade1"
+    }
+  }, [_c("span", {
+    staticClass: "font-weight-bolder font-size-h6"
+  }, [_vm._v("Saved Successfully")])]), _vm._v(" "), _c("button", {
+    staticClass: "btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("Save details")])], 1)]), _vm._v(" "), _c("b-form", {
+    staticClass: "fw-700",
+    on: {
+      submit: _vm.submitAssociation
+    }
+  }, [_c("h3", {
+    staticClass: "fw-700"
+  }, [_vm._v("Association details")]), _vm._v(" "), _c("div", {
+    staticClass: "bg-white p-10 rounded"
+  }, [_c("b-form-group", [_c("b-form-input", {
+    staticClass: "ml-1 input-box",
+    attrs: {
+      id: "input-3",
+      type: "text",
+      required: "",
+      placeholder: "Name"
+    },
+    model: {
+      value: _vm.association_form.name,
+      callback: function callback($$v) {
+        _vm.$set(_vm.association_form, "name", $$v);
+      },
+      expression: "association_form.name"
+    }
   })], 1), _vm._v(" "), _c("b-form-group", [_c("b-form-input", {
     staticClass: "ml-1 input-box",
     attrs: {
@@ -165,11 +209,26 @@ var render = function render() {
       placeholder: "Number"
     },
     model: {
-      value: _vm.user_form.number,
+      value: _vm.association_form.number,
       callback: function callback($$v) {
-        _vm.$set(_vm.user_form, "number", $$v);
+        _vm.$set(_vm.association_form, "number", $$v);
       },
-      expression: "user_form.number"
+      expression: "association_form.number"
+    }
+  })], 1), _vm._v(" "), _c("b-form-group", [_c("b-form-input", {
+    staticClass: "ml-1 input-box",
+    attrs: {
+      id: "input-3",
+      type: "text",
+      required: "",
+      placeholder: "Text"
+    },
+    model: {
+      value: _vm.association_form.pre_text,
+      callback: function callback($$v) {
+        _vm.$set(_vm.association_form, "pre_text", $$v);
+      },
+      expression: "association_form.pre_text"
     }
   })], 1), _vm._v(" "), _c("b-form-group", [_c("b-form-input", {
     staticClass: "ml-1 input-box",
@@ -181,11 +240,11 @@ var render = function render() {
       readonly: ""
     },
     model: {
-      value: _vm.user_form.address1,
+      value: _vm.association_form.address1,
       callback: function callback($$v) {
-        _vm.$set(_vm.user_form, "address1", $$v);
+        _vm.$set(_vm.association_form, "address1", $$v);
       },
-      expression: "user_form.address1"
+      expression: "association_form.address1"
     }
   })], 1), _vm._v(" "), _c("b-form-group", [_c("b-form-input", {
     staticClass: "ml-1 input-box",
@@ -197,11 +256,11 @@ var render = function render() {
       readonly: ""
     },
     model: {
-      value: _vm.user_form.address2,
+      value: _vm.association_form.address2,
       callback: function callback($$v) {
-        _vm.$set(_vm.user_form, "address2", $$v);
+        _vm.$set(_vm.association_form, "address2", $$v);
       },
-      expression: "user_form.address2"
+      expression: "association_form.address2"
     }
   })], 1), _vm._v(" "), _c("div", {
     staticClass: "d-flex mb-5"
@@ -214,11 +273,11 @@ var render = function render() {
       placeholder: "City"
     },
     model: {
-      value: _vm.user_form.city,
+      value: _vm.association_form.city,
       callback: function callback($$v) {
-        _vm.$set(_vm.user_form, "city", $$v);
+        _vm.$set(_vm.association_form, "city", $$v);
       },
-      expression: "user_form.city"
+      expression: "association_form.city"
     }
   }), _vm._v(" "), _c("b-form-input", {
     staticClass: "mx-1 input-box",
@@ -229,11 +288,11 @@ var render = function render() {
       placeholder: "State"
     },
     model: {
-      value: _vm.user_form.state,
+      value: _vm.association_form.state,
       callback: function callback($$v) {
-        _vm.$set(_vm.user_form, "state", $$v);
+        _vm.$set(_vm.association_form, "state", $$v);
       },
-      expression: "user_form.state"
+      expression: "association_form.state"
     }
   }), _vm._v(" "), _c("b-form-input", {
     staticClass: "ml-1 input-box",
@@ -244,22 +303,25 @@ var render = function render() {
       placeholder: "Zip code"
     },
     model: {
-      value: _vm.user_form.zip_code,
+      value: _vm.association_form.zip_code,
       callback: function callback($$v) {
-        _vm.$set(_vm.user_form, "zip_code", $$v);
+        _vm.$set(_vm.association_form, "zip_code", $$v);
       },
-      expression: "user_form.zip_code"
+      expression: "association_form.zip_code"
     }
   })], 1), _vm._v(" "), _c("div", {
     staticClass: "alert alert-success",
     attrs: {
       role: "alert",
-      id: "fade1"
+      id: "fade2"
     }
   }, [_c("span", {
     staticClass: "font-weight-bolder font-size-h6"
   }, [_vm._v("Saved Successfully")])]), _vm._v(" "), _c("button", {
-    staticClass: "btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white"
+    staticClass: "btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white",
+    attrs: {
+      type: "submit"
+    }
   }, [_vm._v("Save details")])], 1)]), _vm._v(" "), _c("b-form", {
     staticClass: "fw-700",
     on: {
@@ -308,7 +370,10 @@ var render = function render() {
   }, [_c("span", {
     staticClass: "font-weight-bolder font-size-h6"
   }, [_vm._v("Saved Successfully")])]), _vm._v(" "), _c("button", {
-    staticClass: "btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white"
+    staticClass: "btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white",
+    attrs: {
+      type: "submit"
+    }
   }, [_vm._v("Save password")])], 1)])], 1), _vm._v(" "), _c("div", {
     staticClass: "mt-5",
     staticStyle: {
@@ -386,7 +451,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fw-700[data-v-3a77686c]{\r\n    font-weight: 700;\n}\n.input-box[data-v-3a77686c]{\r\n    padding: 4%;\r\n    border: 1px silver solid;\n}\n.create_btn[data-v-3a77686c]{\r\n    background: #00A1E4;\n}\n#fade[data-v-3a77686c]{\r\n  display: none;\n}\n#fade1[data-v-3a77686c]{\r\n  display: none;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fw-700[data-v-3a77686c]{\r\n    font-weight: 700;\n}\n.input-box[data-v-3a77686c]{\r\n    padding: 4%;\r\n    border: 1px silver solid;\n}\n.create_btn[data-v-3a77686c]{\r\n    background: #00A1E4;\n}\n#fade[data-v-3a77686c]{\r\n  display: none;\n}\n#fade1[data-v-3a77686c]{\r\n  display: none;\n}\n#fade2[data-v-3a77686c]{\r\n  display: none;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

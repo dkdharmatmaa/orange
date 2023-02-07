@@ -27,7 +27,7 @@ class BranchController extends Controller
             'branch_id' => ['required','string','max:100'],
             'association_id' => ['required','string','max:100'],
             'address1' => ['required','string','max:100'],
-            'address2' => ['nullable','string','max:100'],
+            'address2' => ['max:100'],
             'city' => ['required','string','max:100'],
             'state' => ['required','string','max:100'],
             'zip_code' => ['required','integer'],

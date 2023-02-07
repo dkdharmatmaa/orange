@@ -22,15 +22,6 @@ class SuperAdminController extends Controller
            return response()->json(['status'=>false]);
         }
     }
-    public function login()
-    {
-        $credentials = request(['email', 'password']);
-
-        if (! $token = auth()->guard('superAdmin-api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-        return $this->respondWithToken($token);
-    }
 
     public function me()
     {
@@ -58,7 +49,7 @@ class SuperAdminController extends Controller
     }
     public function update_password(Request $request){
         $validator = Validator::make($request->all(), [
-            'password' => ['required', 'confirmed','min:6'],
+            'password' => ['required', 'confirmed','min:4'],
         ]);
 
         if ($validator->fails()) {

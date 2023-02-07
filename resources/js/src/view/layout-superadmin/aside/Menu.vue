@@ -193,7 +193,7 @@ export default {
     },
     logout(){
       this.$store.dispatch(LOGOUT)
-          .then(() => this.$router.push('/superadmin/login'));
+          .then(() => this.$router.push('/login'));
     }
   }
 };

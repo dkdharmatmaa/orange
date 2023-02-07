@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\user\UserController;
 use App\Http\Controllers\superAdmin\SuperAdminController;
 use App\Http\Controllers\PasswordResetRequestController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\superAdmin\EligibiltyRangeController as SuperAdminEligibiltyRangeController;
 use App\Http\Controllers\superAdmin\BranchController as SuperAdminBranchController;
 use App\Http\Controllers\superAdmin\IncomebindController as SuperAdminIncomebindController;
@@ -33,19 +34,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // =================admin section==========================
 //admin login and register
 Route::post('/admin/register', [AdminController::class,'register']);
-Route::post('admin/login', [AdminController::class,'login']);
 Route::group(['middleware' => 'auth:admin-api','prefix' => 'admin'], function () {
     Route::post('logout', [AdminController::class,'logout']);
     Route::post('verify', [AdminController::class,'me']);
-    Route::put('upadte-detail/{id}', [AdminController::class,'update']);
+    Route::put('upadte-detail', [AdminController::class,'update']);
     Route::put('update-password', [AdminController::class,'update_password']);
     Route::get('admin-report', [AdminController::class,'detail_report']);
     Route::post('/check-eligibilty', [AdminEligibiltyRangeController::class,'check_eligibilty']);
     Route::post('/add-eligibilty-comment/{id}', [AdminEligibiltyRangeController::class,'add_comment']);
     Route::post('/eligibilty-report', [AdminEligibiltyRangeController::class,'index']);
+    Route::get('/user-sumission-detail/{id}', [AdminEligibiltyRangeController::class,'user_sumission_detail']);
     //user related work by admin
     Route::post('/create-user/{assoc_id?}', [UserController::class,'register']);
     Route::put('/edit-user/{id}', [UserController::class,'update']);
+    Route::put('/update-association/{id}', [AdminController::class,'update_association']);
     Route::get('/all-user/{id?}/{assoc_id?}', [UserController::class,'index']);
     Route::delete('/user/{id?}', [UserController::class,'delete']);
     //branch related work by admin
@@ -63,7 +65,6 @@ Route::group(['middleware' => 'auth:admin-api','prefix' => 'admin'], function ()
 // =================user section==========================
 //user login and register
 Route::post('/register', [UserController::class,'register']);
-Route::post('/login', [UserController::class,'login']);
 Route::group(['middleware' => 'auth:user-api','prefix' => 'user'], function () {
     Route::post('logout', [UserController::class,'logout']);
     Route::post('verify', [UserController::class,'me']);
@@ -86,7 +87,6 @@ Route::group(['middleware' => 'auth:user-api','prefix' => 'user'], function () {
 // =================superAdmin section==========================
 //superAdmin login and register
 Route::post('superadmin/register', [SuperAdminController::class,'register']);
-Route::post('superadmin/login', [SuperAdminController::class,'login']);
 Route::group(['middleware' => 'auth:superAdmin-api','prefix' => 'superadmin'], function () {
     Route::post('logout', [SuperAdminController::class,'logout']);
     Route::post('verify', [SuperAdminController::class,'me']);
@@ -95,10 +95,14 @@ Route::group(['middleware' => 'auth:superAdmin-api','prefix' => 'superadmin'], f
     Route::post('/check-eligibilty', [SuperAdminEligibiltyRangeController::class,'check_eligibilty']);
     Route::post('/add-eligibilty-comment/{id}', [SuperAdminEligibiltyRangeController::class,'add_comment']);
     Route::post('/eligibilty-report', [SuperAdminEligibiltyRangeController::class,'index']);
+    Route::get('/user-sumission-detail/{id}', [SuperAdminEligibiltyRangeController::class,'user_sumission_detail']);
     //admin related work by superadmin
     Route::post('/create-admin', [AdminController::class,'register']);
-    Route::put('/edit-admin/{id}', [AdminController::class,'update']);
+    Route::post('/indivedual-admin/{assoc_id}', [AdminController::class,'store']);
+    Route::delete('/delete-admin/{id}', [AdminController::class,'delete']);
+    Route::put('/update-association/{id}', [AdminController::class,'update_association']);
     Route::get('/all-admin/{id?}/{all_data?}', [AdminController::class,'index']);
+    Route::get('/association-with-admin/{id?}', [AdminController::class,'association_with_admin']);
     //user related work by superadmin
     Route::post('/create-user/{assoc_id?}', [UserController::class,'register']);
     Route::put('/edit-user/{id}', [UserController::class,'update']);
@@ -116,9 +120,12 @@ Route::group(['middleware' => 'auth:superAdmin-api','prefix' => 'superadmin'], f
     Route::get('/single-matrix/{association_id}/{branch_id}/{minmum_range}/{maximum_range}', [SuperAdminIncomebindController::class,'single_matrix']);
 });
 
-Route::post('/Forgotpassword/{User}',[PasswordResetRequestController::class,'sendEmail']);
+Route::post('/Forgotpassword',[PasswordResetRequestController::class,'sendEmail']);
 Route::post('/check-forgot-token',[PasswordResetRequestController::class,'check_token']);
 Route::post('ForgotpasswordActual',[PasswordResetRequestController::class,'forgot_password_actual']);
+
+//common login
+Route::post('/login', [LoginController::class,'login']);
 
 
 

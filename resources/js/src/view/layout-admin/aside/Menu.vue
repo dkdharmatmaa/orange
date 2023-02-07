@@ -173,7 +173,7 @@ export default {
     },
     logout(){
       this.$store.dispatch(LOGOUT)
-          .then(() => this.$router.push('/admin/login'));
+          .then(() => this.$router.push('/login'));
     }
   }
 };

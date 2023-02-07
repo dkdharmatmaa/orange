@@ -40,10 +40,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         label: 'Sl',
         key: 'index'
       }, {
-        label: 'Name',
+        label: 'First Name',
         key: "first_name"
       }, {
-        label: 'Executive',
+        label: 'Last Name',
+        key: "last_name"
+      }, {
+        label: 'Branch user',
         key: "executive_name"
       }, {
         label: 'Phone',
@@ -55,6 +58,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         label: 'Members',
         key: 'no_of_people'
       }, {
+        label: 'Member/lead id',
+        key: 'lead_id'
+      }, {
         label: "Date created",
         key: "created_at"
       }, {
@@ -65,7 +71,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         label: 'Name',
         field: "first_name"
       }, {
-        label: 'Executive',
+        label: 'Branch user',
         field: "executive_name"
       }, {
         label: 'Phone',
@@ -76,6 +82,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }, {
         label: 'Members',
         field: 'no_of_people'
+      }, {
+        label: 'Member/lead id',
+        field: 'lead_id'
       }, {
         label: "Date created",
         field: "created_at"
@@ -298,12 +307,12 @@ var render = function render() {
           attrs: {
             to: "/user-details/" + data.item.id
           }
-        }, [_vm._v(_vm._s(data.item.first_name) + " " + _vm._s(data.item.last_name))])];
+        }, [_vm._v(_vm._s(data.item.first_name))])];
       }
     }, {
       key: "cell(created_at)",
       fn: function fn(data) {
-        return [_vm._v("\n              " + _vm._s(data.item.created_at) + "\n              ")];
+        return [_vm._v("\n              " + _vm._s(_vm.moment(data.item.created_at).format("YYYY-MM-DD HH:mm:ss")) + "\n            ")];
       }
     }])
   }), _vm._v(" "), _c("div", {

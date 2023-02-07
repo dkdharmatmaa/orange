@@ -32,7 +32,7 @@
               </template>
           </b-table>
           <div>
-            <button class="create_btn font-weight-bolder text-white rounded p-1" v-on:click="add_no_of_people()">+Add peoples</button>
+            <button class="create_btn font-weight-bolder text-white rounded p-1" v-on:click="add_no_of_people()">+Add people</button>
           </div>
       </div>
 

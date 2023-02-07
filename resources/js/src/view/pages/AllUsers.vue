@@ -52,7 +52,7 @@ export default {
       fields: [
         {label:'Sl',key:'index'},
         {label:'Name',key:"name"},
-        {label:'Email',key:"email"},
+        {label:'Email address',key:"email"},
         {label:'Association Name',key:'get_assos_name'},
         {label:'Branch Name',key:'branch_name'},
         {label:"Action",key:"action"}

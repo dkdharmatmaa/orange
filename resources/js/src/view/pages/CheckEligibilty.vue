@@ -137,7 +137,7 @@
             type="text"
             v-model="eligiblity_form.lead_id"
             required
-            placeholder="Contact/Lead Id"
+            placeholder="Member/lead id"
             class="ml-1 input-box"
             :class="{ 'is-invalid': eligiblity_form.errors.has('lead_id') }"
           >

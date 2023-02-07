@@ -160,7 +160,7 @@ var render = function render() {
       id: "input-2",
       type: "email",
       required: "",
-      placeholder: "Email",
+      placeholder: "Email address",
       readonly: _vm.action == "Edit"
     },
     model: {

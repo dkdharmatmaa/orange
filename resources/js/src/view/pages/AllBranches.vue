@@ -39,6 +39,7 @@
 
 <script>
 import ApiService from "@/core/services/api.service";
+import {mapGetters} from 'vuex';
 export default {
   name: "userallassociation",
   data() {

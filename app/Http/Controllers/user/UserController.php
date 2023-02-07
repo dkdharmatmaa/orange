@@ -4,6 +4,7 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -22,7 +23,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:100', 'unique:admins'],
-            'password' => ['required', 'string', 'min:6'],
+            'password' => ['required', 'string', 'min:4'],
             'association_id' => ['required', 'max:100'],
             'branch_id' => ['required', 'string', 'max:100'],
             'is_admin' => ['required','boolean'],
@@ -41,6 +42,12 @@ class UserController extends Controller
         $user->branch_name=$branch_data[1];
         $user->is_admin=$request->is_admin;
         $user->save();
+
+        $role=new Role();
+        $role->email=$request->email;
+        $role->role='user';
+        $role->save();
+
         if($user){
             return response()->json(['user'=>$user,'status'=>true]);
         }
@@ -51,7 +58,6 @@ class UserController extends Controller
     public function update(Request $request,$id){
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:100'],
-            'branch_id' => ['required', 'string', 'max:100'],
             'is_admin' => ['required','boolean'],
         ]);
 
@@ -60,9 +66,6 @@ class UserController extends Controller
         }
         $user=User::find($id);
         $user->name=$request->name;
-        $branch_data=explode('/////',$request->branch_id);
-        $user->branch_id=$branch_data[0];
-        $user->branch_name=$branch_data[1];
         $user->is_admin=$request->is_admin;
         $user->save();
         if($user){
@@ -93,7 +96,7 @@ class UserController extends Controller
     }
     public function update_password(Request $request){
         $validator = Validator::make($request->all(), [
-            'password' => ['required', 'confirmed','min:6'],
+            'password' => ['required', 'confirmed','min:4'],
         ]);
 
         if ($validator->fails()) {
@@ -103,16 +106,6 @@ class UserController extends Controller
         User::where('id', $id)->update(['password'=>Hash::make($request->password)]);
         return json_encode(['status'=>true,'message'=>"Password updated successful"]);
     }
-    public function login()
-    {
-        $credentials = request(['email', 'password']);
-
-        if (! $token = auth()->guard('user-api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-        return json_encode(['token'=>$token,'user'=>auth()->guard('user-api')->user()]);
-    }
-
     public function me()
     {
         return response()->json(auth()->guard('user-api')->user());
@@ -134,6 +127,7 @@ class UserController extends Controller
     }
     public function delete($id){
         $user = User::find($id);
+        Role::where(['email'=>$user['email'],'role'=>'user'])->delete();
         $user->delete();
         return "User deleted";
     }

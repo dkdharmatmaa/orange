@@ -84,14 +84,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
       this.options_branch.push({
         value: '',
-        text: "Assign branch"
+        text: "Select branch"
       });
       _core_services_api_service__WEBPACK_IMPORTED_MODULE_0__["default"].get("/superadmin/all-admin").then(function (_ref2) {
         var data = _ref2.data;
         var association_option = [];
         association_option.push({
           value: '',
-          text: "Assign association"
+          text: "Select association"
         });
         for (var i = 0; i < data.length; i++) {
           association_option.push({
@@ -110,7 +110,7 @@ __webpack_require__.r(__webpack_exports__);
           var branch_option = [];
           branch_option.push({
             value: '',
-            text: "Assign branch"
+            text: "Select branch"
           });
           for (var i = 0; i < data.length; i++) {
             branch_option.push({
@@ -462,7 +462,7 @@ var render = function render() {
       id: "input-14",
       type: "text",
       required: "",
-      placeholder: "Contact/Lead Id"
+      placeholder: "Member/lead id"
     },
     model: {
       value: _vm.eligiblity_form.lead_id,

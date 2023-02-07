@@ -24,9 +24,6 @@ __webpack_require__.r(__webpack_exports__);
         label: 'Name',
         key: "name"
       }, {
-        label: 'Email',
-        key: "email"
-      }, {
         label: 'Number',
         key: 'number'
       }, {
@@ -175,9 +172,9 @@ var render = function render() {
         }, [_c("router-link", {
           staticClass: "text-white",
           attrs: {
-            to: "/superadmin/newassociation/" + data.item["id"]
+            to: "/superadmin/editassociation/" + data.item["id"]
           }
-        }, [_vm._v("Info")])], 1)];
+        }, [_vm._v("Detail")])], 1)];
       }
     }])
   }), _vm._v(" "), _c("div", {

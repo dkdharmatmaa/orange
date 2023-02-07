@@ -42,7 +42,6 @@
             id="input-5"
             v-model="branch_form.address2"
             type="text"
-            required
             placeholder="Address 2"
             class="ml-1 input-box"
           ></b-form-input>
@@ -133,7 +132,7 @@ export default {
         ApiService.get(`/superadmin/all-admin`)
         .then(({ data }) => {
             let association_option=[];
-            association_option.push({value:"",text:"Assign association"})
+            association_option.push({value:"",text:"Select association"})
             for(let i=0;i<data.length;i++){
                 association_option.push({value:data[i]['id']+"/////"+data[i]['name'],text:data[i]['name']});  
             }

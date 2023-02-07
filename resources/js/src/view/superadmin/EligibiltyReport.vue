@@ -52,11 +52,10 @@
                 {{ data.index + 1 }}
               </template>
               <template #cell(first_name)="data">
-                {{data.item.first_name}} {{data.item.last_name}}
+                <router-link :to="'/superadmin/user-details/'+data.item.id">{{data.item.first_name}}</router-link>
               </template>
               <template #cell(created_at)="data">
-                {{data.item.created_at}}
-                <!-- {{date('d/M/y', strtotime(data.item.created_at))}} -->
+                {{ moment(data.item.created_at).format('YYYY-MM-DD HH:mm:ss') }}
               </template>
            </b-table>
           <!-- for pagination -->
@@ -88,22 +87,25 @@ export default {
       till_date:new Date(), 
       fields: [
         {label:'Sl',key:'index'},
-        {label:'Name',key:"first_name"},
-        {label:'Executive',key:"executive_name"},
+        {label:'First Name',key:"first_name"},
+        {label:'Last Name',key:"last_name"},
+        {label:'Branch user',key:"executive_name"},
         {label:'Branch Name',key:"branch_name"},
         {label:'Phone',key:'phone'},
         {label:'Birthday',key:'birthday'},
         {label:'Members',key:'no_of_people'},
+        {label:'Member/lead id',key:'lead_id'},
         {label:"Date created",key:"created_at"},
         {label:"Status",key:"api_status"},
         ],
       columns: [
         {label:'Name',field:"first_name"},
-        {label:'Executive',field:"executive_name"},
+        {label:'Branch user',field:"executive_name"},
         {label:'Branch Name',field:"branch_name"},
         {label:'Phone',field:'phone'},
         {label:'Birthday',field:'birthday'},
         {label:'Members',field:'no_of_people'},
+        {label:'Member/lead id',field:'lead_id'},
         {label:"Date created",field:"created_at"},
         {label:"Status",field:"api_status"},
         ],
@@ -131,11 +133,11 @@ export default {
         })
     },
       getAssociation(){
-        this.options_branch.push({value:"",text:"Assign branch"})
+        this.options_branch.push({value:"",text:"Select branch"})
         ApiService.get(`/superadmin/all-admin`)
         .then(({ data }) => {
             let association_option=[];
-            association_option.push({value:"",text:"Assign association"})
+            association_option.push({value:"",text:"Select association"})
             for(let i=0;i<data.length;i++){
                 association_option.push({value:data[i]['id'],text:data[i]['name']});  
             }
@@ -147,7 +149,7 @@ export default {
             ApiService.get(`/superadmin/all-branch/0/${this.condition_arr.association_id}`)
             .then(({ data }) => {
                 let branch_option=[];
-                branch_option.push({value:"",text:"Assign branch"})
+                branch_option.push({value:"",text:"Select branch"})
                 for(let i=0;i<data.length;i++){
                     branch_option.push({value:data[i]['id'],text:data[i]['name']});  
                 }

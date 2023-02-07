@@ -54,7 +54,7 @@ export default {
       fields: [
         {label:'Sl',key:'index'},
         {label:'Name',key:"name"},
-        {label:'Email',key:"email"},
+        {label:'Email address',key:"email"},
         {label:'Association Name',key:'get_assos_name'},
         {label:'Branch Name',key:'branch_name'},
         {label:"Action",key:"action"}
@@ -90,7 +90,7 @@ export default {
         ApiService.get(`/superadmin/all-admin`)
         .then(({ data }) => {
             let association_option=[];
-            association_option.push({value:"",text:"Assign association"})
+            association_option.push({value:"",text:"Select association"})
             for(let i=0;i<data.length;i++){
                 association_option.push({value:data[i]['id'],text:data[i]['name']});  
             }

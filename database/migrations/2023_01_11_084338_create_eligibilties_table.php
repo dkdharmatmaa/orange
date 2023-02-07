@@ -32,8 +32,10 @@ class CreateEligibiltiesTable extends Migration
             $table->string('lead_id',100)->nullable();
             $table->enum('api_status',['Qualified','Not Qualified'])->default(null);
             $table->bigInteger('api_incomebind')->nullable();
+            $table->integer('plan_id')->nullable();
             $table->enum('user_status',['Accepted','Deferred'])->default(null);
             $table->string('comment',250)->nullable();
+            $table->string('executive_name',100);
             $table->timestamps();
         });
     }

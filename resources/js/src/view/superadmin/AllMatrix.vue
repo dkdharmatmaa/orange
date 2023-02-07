@@ -75,11 +75,11 @@ export default {
       }
     },
      getAssociation(){
-        this.options_branch.push({value:"",text:"Assign branch"})
+        this.options_branch.push({value:"",text:"Select branch"})
         ApiService.get(`/superadmin/all-admin`)
         .then(({ data }) => {
             let association_option=[];
-            association_option.push({value:"",text:"Assign association"})
+            association_option.push({value:"",text:"Select association"})
             for(let i=0;i<data.length;i++){
                 association_option.push({value:data[i]['id'],text:data[i]['name']});  
             }
@@ -91,7 +91,7 @@ export default {
             ApiService.get(`/superadmin/all-branch/0/${this.association_id}`)
             .then(({ data }) => {
                 let branch_option=[];
-                branch_option.push({value:"",text:"Assign branch"})
+                branch_option.push({value:"",text:"Select branch"})
                 for(let i=0;i<data.length;i++){
                     branch_option.push({value:data[i]['id'],text:data[i]['name']});  
                 }

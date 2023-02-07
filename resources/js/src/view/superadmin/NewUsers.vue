@@ -21,7 +21,7 @@
             v-model="user_form.email"
             type="email"
             required
-            placeholder="Email"
+            placeholder="Email address"
             class="mx-1 input-box"
             :readonly="action=='Edit'"
           ></b-form-input>
@@ -79,7 +79,7 @@ export default {
         is_admin: false,
       }),
       options_association:null,
-      options_branch:null,
+      options_branch:[],
       action: 'Add',
     };
   },
@@ -115,11 +115,12 @@ export default {
         ApiService.get(`/superadmin/all-admin`)
         .then(({ data }) => {
             let association_option=[];
-            association_option.push({value:"",text:"Assign association"})
+            association_option.push({value:"",text:"Select association"})
             for(let i=0;i<data.length;i++){
                 association_option.push({value:data[i]['id'],text:data[i]['name']});  
             }
             this.options_association=association_option;
+            this.options_branch.push({value:"",text:"Select branch"});
         })
     },
     getBranches(){

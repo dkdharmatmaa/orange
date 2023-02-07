@@ -9,17 +9,17 @@ use Illuminate\Support\Facades\DB;
 class IncomebindController extends Controller
 {
     public function index($branch_id){
-        $assoc_id=auth()->guard('admin-api')->user()->id;
+        $assoc_id=auth()->guard('admin-api')->user()->association_id;
         $data=Incomebind::where([['association_id',$assoc_id],['branch_id',$branch_id]])->get()->groupBy('minmum_range')->toArray();
         return json_encode($data);
     }
     public function single_matrix($branch_id,$minmum_range,$maximum_range){
-        $assos_id=auth()->guard('admin-api')->user()->id;
+        $assos_id=auth()->guard('admin-api')->user()->association_id;
         $data=Incomebind::where([['association_id',$assos_id],['branch_id',$branch_id],['minmum_range',$minmum_range],['maximum_range',$maximum_range]])->get()->toArray();
         return json_encode($data);
     }
     public function store(Request $request,$branch_id){
-        $assos_id=auth()->guard('admin-api')->user()->id;
+        $assos_id=auth()->guard('admin-api')->user()->association_id;
         if(!empty($assos_id) and !empty($branch_id)){
             $total_range = count($request->all());
             for($i=0;$i<$total_range;$i++){
@@ -48,7 +48,7 @@ class IncomebindController extends Controller
         }
     }
     public function update(Request $request,$branch_id,$minmum_range,$maximum_range){
-        $assos_id=auth()->guard('admin-api')->user()->id;
+        $assos_id=auth()->guard('admin-api')->user()->association_id;
         //before insert delete all plan for this income range
         DB::table('incomebinds')->where([['association_id',$assos_id],['branch_id',$branch_id],['minmum_range',$minmum_range],['maximum_range',$maximum_range]])->delete();
        

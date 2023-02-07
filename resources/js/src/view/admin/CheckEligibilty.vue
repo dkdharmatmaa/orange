@@ -146,7 +146,7 @@
             type="text"
             v-model="eligiblity_form.lead_id"
             required
-            placeholder="Contact/Lead Id"
+            placeholder="Member/lead id"
             class="ml-1 input-box"
             :class="{ 'is-invalid': eligiblity_form.errors.has('lead_id') }"
           >
@@ -225,7 +225,7 @@ export default {
             ApiService.get(`/admin/all-branch/`)
             .then(({ data }) => {
                 let branch_option=[];
-                branch_option.push({value:'',text:"Assign branch"})
+                branch_option.push({value:'',text:"Select branch"})
                 for(let i=0;i<data.length;i++){
                     branch_option.push({value:data[i]['id']+"/////"+data[i]['name'],text:data[i]['name']});  
                 }

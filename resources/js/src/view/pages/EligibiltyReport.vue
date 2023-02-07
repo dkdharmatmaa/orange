@@ -46,11 +46,10 @@
                 {{ data.index + 1 }}
               </template>
               <template #cell(first_name)="data">
-              <router-link :to="'/user-details/'+data.item.id">{{data.item.first_name}} {{data.item.last_name}}</router-link>
+              <router-link :to="'/user-details/'+data.item.id">{{data.item.first_name}}</router-link>
               </template>
               <template #cell(created_at)="data">
-                {{data.item.created_at}}
-                <!-- {{date('d/M/y', strtotime(data.item.created_at))}} -->
+                {{ moment(data.item.created_at).format('YYYY-MM-DD HH:mm:ss') }}
               </template>
            </b-table>
           <!-- for pagination -->
@@ -82,20 +81,23 @@ export default {
       till_date:new Date(), 
       fields: [
         {label:'Sl',key:'index'},
-        {label:'Name',key:"first_name"},
-        {label:'Executive',key:"executive_name"},
+        {label:'First Name',key:"first_name"},
+        {label:'Last Name',key:"last_name"},
+        {label:'Branch user',key:"executive_name"},
         {label:'Phone',key:'phone'},
         {label:'Birthday',key:'birthday'},
         {label:'Members',key:'no_of_people'},
+        {label:'Member/lead id',key:'lead_id'},
         {label:"Date created",key:"created_at"},
         {label:"Status",key:"api_status"},
         ],
       columns: [
         {label:'Name',field:"first_name"},
-        {label:'Executive',field:"executive_name"},
+        {label:'Branch user',field:"executive_name"},
         {label:'Phone',field:'phone'},
         {label:'Birthday',field:'birthday'},
         {label:'Members',field:'no_of_people'},
+        {label:'Member/lead id',field:'lead_id'},
         {label:"Date created",field:"created_at"},
         {label:"Status",field:"api_status"},
         ],

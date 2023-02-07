@@ -33,10 +33,13 @@ __webpack_require__.r(__webpack_exports__);
         label: 'Sl',
         key: 'index'
       }, {
-        label: 'Name',
+        label: 'First Name',
         key: "first_name"
       }, {
-        label: 'Executive',
+        label: 'Last Name',
+        key: "last_name"
+      }, {
+        label: 'Branch user',
         key: "executive_name"
       }, {
         label: 'Branch Name',
@@ -51,6 +54,9 @@ __webpack_require__.r(__webpack_exports__);
         label: 'Members',
         key: 'no_of_people'
       }, {
+        label: 'Member/lead id',
+        key: 'lead_id'
+      }, {
         label: "Date created",
         key: "created_at"
       }, {
@@ -61,7 +67,7 @@ __webpack_require__.r(__webpack_exports__);
         label: 'Name',
         field: "first_name"
       }, {
-        label: 'Executive',
+        label: 'Branch user',
         field: "executive_name"
       }, {
         label: 'Branch Name',
@@ -75,6 +81,9 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         label: 'Members',
         field: 'no_of_people'
+      }, {
+        label: 'Member/lead id',
+        field: 'lead_id'
       }, {
         label: "Date created",
         field: "created_at"
@@ -122,14 +131,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
       this.options_branch.push({
         value: "",
-        text: "Assign branch"
+        text: "Select branch"
       });
       _core_services_api_service__WEBPACK_IMPORTED_MODULE_0__["default"].get("/superadmin/all-admin").then(function (_ref2) {
         var data = _ref2.data;
         var association_option = [];
         association_option.push({
           value: "",
-          text: "Assign association"
+          text: "Select association"
         });
         for (var i = 0; i < data.length; i++) {
           association_option.push({
@@ -148,7 +157,7 @@ __webpack_require__.r(__webpack_exports__);
           var branch_option = [];
           branch_option.push({
             value: "",
-            text: "Assign branch"
+            text: "Select branch"
           });
           for (var i = 0; i < data.length; i++) {
             branch_option.push({
@@ -377,12 +386,16 @@ var render = function render() {
     }, {
       key: "cell(first_name)",
       fn: function fn(data) {
-        return [_vm._v("\n              " + _vm._s(data.item.first_name) + " " + _vm._s(data.item.last_name) + "\n            ")];
+        return [_c("router-link", {
+          attrs: {
+            to: "/superadmin/user-details/" + data.item.id
+          }
+        }, [_vm._v(_vm._s(data.item.first_name))])];
       }
     }, {
       key: "cell(created_at)",
       fn: function fn(data) {
-        return [_vm._v("\n              " + _vm._s(data.item.created_at) + "\n              ")];
+        return [_vm._v("\n              " + _vm._s(_vm.moment(data.item.created_at).format("YYYY-MM-DD HH:mm:ss")) + "\n            ")];
       }
     }])
   }), _vm._v(" "), _c("div", {

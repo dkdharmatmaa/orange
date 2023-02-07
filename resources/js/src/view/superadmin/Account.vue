@@ -102,7 +102,7 @@ export default {
         ApiService.put(`/superadmin/update-password`, this.password_form)
             .then(({ data }) => {
                 this.$store.dispatch(LOGOUT)
-                .then(() => this.$router.push('/superadmin/login'));
+                .then(() => this.$router.push('/login'));
             })
     },
   },

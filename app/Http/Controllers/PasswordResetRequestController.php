@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\User;
 use App\Admin;
+use App\Role;
 use App\SuperAdmin;
 use App\Mail\ResetPasswordMailable;
 use Illuminate\Support\Facades\Mail;
@@ -18,8 +19,15 @@ use Illuminate\Support\Facades\Validator;
 class PasswordResetRequestController extends Controller
 {
     
-    public function sendEmail(Request $request,$userType)  // this is most important function to send mail and inside of that there are another function
+    public function sendEmail(Request $request)  // this is most important function to send mail and inside of that there are another function
     {
+        $userTypeDemo=Role::where('email',$request->email)->select('role')->first()->toArray()['role'];
+        if($userTypeDemo=='user')
+        $userType='users';
+        else if($userTypeDemo=='admin')
+        $userType='admins';
+        else
+        $userType='super_admin';
         if (!$this->validateEmail($request->email,$userType)) {  // this is validate to fail send mail or true
             return $this->failedResponse();
         }

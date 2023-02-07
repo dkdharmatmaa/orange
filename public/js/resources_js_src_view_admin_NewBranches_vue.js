@@ -151,7 +151,6 @@ var render = function render() {
     attrs: {
       id: "input-5",
       type: "text",
-      required: "",
       placeholder: "Address 2"
     },
     model: {

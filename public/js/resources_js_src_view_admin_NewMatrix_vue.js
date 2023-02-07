@@ -100,7 +100,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         var branch_option = [];
         branch_option.push({
           value: "",
-          text: "Assign branch"
+          text: "Select branch"
         });
         for (var i = 0; i < data.length; i++) {
           branch_option.push({
@@ -421,7 +421,7 @@ var render = function render() {
           return _vm.add_no_of_people(index_main);
         }
       }
-    }, [_vm._v("+Add peoples")]), _vm._v(" "), _c("span", {
+    }, [_vm._v("+Add people")]), _vm._v(" "), _c("span", {
       staticClass: "glyphicon glyphicon-folder-open bg-success float-right py-1 px-3 text-white rounded",
       on: {
         click: function click($event) {

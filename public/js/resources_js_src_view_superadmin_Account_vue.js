@@ -54,7 +54,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       _core_services_api_service__WEBPACK_IMPORTED_MODULE_1__["default"].put("/superadmin/update-password", this.password_form).then(function (_ref2) {
         var data = _ref2.data;
         _this.$store.dispatch(_core_services_store_auth_module__WEBPACK_IMPORTED_MODULE_2__.LOGOUT).then(function () {
-          return _this.$router.push('/superadmin/login');
+          return _this.$router.push('/login');
         });
       });
     }

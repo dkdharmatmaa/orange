@@ -22,6 +22,9 @@ import { Form, HasError, AlertError } from "vform";
 window.Form = Form;
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
+//moment for time formate
+import moment from 'moment';
+Vue.prototype.moment = moment;
 
 // Vue 3rd party plugins
 import i18n from "@/core/plugins/vue-i18n";

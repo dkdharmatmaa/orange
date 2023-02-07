@@ -45,7 +45,7 @@
               </template>
           </b-table>
           <div>
-            <button class="create_btn font-weight-bolder text-white rounded p-1" v-on:click="add_no_of_people(index_main)">+Add peoples</button>
+            <button class="create_btn font-weight-bolder text-white rounded p-1" v-on:click="add_no_of_people(index_main)">+Add people</button>
             <span class="glyphicon glyphicon-folder-open bg-success float-right py-1 px-3 text-white rounded" v-on:click="copy_plan(index_main)"><i class="fas fa-copy text-white"></i> Copy</span>
           </div>
       </div>
@@ -126,7 +126,7 @@ export default {
             ApiService.get(`/admin/all-branch`)
             .then(({ data }) => {
                 let branch_option=[];
-                branch_option.push({value:"",text:"Assign branch"})
+                branch_option.push({value:"",text:"Select branch"})
                 for(let i=0;i<data.length;i++){
                     branch_option.push({value:data[i]['id'],text:data[i]['name']});  
                 }

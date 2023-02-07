@@ -77,13 +77,13 @@
                   Enter your email to reset your password
                 </p>
               </div>
-              <div class="text-success mt-2 ml-2 h4" v-if="email_send">Reset Email is send successfully, please check your inbox.</div>
+              <div class="text-success mt-2 ml-2 h5" v-if="email_send">Reset Email is send successfully, please check your inbox.</div>
               <div class="text-danger mt-2 ml-2" v-if="check_email">Invalid email.</div>
               <div class="form-group">
                 <input
                   class="form-control form-control-solid h-auto py-3 px-2 rounded-lg font-size-h6"
                   type="email"
-                  placeholder="Email"
+                  placeholder="Email address"
                   name="email"
                   autocomplete="off"
                   v-model="email"
@@ -197,11 +197,7 @@ export default {
       this.$store.dispatch(LOGOUT);
 
       // send login request
-        this.$store
-          .dispatch(LOGIN, { email, password })
-          // go to which page after successfully login
-          .then(() => this.$router.push({ name: 'user-checkeligibilty' }))
-          .catch(() => {});
+        this.$store.dispatch(LOGIN, { email, password })
     });
 
     this.fv.on("core.form.invalid", () => {
@@ -224,7 +220,7 @@ export default {
       );
     },
     requestResetPassword() {
-        axios.post("/Forgotpassword/users", {email: this.email}).then(result => {
+        axios.post("/Forgotpassword", {email: this.email}).then(result => {
             this.email_send=true;
             this.check_email=false;
         })

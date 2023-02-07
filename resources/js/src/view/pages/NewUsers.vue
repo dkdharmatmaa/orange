@@ -21,7 +21,7 @@
             v-model="user_form.email"
             type="email"
             required
-            placeholder="Email"
+            placeholder="Email address"
             class="mx-1 input-box"
             :readonly="action=='Edit'"
           ></b-form-input>

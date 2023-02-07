@@ -100,13 +100,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       _this.$store.dispatch(_core_services_store_auth_module__WEBPACK_IMPORTED_MODULE_6__.LOGIN, {
         email: email,
         password: password
-      })
-      // go to which page after successfully login
-      .then(function () {
-        return _this.$router.push({
-          name: 'user-checkeligibilty'
-        });
-      })["catch"](function () {});
+      });
     });
     this.fv.on("core.form.invalid", function () {
       sweetalert2__WEBPACK_IMPORTED_MODULE_7___default().fire({
@@ -126,7 +120,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     requestResetPassword: function requestResetPassword() {
       var _this2 = this;
-      axios__WEBPACK_IMPORTED_MODULE_1___default().post("/Forgotpassword/users", {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().post("/Forgotpassword", {
         email: this.email
       }).then(function (result) {
         _this2.email_send = true;
@@ -273,7 +267,7 @@ var render = function render() {
       }
     }
   }, [_vm._m(2), _vm._v(" "), _vm.email_send ? _c("div", {
-    staticClass: "text-success mt-2 ml-2 h4"
+    staticClass: "text-success mt-2 ml-2 h5"
   }, [_vm._v("Reset Email is send successfully, please check your inbox.")]) : _vm._e(), _vm._v(" "), _vm.check_email ? _c("div", {
     staticClass: "text-danger mt-2 ml-2"
   }, [_vm._v("Invalid email.")]) : _vm._e(), _vm._v(" "), _c("div", {
@@ -288,7 +282,7 @@ var render = function render() {
     staticClass: "form-control form-control-solid h-auto py-3 px-2 rounded-lg font-size-h6",
     attrs: {
       type: "email",
-      placeholder: "Email",
+      placeholder: "Email address",
       name: "email",
       autocomplete: "off"
     },

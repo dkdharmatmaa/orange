@@ -32,7 +32,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         label: 'Name',
         key: "name"
       }, {
-        label: 'Email',
+        label: 'Email address',
         key: "email"
       }, {
         label: 'Association Name',

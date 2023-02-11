@@ -130,7 +130,7 @@
                 <?php
             }
             ?>
-                <p class="fw mt-1" style="font-size: 16px;">{{$main_data['first_name']}} is qualified for following membership rates</p>
+                <p class="fw mt-1" style="font-size: 16px;">{{$main_data['first_name']}} is qualified for the following financial assistance.</p>
                 <div class="table-responsive text-center bg-white" style="width: 50%">
                     <table class="table table-striped p-2">
                         <tbody>

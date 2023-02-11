@@ -151,9 +151,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "d-flex flex-column flex-root"
-  }, [_c("div", {
-    staticClass: "login login-1 d-flex flex-column flex-lg-row flex-column-fluid",
+    staticClass: "login login-1 row h-100",
     "class": {
       "login-signin-on": this.state == "signin",
       "login-signup-on": this.state == "signup",
@@ -163,7 +161,9 @@ var render = function render() {
       id: "kt_login"
     }
   }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "login-content flex-row-fluid d-flex flex-column justify-content-center position-relative p-8"
+    staticClass: "col-sm-12 col-12 col-md-6 align-self-center text-al"
+  }, [_c("div", {
+    staticClass: "login-content d-flex flex-column justify-content-center"
   }, [_c("div", {
     staticClass: "d-flex flex-column-fluid flex-center"
   }, [_c("div", {
@@ -251,7 +251,7 @@ var render = function render() {
   }, [_vm._v("Forgot Password ?")])]), _vm._v(" "), _c("div", [_c("button", {
     ref: "kt_login_signin_submit",
     staticClass: "btn font-weight-bolder font-size-h6 py-3 w-100 mt-7 text-white btn-color"
-  }, [_vm._v("\n                Login\n              ")])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n              Login\n            ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "login-form login-forgot"
   }, [_c("form", {
     ref: "kt_login_forgot_form",
@@ -303,7 +303,7 @@ var render = function render() {
       type: "submit",
       id: "kt_login_forgot_submit"
     }
-  }, [_vm._v("\n                Send Password Reset Link\n              ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n              Send Password Reset Link\n            ")]), _vm._v(" "), _c("button", {
     staticClass: "btn font-weight-bolder font-size-h6 px-12 btn-color text-white py-3 my-3",
     attrs: {
       type: "button",
@@ -314,17 +314,17 @@ var render = function render() {
         return _vm.showForm("signin");
       }
     }
-  }, [_vm._v("\n                Cancel\n              ")])])])])])])])]);
+  }, [_vm._v("\n              Cancel\n            ")])])])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "login-aside"
+    staticClass: "col-sm-12 col-12 col-md-6 p-0 m-0 image-div"
   }, [_c("img", {
-    staticClass: "img-fluid1",
+    staticClass: "img-fluid h-100",
     attrs: {
-      src: "/media/custome/login/login-image.png",
+      src: "/media/custome/login/login-image-min.png",
       alt: "login image"
     }
   })]);
@@ -349,9 +349,9 @@ var staticRenderFns = [function () {
     staticClass: "pb-5 pt-lg-0 pt-5"
   }, [_c("h4", {
     staticClass: "font-weight-bolder text-dark font-size-h4 font-size-h1-lg"
-  }, [_vm._v("\n                Forgotten Password ?\n              ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n              Forgotten Password ?\n            ")]), _vm._v(" "), _c("p", {
     staticClass: "text-muted font-weight-bold font-size-h5"
-  }, [_vm._v("\n                Enter your email to reset your password\n              ")])]);
+  }, [_vm._v("\n              Enter your email to reset your password\n            ")])]);
 }];
 render._withStripped = true;
 
@@ -1353,7 +1353,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.btn-color[data-v-46011a81]{\r\n  background:#00A1E4;\n}\n@media (min-width: 720px){\n.login-content[data-v-46011a81]{\r\n   margin: auto;\n}\n.img-fluid1[data-v-46011a81]{\r\n   max-width: 116% !important;\n}\n}\n@media (max-width: 720px){\n.img-fluid1[data-v-46011a81]{\r\n   max-width: 109% !important;\n}\n.login-aside[data-v-46011a81]{\r\n  margin-left: -10%;\n}\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.btn-color[data-v-46011a81]{\r\n  background:#00A1E4;\n}\n.image-div[data-v-46011a81]{\r\n  height: 100%;\n}\n.text-al[data-v-46011a81]{\r\n  text-align: -webkit-center;\n}\n@media (min-width: 720px){\n}\n@media (max-width: 720px){\n.login-content[data-v-46011a81]{\r\n    padding: 5%;\n}\n.image-div[data-v-46011a81]{\r\n    height: 70%;\n}\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

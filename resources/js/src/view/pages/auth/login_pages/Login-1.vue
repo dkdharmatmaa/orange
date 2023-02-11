@@ -1,21 +1,17 @@
 <template>
-  <div class="d-flex flex-column flex-root">
-    <div
-      class="login login-1 d-flex flex-column flex-lg-row flex-column-fluid"
-      :class="{
+    <div class="login login-1 row h-100" :class="{
         'login-signin-on': this.state == 'signin',
         'login-signup-on': this.state == 'signup',
         'login-forgot-on': this.state == 'forgot'
-      }"
-      id="kt_login"
-    >
+      }" id="kt_login">
       <!--begin::Aside-->
-      <div class="login-aside">
-       <img src="/media/custome/login/login-image.png" alt="login image" class="img-fluid1">
+      <div class="col-sm-12 col-12 col-md-6 p-0 m-0 image-div">
+       <img src="/media/custome/login/login-image-min.png" class="img-fluid h-100" alt="login image">
       </div>
       <!--begin::Aside-->
       <!--begin::Content-->
-        <div class="login-content flex-row-fluid d-flex flex-column justify-content-center position-relative p-8">
+      <div class="col-sm-12 col-12 col-md-6 align-self-center text-al">
+        <div class="login-content d-flex flex-column justify-content-center">
         <div class="d-flex flex-column-fluid flex-center">
           <!--begin::Signin-->
           <div class="login-form login-signin">
@@ -114,9 +110,9 @@
         
         <!--end::Content footer-->
         </div>
+      </div>
       <!--end::Content-->
     </div>
-  </div>
 </template>
 
 <!-- Load login custom page styles -->
@@ -236,20 +232,20 @@ export default {
 .btn-color{
   background:#00A1E4;
 }
+.image-div{
+  height: 100%;
+}
+.text-al{
+  text-align: -webkit-center;
+}
 @media (min-width: 720px){
- .login-content{
-   margin: auto;
- }
- .img-fluid1{
-   max-width: 116% !important;
- }
 }
 @media (max-width: 720px){
- .img-fluid1{
-   max-width: 109% !important;
- }
- .login-aside{
-  margin-left: -10%;
-}
+  .login-content{
+    padding: 5%;
+  }
+  .image-div{
+    height: 70%;
+  }
 }
 </style>

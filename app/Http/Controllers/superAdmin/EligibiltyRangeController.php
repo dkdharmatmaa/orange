@@ -16,56 +16,56 @@ class EligibiltyRangeController extends Controller
             if($request->association_id){
                 if($request->branch_id){
                     if($request->api_status=='Qualified')
-                    $data=Eligibilty::where([['association_id',$request->association_id],['branch_id',$request->branch_id],['api_status','Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
+                    $data=Eligibilty::where([['association_id',$request->association_id],['branch_id',$request->branch_id],['api_status','Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
                     elseif($request->api_status=='Not Qualified')
-                    $data=Eligibilty::where([['association_id',$request->association_id],['branch_id',$request->branch_id],['api_status','Not Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
+                    $data=Eligibilty::where([['association_id',$request->association_id],['branch_id',$request->branch_id],['api_status','Not Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
                     else
-                    $data=Eligibilty::where([['association_id',$request->association_id],['branch_id',$request->branch_id],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
+                    $data=Eligibilty::where([['association_id',$request->association_id],['branch_id',$request->branch_id],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
                 }
                 else{
                     if($request->api_status=='Qualified')
-                    $data=Eligibilty::where([['association_id',$request->association_id],['api_status','Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
+                    $data=Eligibilty::where([['association_id',$request->association_id],['api_status','Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
                     elseif($request->api_status=='Not Qualified')
-                    $data=Eligibilty::where([['association_id',$request->association_id],['api_status','Not Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
+                    $data=Eligibilty::where([['association_id',$request->association_id],['api_status','Not Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
                     else
-                    $data=Eligibilty::where([['association_id',$request->association_id],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
+                    $data=Eligibilty::where([['association_id',$request->association_id],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
                 }
             }
             else{
                 if($request->api_status=='Qualified')
-                $data=Eligibilty::where([['api_status','Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
+                $data=Eligibilty::where([['api_status','Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
                 elseif($request->api_status=='Not Qualified')
-                $data=Eligibilty::where([['api_status','Not Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
+                $data=Eligibilty::where([['api_status','Not Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
                 else
-                $data=Eligibilty::where(['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
+                $data=Eligibilty::where(['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->take($request->per_page)->toArray();
             }
         }
         else{
             if($request->association_id){
                 if($request->branch_id){
                     if($request->api_status=='Qualified')
-                    $data=Eligibilty::where([['association_id',$request->association_id],['branch_id',$request->branch_id],['api_status','Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->toArray();
+                    $data=Eligibilty::where([['association_id',$request->association_id],['branch_id',$request->branch_id],['api_status','Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->toArray();
                     elseif($request->api_status=='Not Qualified')
-                    $data=Eligibilty::where([['association_id',$request->association_id],['branch_id',$request->branch_id],['api_status','Not Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->toArray();
+                    $data=Eligibilty::where([['association_id',$request->association_id],['branch_id',$request->branch_id],['api_status','Not Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->toArray();
                     else
-                    $data=Eligibilty::where([['association_id',$request->association_id],['branch_id',$request->branch_id],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->toArray();
+                    $data=Eligibilty::where([['association_id',$request->association_id],['branch_id',$request->branch_id],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->toArray();
                 }
                 else{
                     if($request->api_status=='Qualified')
-                    $data=Eligibilty::where([['association_id',$request->association_id],['api_status','Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->toArray();
+                    $data=Eligibilty::where([['association_id',$request->association_id],['api_status','Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->toArray();
                     elseif($request->api_status=='Not Qualified')
-                    $data=Eligibilty::where([['association_id',$request->association_id],['api_status','Not Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->toArray();
+                    $data=Eligibilty::where([['association_id',$request->association_id],['api_status','Not Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->toArray();
                     else
-                    $data=Eligibilty::where([['association_id',$request->association_id],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->toArray();
+                    $data=Eligibilty::where([['association_id',$request->association_id],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->toArray();
                 }
             }
             else{
                 if($request->api_status=='Qualified')
-                $data=Eligibilty::where([['api_status','Qualified'],['created_at','<=',$request->from_date_custome],['created_at','>',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->toArray();
+                $data=Eligibilty::where([['api_status','Qualified'],['created_at','<=',$request->from_date_custome],['created_at','>',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->toArray();
                 elseif($request->api_status=='Not Qualified')
-                $data=Eligibilty::where([['api_status','Not Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->toArray();
+                $data=Eligibilty::where([['api_status','Not Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->toArray();
                 else
-                $data=Eligibilty::where([['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','phone','birthday','no_of_people','created_at','api_status','lead_id')->get()->toArray();
+                $data=Eligibilty::where([['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->toArray();
             }
         }
         
@@ -145,7 +145,7 @@ class EligibiltyRangeController extends Controller
         return json_encode(['status'=>true,'message'=>"Data updated successful"]);
     }
     public function user_sumission_detail($id){
-        $main_data=Eligibilty::where('id',$id)->with('plans','association')->select('first_name','last_name','no_of_people','email_id','phone','birthday','street_address','address','association_id','branch_name','branch_id','city','state','zip_code','comment','plan_id','created_at')->first()->toArray();
+        $main_data=Eligibilty::where('id',$id)->with('plans','association')->select('first_name','last_name','no_of_people','email_id','street_address','address','association_id','branch_name','branch_id','city','state','zip_code','comment','plan_id','created_at')->first()->toArray();
         return $main_data;
     }
 }

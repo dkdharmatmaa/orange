@@ -47,10 +47,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { UPDATE_BRANCHID } from "@/core/services/store/auth.module";
-import objectPath from "object-path";
 import ApiService from "@/core/services/api.service";
-import KTLayoutBrand from "@/assets/js/layout/base/brand.js";
-import KTLayoutAsideToggle from "@/assets/js/layout/base/aside-toggle.js";
 
 export default {
   name: "KTBrand",
@@ -61,10 +58,6 @@ export default {
     }
   },
   mounted() {
-    // Init Brand Panel For Logo
-    KTLayoutBrand.init(this.$refs["kt_brand"]);
-    // Init Aside Menu Toggle
-    KTLayoutAsideToggle.init(this.$refs["kt_aside_toggle"]);
     if(this.selected_branch_id)
     this.branch_id=this.selected_branch_id;
     else

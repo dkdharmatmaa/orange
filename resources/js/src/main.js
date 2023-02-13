@@ -11,12 +11,12 @@ import { RESET_LAYOUT_CONFIG } from "@/core/services/store/config.module";
 Vue.config.productionTip = false;
 Vue.use(VueExcelXlsx);
 // Global 3rd party plugins
-import "popper.js";
-import "tooltip.js";
-import PerfectScrollbar from "perfect-scrollbar";
-window.PerfectScrollbar = PerfectScrollbar;
-import ClipboardJS from "clipboard";
-window.ClipboardJS = ClipboardJS;
+// import "popper.js";
+// import "tooltip.js";
+// import PerfectScrollbar from "perfect-scrollbar";
+// window.PerfectScrollbar = PerfectScrollbar;
+// import ClipboardJS from "clipboard";
+// window.ClipboardJS = ClipboardJS;
 
 import { Form, HasError, AlertError } from "vform";
 window.Form = Form;
@@ -27,15 +27,15 @@ import moment from 'moment';
 Vue.prototype.moment = moment;
 
 // Vue 3rd party plugins
-import i18n from "@/core/plugins/vue-i18n";
-import vuetify from "@/core/plugins/vuetify";
-import "@/core/plugins/portal-vue";
+// import i18n from "@/core/plugins/vue-i18n";
+// import vuetify from "@/core/plugins/vuetify";
+// import "@/core/plugins/portal-vue";
 import "@/core/plugins/bootstrap-vue";
 import "@/core/plugins/perfect-scrollbar";
-import "@/core/plugins/highlight-js";
+// import "@/core/plugins/highlight-js";
 import "@/core/plugins/inline-svg";
-import "@/core/plugins/apexcharts";
-import "@/core/plugins/treeselect";
+// import "@/core/plugins/apexcharts";
+// import "@/core/plugins/treeselect";
 import "@/core/plugins/metronic";
 // import "@mdi/font/css/materialdesignicons.css";
 import "@/core/plugins/formvalidation";
@@ -67,7 +67,7 @@ router.beforeEach((to, from, next) => {
 new Vue({
   router,
   store,
-  i18n,
-  vuetify,
+  // i18n,
+  // vuetify,
   render: h => h(App)
 }).$mount("#app");

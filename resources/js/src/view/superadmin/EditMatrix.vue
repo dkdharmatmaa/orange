@@ -46,7 +46,6 @@
   </div>
 </template>
 <script>
-import Form from 'vform';
 import ApiService from "@/core/services/api.service";
 export default {
   data() {
@@ -134,5 +133,8 @@ export default {
 }
 #fade{
   display: none;
+}
+button{
+  border: 0 !important;
 }
 </style>

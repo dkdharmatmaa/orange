@@ -12,7 +12,7 @@
           <b-form-group class="ml-3">
             <b-form-select id="input-4" v-model="condition_arr.api_status" :options="options_api_status" @change="get_report()" class="input-box text-seconday" required></b-form-select>
           </b-form-group>
-             <div class="ml-3">
+             <div class="ml-3 excel-export">
               <vue-excel-xlsx
                   :data="items"
                   :columns="columns"
@@ -141,6 +141,13 @@ export default {
 </script>
 
 <style>
+input:read-only {
+  border: 0 !important;
+  width: 100% !important;
+}
+div.excel-export button:first-child{
+ border: 0;
+}
 .create_btn{
     background: #00A1E4;
     padding: 2px 25px;

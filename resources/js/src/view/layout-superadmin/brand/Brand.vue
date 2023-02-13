@@ -45,17 +45,10 @@
 
 <script>
 import { mapGetters } from "vuex";
-import objectPath from "object-path";
-import KTLayoutBrand from "@/assets/js/layout/base/brand.js";
-import KTLayoutAsideToggle from "@/assets/js/layout/base/aside-toggle.js";
 
 export default {
   name: "KTBrand",
   mounted() {
-    // Init Brand Panel For Logo
-    KTLayoutBrand.init(this.$refs["kt_brand"]);
-    // Init Aside Menu Toggle
-    KTLayoutAsideToggle.init(this.$refs["kt_aside_toggle"]);
   },
   methods: {
   },

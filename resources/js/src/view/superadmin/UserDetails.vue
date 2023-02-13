@@ -11,66 +11,56 @@
                 </div>
                 <br><br><br><br><br>
                 <h3 class="mb-1 mt-3">Personal details</h3>
-                <div class="bg-white p-3 rounded" style="margin-right: 2%">
-                    <div class="" style="width:48%; float: right;">
+                <div class="bg-white p-5 rounded" style="margin-right: 2%">
+                    <div class="mb-3" style="width:48%; float: right;">
                         <span>Last name</span><br>
-                        <h5>{{branch_detail['last_name']}}</h5>
-                        
+                        <input type="text" :value="branch_detail['last_name']" class="input-value" readonly>   
                     </div>
-                    <div class="" style="width:48%;">
+                    <div class="mb-3" style="width:48%;">
                         <span>First name</span><br>
-                        <h5>{{branch_detail['first_name']}}</h5>
-                        
+                         <input type="text" :value="branch_detail['first_name']" class="input-value" readonly>  
                     </div>
-                    <div style="width:48%;float: right;">
+                    <div class="mb-3" style="width:48%;float: right;">
                         <span>Number of people in household</span><br>
-                        <h5>{{branch_detail['no_of_people']}}</h5>
-                        
+                        <input type="text" :value="branch_detail['no_of_people']" class="input-value" readonly> 
                     </div>
-                    <div style="width:48%;">
+                    <div class="mb-3" style="width:48%;">
                         <span>Email id</span><br>
-                        <h5>{{branch_detail['email_id']}}</h5>
-                        
+                        <input type="text" :value="branch_detail['email_id']" class="input-value" readonly> 
                     </div>
-                    <div style="width:48%;float: right;">
+                    <div class="mb-3" style="width:48%;float: right;">
                         <span>Birthday</span><br>
-                        <h5>{{branch_detail['birthday']}}</h5>
-                        
+                        <input type="text" :value="branch_detail['birthday']" class="input-value" readonly> 
                     </div>
-                    <div style="width:48%;">
+                    <div class="mb-3" style="width:48%;">
                         <span>Phone number</span><br>
-                        <h5>{{branch_detail['phone']}}</h5>
-                        
+                        <input type="text" :value="branch_detail['phone']" class="input-value" readonly>
                     </div>
-                    <div>
+                    <div class="mb-3">
                         <span>Address</span><br>
-                        <h5>{{branch_detail['street_address']}} {{branch_detail['address']}}</h5>
-                        
+                        <input type="text" :value="branch_detail['street_address']" class="input-value" readonly style="padding:7px">
                     </div>
-                    <div style="width:31%;float: right;">
+                    <div class="mb-3" style="width:31%;float: right;">
                         <span>Zip code</span><br>
-                        <h5>{{branch_detail['zip_code']}}</h5>
-                        
+                        <input type="text" :value="branch_detail['zip_code']" class="input-value" readonly>
                     </div>
-                    <div style="width:31%;float: right;padding-right: 4%;">
+                    <div class="mb-3" style="width:31%;float: right;padding-right: 4%;">
                         <span>State</span><br>
-                        <h5>{{branch_detail['state']}}</h5>
-                        
+                        <input type="text" :value="branch_detail['state']" class="input-value" readonly>
                     </div>
-                    <div style="width:31%;">
+                    <div class="mb-3" style="width:31%;">
                         <span>City</span><br>
-                        <h5>{{branch_detail['city']}}</h5>
-                        
+                        <input type="text" :value="branch_detail['city']" class="input-value" readonly>
                     </div>
                 </div>
-                <div class="bg-white px-3 pb-1 mt-2 rounded" style="margin-right: 2%" v-if="branch_detail['comment']">
+                <div class="bg-white px-3 pb-1 mt-5 rounded" style="margin-right: 2%" v-if="branch_detail['comment']">
                     <span>Comments</span><br>
                     <h5>{{branch_detail['comment']}}</h5>
                     
                 </div>
-                <p class="fw mt-1" style="font-size: 18px;">{{branch_detail['first_name']}} is qualified for following membership rates</p>
+                <p class="fw mt-5" style="font-size: 18px;">{{branch_detail['first_name']}} is qualified for following membership rates</p>
                 <div class="table-responsive text-center bg-white" style="width: 50%">
-                    <table class="table table-striped p-2">
+                    <table class="table table-striped p-2" v-if="plans">
                         <tbody>
                         <tr v-for="(key,value) in plans">
                             <td>{{value}}</td>
@@ -78,12 +68,14 @@
                         </tr>
                         </tbody>
                     </table>
+                    <div v-else><h3>Not qualified</h3></div>
                 </div>
             </div>
         </div>
 </template>
 <script>
 import ApiService from "@/core/services/api.service";
+
 export default {
   data() {        
     return {
@@ -98,11 +90,13 @@ export default {
         ApiService.get(`/superadmin/user-sumission-detail/${this.user_id}`)
           .then(({ data }) => {
               this.branch_detail=data;
+              if(data['plans']){
               let plan_data=JSON.parse(data['plans']['plans']);
               delete plan_data.index;
               delete plan_data.action;
               delete plan_data.no_of_peoples;
               this.plans=plan_data;
+              }
               this.data_loded=true;
           })
     },
@@ -114,6 +108,15 @@ export default {
 };
 </script>
 <style scoped>
+.input-value{
+    padding: 1.5%;
+    border: 0;
+    font-size: 16px;
+    box-shadow: -3px 1px 2px 1px rgb(0 0 0 / 20%);
+}
+.input-value:focus {
+  outline: none;
+}
 .col-sm-12{
     margin-left: 7px;
     background: #F0F2F5;

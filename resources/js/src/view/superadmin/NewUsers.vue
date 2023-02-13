@@ -52,7 +52,9 @@
                 <div class="flex-fill border-bottom border-2 border-secondary h1"></div>
           </div>
           <p class="h6">Branch admin</p>
-          <input type="checkbox" value="true" v-model="user_form.is_admin"> <span class="text-muted">Can create / edit more branch users</span>
+          <div class="d-flex">
+            <input type="checkbox" value="true" v-model="user_form.is_admin"> <span class="text-muted">Can create / edit more branch users</span>
+          </div>
         </div>
         <!-- <has-error :form="form" field="password"></has-error> -->
         <div class="alert alert-success mt-3" role="alert" id="fade">
@@ -64,7 +66,6 @@
   </div>
 </template>
 <script>
-import Form from 'vform';
 import ApiService from "@/core/services/api.service";
 export default {
   data() {

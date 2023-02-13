@@ -1,5 +1,5 @@
 <template>
-  <div class="h-100">
+  <div class="h-100 main-hide">
      <router-view></router-view>
   </div>
 </template>
@@ -8,13 +8,13 @@
 // 3rd party plugins css
 @import "~bootstrap-vue/dist/bootstrap-vue.css";
 @import "~perfect-scrollbar/css/perfect-scrollbar.css";
-@import "~socicon/css/socicon.css";
-@import "~animate.css";
+//@import "~socicon/css/socicon.css";
+//@import "~animate.css";
 @import "~@fortawesome/fontawesome-free/css/all.css";
-@import "~line-awesome/dist/line-awesome/css/line-awesome.css";
-@import "assets/plugins/flaticon/flaticon.css";
-@import "assets/plugins/flaticon2/flaticon.css";
-@import "assets/plugins/keenthemes-icons/font/ki.css";
+//@import "~line-awesome/dist/line-awesome/css/line-awesome.css";
+//@import "assets/plugins/flaticon/flaticon.css";
+//@import "assets/plugins/flaticon2/flaticon.css";
+//@import "assets/plugins/keenthemes-icons/font/ki.css";
 
 // Main demo style scss
 @import "assets/sass/style.vue";
@@ -23,7 +23,11 @@
 // Update HTML with RTL attribute at public/index.html
 /*@import "assets/css/style.vue.rtl";*/
 </style>
-
+<style scoped>
+.main-hide{
+  overflow-x: hidden;
+}
+</style>
 <script>
 import { OVERRIDE_LAYOUT_CONFIG } from "@/core/services/store/config.module";
 

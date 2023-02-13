@@ -136,7 +136,6 @@
   </div>
 </template>
 <script>
-import Form from 'vform';
 import ApiService from "@/core/services/api.service";
 export default {
   data() {

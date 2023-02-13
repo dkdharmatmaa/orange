@@ -176,7 +176,6 @@
   </div>
 </template>
 <script>
-import Form from 'vform';
 import ApiService from "@/core/services/api.service";
 import { mapGetters } from "vuex";
 import { LOGOUT} from "@/core/services/store/auth.module";

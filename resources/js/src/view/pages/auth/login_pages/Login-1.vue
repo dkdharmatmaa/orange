@@ -42,7 +42,7 @@
                   />
               </div>
               <div class="">
-                  <input type="checkbox" style="margin-top: 4px;" /> <span class="text-muted font-weight-bolder">Remember me</span>
+                  <div class="float-left"><input type="checkbox" style="margin-top: 4px;" /> <span class="text-muted font-weight-bolder">Remember me</span></div>
                   <a class="text-muted font-weight-bolder float-right" id="kt_login_forgot" @click="showForm('forgot')">Forgot Password ?</a>
               </div>
               <div>
@@ -127,7 +127,6 @@ import axios from 'axios';
 import Trigger from "@/assets/plugins/formvalidation/dist/es6/plugins/Trigger";
 import Bootstrap from "@/assets/plugins/formvalidation/dist/es6/plugins/Bootstrap";
 import SubmitButton from "@/assets/plugins/formvalidation/dist/es6/plugins/SubmitButton";
-
 import KTUtil from "@/assets/js/components/util";
 import { mapGetters, mapState } from "vuex";
 import { LOGIN, LOGOUT} from "@/core/services/store/auth.module";

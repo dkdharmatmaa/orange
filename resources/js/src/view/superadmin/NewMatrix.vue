@@ -165,4 +165,7 @@ export default {
 #fade{
   display: none;
 }
+button{
+  border: 0 !important;
+}
 </style>

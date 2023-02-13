@@ -77,8 +77,8 @@ class EligibiltyRangeController extends Controller
             'first_name' => ['required', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
             'total_people' => ['required', 'string', 'max:100'],
-            'phone' => ['required','regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
-            'birthday' => ['required', 'string', 'max:20'],
+            // 'phone' => ['required','regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
+            // 'birthday' => ['required', 'string', 'max:20'],
             'street_address' => ['required','string','max:100'],
             'address' => ['nullable','string','max:100'],
             'city' => ['required','string','max:100'],
@@ -96,8 +96,6 @@ class EligibiltyRangeController extends Controller
         $eligibilty->last_name=$request->last_name;
         $eligibilty->no_of_people=$request->total_people;
         $eligibilty->email_id=$request->email;
-        $eligibilty->phone=$request->phone;
-        $eligibilty->birthday=$request->birthday;
         $eligibilty->street_address=$request->street_address;
         $eligibilty->address=$request->address;
         $eligibilty->city=$request->city;
@@ -125,14 +123,14 @@ class EligibiltyRangeController extends Controller
 
         if($total_income){
             $palns=Incomebind::where([['association_id','=',$eligibilty->association_id],['branch_id','=',$eligibilty->branch_id],['no_of_people','=',$eligibilty->no_of_people],['minmum_range','<=',$total_income],['maximum_range','>=',$total_income]])->select('id','minmum_range','maximum_range','plans')->first();
-            if($palns){
+            if(!$palns){
+                $palns=Incomebind::where([['association_id','=',$eligibilty->association_id],['branch_id','=',$eligibilty->branch_id],['minmum_range','<=',$total_income],['maximum_range','>=',$total_income]])->select('id','minmum_range','maximum_range','plans')->orderBy('no_of_people','desc')->take(1)->first();
+            }
             $data['plans']=$palns;
-            }
-            else{
-                $palns_exception=Incomebind::where([['association_id','=',$eligibilty->association_id],['branch_id','=',$eligibilty->branch_id],['minmum_range','<=',$total_income],['maximum_range','>=',$total_income]])->select('id','minmum_range','maximum_range','plans')->orderBy('no_of_people','desc')->take(1)->first();
-                $data['plans']=$palns_exception;
-            }
-            Eligibilty::where('id',$eligibilty->id)->update(['api_status'=>"Qualified",'api_incomebind'=>$total_income,'plan_id'=>$data['plans']['id']]);
+            $plan_id=0;
+            if($palns)
+            $plan_id=$data['plans']['id'];
+            Eligibilty::where('id',$eligibilty->id)->update(['api_status'=>"Qualified",'api_incomebind'=>$total_income,'plan_id'=>$plan_id]);
             $data['details']=$eligibilty;
             return json_encode(['status'=>true,'message'=>"Data get from API",'data'=>$data],true);
         }

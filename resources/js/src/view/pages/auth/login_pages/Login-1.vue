@@ -27,7 +27,7 @@
                     name="email"
                     ref="email"
                     v-model="form.email"
-                    placeholder="Email"
+                    placeholder="Email address"
                   />
               </div>
               <div class="form-group">

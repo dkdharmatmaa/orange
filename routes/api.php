@@ -57,7 +57,7 @@ Route::group(['middleware' => 'auth:admin-api','prefix' => 'admin'], function ()
     //matrix opertaion
     Route::post('/create-matrix/{branch_id}', [AdminIncomebindController::class,'store']);
     Route::put('/edit-matrix/{branch_id}/{minmum_range}/{maximum_range}', [AdminIncomebindController::class,'update']);
-    Route::delete('/delete-matrix/{matrix_id}', [AdminIncomebindController::class,'delete']);
+    Route::delete('/delete-matrix/{minmum_range}/{branch_id}', [AdminIncomebindController::class,'delete']);
     Route::get('/all-matrix/{branch_id}', [AdminIncomebindController::class,'index']);
     Route::get('/single-matrix/{branch_id}/{minmum_range}/{maximum_range}', [AdminIncomebindController::class,'single_matrix']);
 });
@@ -115,7 +115,7 @@ Route::group(['middleware' => 'auth:superAdmin-api','prefix' => 'superadmin'], f
     //matrix opertaion
     Route::post('/create-matrix/{assos_id}/{branch_id}', [SuperAdminIncomebindController::class,'store']);
     Route::put('/edit-matrix/{association_id}/{branch_id}/{minmum_range}/{maximum_range}', [SuperAdminIncomebindController::class,'update']);
-    Route::delete('/delete-matrix/{matrix_id}', [SuperAdminIncomebindController::class,'delete']);
+    Route::delete('/delete-matrix/{minmum_range}/{assoc_id}/{branch_id}', [SuperAdminIncomebindController::class,'delete']);
     Route::get('/all-matrix/{assos_id}/{branch_id}', [SuperAdminIncomebindController::class,'index']);
     Route::get('/single-matrix/{association_id}/{branch_id}/{minmum_range}/{maximum_range}', [SuperAdminIncomebindController::class,'single_matrix']);
 });

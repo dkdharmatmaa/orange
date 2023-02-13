@@ -72,9 +72,8 @@ class IncomebindController extends Controller
         }
         return json_encode(['status'=>true,'message'=>"Data update successful"]);
     }
-    public function delete($matrix_id){
-        $incomebind = Incomebind::find($matrix_id);
-        $incomebind->delete();
+    public function delete($minmum_range,$assoc_id,$branch_id){
+        $incomebind = Incomebind::where([['minmum_range',$minmum_range],['association_id',$assoc_id],['branch_id',$branch_id]])->delete();
         if($incomebind){
             return response()->json(['status'=>true,'message'=>'Data delete successful']);
         }

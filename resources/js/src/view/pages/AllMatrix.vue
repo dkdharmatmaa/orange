@@ -37,6 +37,7 @@ export default {
   },
   methods: {
     get_plans(){
+      this.main_arr=[];
       ApiService.get(`/user/all-matrix/${this.branch_id}`)
         .then((data) => {
           for(var short_data in data.data) {

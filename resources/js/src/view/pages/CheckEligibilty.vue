@@ -43,37 +43,13 @@
             type="email"
             v-model="eligiblity_form.email"
             required
-            placeholder="Email Id"
+            placeholder="Email address"
             class="ml-1 input-box"
           :class="{ 'is-invalid': eligiblity_form.errors.has('email') }"
           >
           <has-error :form="eligiblity_form" field="email"></has-error>
           </b-form-input>
         </b-form-group>
-        <div class="d-flex mb-7">
-          <b-form-input
-            id="input-5"
-            v-model="eligiblity_form.phone"
-            type="text"
-            required
-            placeholder="123-456-7891"
-            class="mx-1 input-box"
-            :class="{ 'is-invalid': eligiblity_form.errors.has('phone') }"
-          >
-          <has-error :form="eligiblity_form" field="phone"></has-error>
-          </b-form-input>
-          <b-form-input
-            id="input-6"
-            type="text"
-            v-model="eligiblity_form.birthday"
-            required
-            placeholder="Birthday - MM/DD/YYYY"
-            class="ml-1 input-box"
-            :class="{ 'is-invalid': eligiblity_form.errors.has('birthday') }"
-          >
-          <has-error :form="eligiblity_form" field="birthday"></has-error>
-          </b-form-input>
-        </div>
         <b-form-group>
           <b-form-input
             id="input-7"
@@ -161,8 +137,6 @@ export default {
         last_name: "",
         total_people: "Number of people in household",
         email: "",
-        phone: "",
-        birthday: "",
         street_address: "",
         address: "",
         city: "",
@@ -192,24 +166,6 @@ export default {
                 this.submit_spinner=false;
               });
     }
-    },
-    onReset(evt) {
-      evt.preventDefault();
-      // Reset our form values
-      this.eligiblity_form.first_name = "";
-      this.eligiblity_form.last_name = "";
-      this.eligiblity_form.total_people = "";
-      this.eligiblity_form.email = "";
-      this.eligiblity_form.phone = "";
-      this.eligiblity_form.birthday = "";
-      this.eligiblity_form.address1 = "";
-      this.eligiblity_form.address2 = "";
-      this.eligiblity_form.association = "";
-      this.eligiblity_form.branch = "";
-      this.eligiblity_form.city = "";
-      this.eligiblity_form.state = "";
-      this.eligiblity_form.zip_code = "";
-      this.eligiblity_form.lead_id = "";
     },
   },
   mounted() {

@@ -44,7 +44,7 @@
                 <div class="mb-5">
                     <div class="bg-white p-3 rounded" style="width:40%;float:left;">
                         <h6>{{$main_data['branch']['name']}}</h6>
-                        <h6>{{ date('d/M/y', strtotime($main_data['created_at'])) }}</h6>
+                        <h6>{{ date('M/d/y', strtotime($main_data['created_at'])) }}</h6>
                         {{-- <table>
                             <tr>
                                 <td>Branch name</td>
@@ -90,7 +90,7 @@
                         <h6>{{$main_data['email_id']}}</h6>
                         <hr>
                     </div>
-                    <div style="width:48%;float: right;">
+                    {{-- <div style="width:48%;float: right;">
                         <span>Birthday</span><br>
                         <h6>{{$main_data['birthday']}}</h6>
                         <hr>
@@ -99,7 +99,7 @@
                         <span>Phone number</span><br>
                         <h6>{{$main_data['phone']}}</h6>
                         <hr>
-                    </div>
+                    </div> --}}
                     <div>
                         <span>Address</span><br>
                         <h6>{{$main_data['street_address']}} {{$main_data['address']}}</h6>

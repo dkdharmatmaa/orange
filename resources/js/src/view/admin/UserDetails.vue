@@ -6,7 +6,7 @@
                 <div class="mb-5">
                     <div class="bg-white p-5 rounded" style="width:auto;float:left;">
                         <h4>{{branch_detail['association']['name']}}</h4>
-                        <h4>{{ moment(branch_detail['created_at']).format('YYYY-MM-DD HH:mm:ss') }}</h4>
+                        <h4>{{ moment(branch_detail['created_at']).format('MM-DD-YYYY HH:mm:ss') }}</h4>
                     </div>
                 </div>
                 <br><br><br><br><br>
@@ -32,14 +32,14 @@
                         <span>Birthday</span><br>
                         <input type="text" :value="branch_detail['birthday']" class="input-value" readonly> 
                     </div>
-                    <div class="mb-3" style="width:48%;">
+                    <!-- <div class="mb-3" style="width:48%;">
                         <span>Phone number</span><br>
                         <input type="text" :value="branch_detail['phone']" class="input-value" readonly>
                     </div>
                     <div class="mb-3">
                         <span>Address</span><br>
                         <input type="text" :value="branch_detail['street_address']" class="input-value" readonly style="padding:7px">
-                    </div>
+                    </div> -->
                     <div class="mb-3" style="width:31%;float: right;">
                         <span>Zip code</span><br>
                         <input type="text" :value="branch_detail['zip_code']" class="input-value" readonly>

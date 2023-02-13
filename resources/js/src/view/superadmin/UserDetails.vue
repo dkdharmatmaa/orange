@@ -6,7 +6,7 @@
                 <div class="mb-5">
                     <div class="bg-white p-5 rounded" style="width:auto;float:left;">
                         <h4>{{branch_detail['association']['name']}}</h4>
-                        <h4>{{ moment(branch_detail['created_at']).format('YYYY-MM-DD HH:mm:ss') }}</h4>
+                        <h4>{{ moment(branch_detail['created_at']).format('MM-DD-YYYY HH:mm:ss') }}</h4>
                     </div>
                 </div>
                 <br><br><br><br><br>

@@ -49,7 +49,7 @@
               <router-link :to="'/user-details/'+data.item.id">{{data.item.first_name}}</router-link>
               </template>
               <template #cell(created_at)="data">
-                {{ moment(data.item.created_at).format('YYYY-MM-DD HH:mm:ss') }}
+                {{ moment(data.item.created_at).format('MM-DD-YYYY HH:mm:ss') }}
               </template>
            </b-table>
           <!-- for pagination -->
@@ -84,8 +84,6 @@ export default {
         {label:'First Name',key:"first_name"},
         {label:'Last Name',key:"last_name"},
         {label:'Branch user',key:"executive_name"},
-        {label:'Phone',key:'phone'},
-        {label:'Birthday',key:'birthday'},
         {label:'Members',key:'no_of_people'},
         {label:'Member/lead id',key:'lead_id'},
         {label:"Date created",key:"created_at"},
@@ -94,8 +92,6 @@ export default {
       columns: [
         {label:'Name',field:"first_name"},
         {label:'Branch user',field:"executive_name"},
-        {label:'Phone',field:'phone'},
-        {label:'Birthday',field:'birthday'},
         {label:'Members',field:'no_of_people'},
         {label:'Member/lead id',field:'lead_id'},
         {label:"Date created",field:"created_at"},

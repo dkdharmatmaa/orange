@@ -126,7 +126,7 @@ export default {
       this.action='Edit';
    }
    this.getBranches();
-   this.user_form.association_id=this.currentUser.id;
+   this.user_form.association_id=this.currentUser.association_id;
   },
   computed: {
     get_item: function(){

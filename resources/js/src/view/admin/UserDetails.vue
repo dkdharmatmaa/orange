@@ -28,18 +28,10 @@
                         <span>Email id</span><br>
                         <input type="text" :value="branch_detail['email_id']" class="input-value" readonly> 
                     </div>
-                    <div class="mb-3" style="width:48%;float: right;">
-                        <span>Birthday</span><br>
-                        <input type="text" :value="branch_detail['birthday']" class="input-value" readonly> 
-                    </div>
-                    <!-- <div class="mb-3" style="width:48%;">
-                        <span>Phone number</span><br>
-                        <input type="text" :value="branch_detail['phone']" class="input-value" readonly>
-                    </div>
                     <div class="mb-3">
                         <span>Address</span><br>
                         <input type="text" :value="branch_detail['street_address']" class="input-value" readonly style="padding:7px">
-                    </div> -->
+                    </div>
                     <div class="mb-3" style="width:31%;float: right;">
                         <span>Zip code</span><br>
                         <input type="text" :value="branch_detail['zip_code']" class="input-value" readonly>

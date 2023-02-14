@@ -43,7 +43,7 @@
       </div>
       </div>
 
-      <b-form @submit="onSubmit" class="fw-700 mt-5">
+      <b-form class="fw-700 mt-5">
       <h3 class="fw-700">Personal details</h3>
       <div class="bg-white p-10 rounded">
         <b-form-group>
@@ -52,10 +52,10 @@
             type="text"
             v-model="user_form.name"
             required
+            readonly
             placeholder="Name"
             class="ml-1 input-box"
           ></b-form-input>
-          <!-- <has-error :form="form" field="address2"></has-error> -->
         </b-form-group>
         <b-form-group>
           <b-form-input
@@ -67,47 +67,42 @@
             class="ml-1 input-box"
             readonly
           ></b-form-input>
-          <!-- <has-error :form="form" field="email"></has-error> -->
         </b-form-group>
-        <div class="alert alert-success" role="alert" id="fade1">
+        <!-- <div class="alert alert-success" role="alert" id="fade1">
           <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
         </div>
-         <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white">Save details</button>
+         <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white">Save details</button> -->
       </div>
       </b-form>
-      <b-form
-      @submit="submitPassword"
-      class="fw-700"
-    >
-      <h3 class="font-weight-bolder mt-10">Reset password</h3>
-      <div class="bg-white p-10 rounded">
-        <b-form-group>
-          <b-form-input
-            id="input-4"
-            v-model="password_form.password"
-            type="password"
-            required
-            placeholder="Password"
-            class="ml-1 input-box"
-          ></b-form-input>
-        </b-form-group>
-        <b-form-group>
-          <b-form-input
-            id="input-4"
-            v-model="password_form.password_confirmation"
-            type="password"
-            required
-            placeholder="Confirm password"
-            class="ml-1 input-box"
-          ></b-form-input>
-        </b-form-group>
-        <!-- <has-error :form="form" field="password"></has-error> -->
-        <div class="alert alert-success" role="alert" id="fade">
-          <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
+      <!-- <b-form @submit="submitPassword" class="fw-700">
+        <h3 class="font-weight-bolder mt-10">Reset password</h3>
+        <div class="bg-white p-10 rounded">
+          <b-form-group>
+            <b-form-input
+              id="input-4"
+              v-model="password_form.password"
+              type="password"
+              required
+              placeholder="Password"
+              class="ml-1 input-box"
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <b-form-input
+              id="input-4"
+              v-model="password_form.password_confirmation"
+              type="password"
+              required
+              placeholder="Confirm password"
+              class="ml-1 input-box"
+            ></b-form-input>
+          </b-form-group>
+          <div class="alert alert-success" role="alert" id="fade">
+            <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
+          </div>
+          <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white">Save password</button>
         </div>
-         <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white">Save password</button>
-      </div>
-    </b-form>
+    </b-form> -->
     </div>
   </div>
 </template>

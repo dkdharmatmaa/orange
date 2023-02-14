@@ -42,7 +42,7 @@
                   />
               </div>
               <div class="">
-                  <div class="float-left"><input type="checkbox" style="margin-top: 4px;" /> <span class="text-muted font-weight-bolder">Remember me</span></div>
+                  <div class="float-left d-flex"><input type="checkbox" style="margin-top: 4px;" />&nbsp; <span class="text-muted font-weight-bolder mt-1">Remember me</span></div>
                   <a class="text-muted font-weight-bolder float-right" id="kt_login_forgot" @click="showForm('forgot')">Forgot Password ?</a>
               </div>
               <div>
@@ -74,7 +74,7 @@
                 </p>
               </div>
               <div class="text-success mt-2 ml-2 h5" v-if="email_send">Reset Email is send successfully, please check your inbox.</div>
-              <div class="text-danger mt-2 ml-2" v-if="check_email">Invalid email.</div>
+              <div class="text-danger mt-2 ml-2" v-if="check_email">Invalid email. Note:- User can't forget password</div>
               <div class="form-group">
                 <input
                   class="form-control form-control-solid h-auto py-3 px-2 rounded-lg font-size-h6"

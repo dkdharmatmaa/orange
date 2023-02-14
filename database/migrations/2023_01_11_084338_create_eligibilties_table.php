@@ -30,7 +30,7 @@ class CreateEligibiltiesTable extends Migration
             $table->string('state',50)->nullable();
             $table->integer('zip_code');
             $table->string('lead_id',100)->nullable();
-            $table->enum('api_status',['Qualified','Not Qualified'])->default(null);
+            $table->enum('api_status',['Qualified','Not Qualified','No match found'])->default(null);
             $table->bigInteger('api_incomebind')->nullable();
             $table->integer('plan_id')->nullable();
             $table->enum('user_status',['Accepted','Deferred'])->default(null);

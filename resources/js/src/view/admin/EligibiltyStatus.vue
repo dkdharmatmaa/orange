@@ -68,13 +68,13 @@ export default {
       if(this.$route.params.main_data.status){  
       this.plans=this.$route.params.main_data.data.plans;
       // for income band $${this.plans.minmum_range} - $${this.plans.maximum_range}
-      this.main_message=`${this.user_details.first_name} is qualified for following membership rates`;
+      this.main_message=`(${this.user_details.first_name}) is qualified for following membership rates`;
       let all_plans=Object.entries(JSON.parse(this.plans.plans));
       all_plans.splice(0, 3);
       this.items=all_plans;
       }
       else{
-        this.main_message=`${this.user_details.first_name} is not qualified `;
+        this.main_message=`${this.user_details.first_name} ${this.$route.params.main_data.message}`;
       }
       }
       else{

@@ -1,13 +1,13 @@
 import Vue from "vue";
 import Router from "vue-router";
 Vue.use(Router);
-
 export default new Router({
   mode: "history",
   routes: [
     //-----------users route-------------------
     {
       path: "/",
+      redirect: "/check-eligibilty",
       component: () => import("@/view/layout/Layout"),
       children: [
         {
@@ -35,7 +35,7 @@ export default new Router({
           meta: { userType: 'user' }
         },
         {
-          path: "check-eligibilty",
+          path: "/check-eligibilty",
           name: "user-checkeligibilty",
           component: () => import("@/view/pages/CheckEligibilty.vue"),
           meta: { userType: 'user' }

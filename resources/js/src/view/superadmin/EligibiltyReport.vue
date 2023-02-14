@@ -113,7 +113,7 @@ export default {
       pageOptions: [10, 15, 20,{ value: 100, text: "Show a lot" }],
       options_association:[],
       options_branch:[],
-      options_api_status:[{value:'',text:'Select status'},{value:'Qualified',text:'Qualified'},{value:'Not Qualified',text:'Not Qualified'}],
+      options_api_status:[{value:'',text:'Select status'},{value:'Qualified',text:'Qualified'},{value:'Not Qualified',text:'Not Qualified'},{value:'No match found',text:'No match found'}],
     };
   },
   methods: {

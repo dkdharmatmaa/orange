@@ -30,7 +30,7 @@
              </div>
             <div class="my-5">
               <b-button variant="primary" class="px-5 h5" v-on:click="save_comment()">Save details</b-button>&nbsp;&nbsp;&nbsp;&nbsp;
-              <b-button variant="white" class="print_btn border border-secondary"><a :href="'/generate-pdf/'+user_details.id" target="_blank" class="h5">Print details</a></b-button>            
+              <b-button variant="white" class="print_btn border border-secondary" v-if="get_data"><a :href="'/generate-pdf/'+user_details.id" target="_blank" class="h5">Print details</a></b-button>            
             </div>
         </div>
       </div>
@@ -51,6 +51,7 @@ export default {
         user_details:[],
         plans:[],
         main_message:'',
+        get_data:true,
       }
     },
     methods:{
@@ -67,14 +68,14 @@ export default {
         this.user_details=this.$route.params.main_data.data.details;
       if(this.$route.params.main_data.status){  
       this.plans=this.$route.params.main_data.data.plans;
-      // for income band $${this.plans.minmum_range} - $${this.plans.maximum_range}
-      this.main_message=`(${this.user_details.first_name}) is qualified for following membership rates`;
+      this.main_message=`${this.user_details.first_name} is qualified for the following financial assistance.`;
       let all_plans=Object.entries(JSON.parse(this.plans.plans));
       all_plans.splice(0, 3);
       this.items=all_plans;
       }
       else{
         this.main_message=`${this.user_details.first_name} ${this.$route.params.main_data.message} `;
+        this.get_data=false;
       }
       }
       else{

@@ -134,7 +134,8 @@
                 <div class="table-responsive text-center bg-white" style="width: 50%">
                     <table class="table table-striped p-2">
                         <tbody>
-                            @php 
+                            @php
+                            if($main_data['plans']){ 
                             $plans_data=json_decode($main_data['plans']['plans'],true);
                             $output = array_slice($plans_data, 3); 
                             foreach ($output as $key => $value) {
@@ -142,10 +143,13 @@
                                 echo "<td>".$key."</td>";
                                 echo "<td>".$value."</td>";
                                 echo "</tr>";    
-                            }  
-                            // for($i=0;$i<sizeof($plans_data);$i++){
-                            
-                            // } 
+                            } 
+                        }
+                        else{
+                            echo "<tr class='m-2'>";
+                                echo "<td>No data found</td>";
+                            echo "</tr>";  
+                        } 
                             @endphp
                         </tbody>
                     </table>

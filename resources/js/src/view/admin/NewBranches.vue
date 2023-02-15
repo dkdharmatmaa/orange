@@ -4,7 +4,7 @@
       @submit="onSubmit"
       class="w-md-50 fw-700"
     >
-      <h3 class="fw-700">{{action}} branch</h3>
+      <h3 class="fw-700">{{action_name}} branch</h3>
       <div class="bg-white p-10 rounded">
         <div class="d-flex mb-7">
           <b-form-input
@@ -100,6 +100,7 @@ export default {
         zip_code: "",
       }),
       action: 'Add',
+      action_name: 'Add',
     };
   },
   methods: {
@@ -133,6 +134,7 @@ export default {
    if(this.get_item){
       this.getData(this.get_item);
       this.action='Save';
+      this.action_name='Edit';
    }
   },
   computed: {

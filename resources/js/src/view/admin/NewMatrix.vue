@@ -32,7 +32,7 @@
           <b-table responsive :items="single_arr.items" :fields="single_arr.fields" style="white-space:nowrap">  
           <template v-for="(field,field_index) in single_arr.fields" v-slot:[`head(${field})`]="data">
             <span v-if="data.field.key!='index'" v-html="data.field.label" />
-            <span class="text-danger" v-if="data.field.key!='action' && data.field.key!='index' && data.field.key!='no_of_peoples'" v-on:click="delete_plan(index_main,field_index,data.field.key)"> | <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
+            <span class="text-danger" v-if="data.field.key!='action' && data.field.key!='index' && data.field.key!='no_of_people'" v-on:click="delete_plan(index_main,field_index,data.field.key)"> | <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
             </span>
           </template>
               <template v-for="field in single_arr.fields" v-slot:[`cell(${field})`]="data">
@@ -89,7 +89,7 @@ export default {
       this.main_arr[index].items.push(obj); 
     },
     add_incomebind(){
-      this.main_arr.push({"minmum_range":this.incomebind_min,'maximum_range':this.incomebind_max,'plan_name':'','fields':['index','action','no_of_peoples'],'items':[{'index':"",'action':"","no_of_peoples":1}]});
+      this.main_arr.push({"minmum_range":this.incomebind_min,'maximum_range':this.incomebind_max,'plan_name':'','fields':['index','action','no_of_people'],'items':[{'index':"",'action':"","no_of_people":1}]});
       this.add_incomebind_active=false;
       this.incomebind_min='';
       this.incomebind_max='';

@@ -42,14 +42,16 @@
           ></b-form-input>
         </b-form-group>
         <div>
-          <div class="d-flex">
+          <!-- <div class="d-flex">
                 <div class="flex-fill border-top border-2 border-secondary h1"></div>
                 <div class="h6 text-center font-weight-bolder">Permission</div>
                 <div class="flex-fill border-bottom border-2 border-secondary h1"></div>
-          </div>
+          </div> -->
+          <div class="h6 text-center font-weight-bolder">Permission</div>
+          <hr style="margin: -10px 0 7px 0;">
           <p class="h6">Branch admin</p>
           <div class="d-flex">
-            <input type="checkbox" value="true" v-model="user_form.is_admin"> <span class="text-muted">Can create / edit more branch users</span>
+            <input type="checkbox" value="true" v-model="user_form.is_admin"> &nbsp;<span class="text-muted">Can create / edit more branch users</span>
           </div>
         </div>
         <!-- <has-error :form="form" field="password"></has-error> -->

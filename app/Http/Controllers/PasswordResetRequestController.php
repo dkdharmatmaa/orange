@@ -21,8 +21,10 @@ class PasswordResetRequestController extends Controller
     
     public function sendEmail(Request $request)  // this is most important function to send mail and inside of that there are another function
     {
-        $userTypeDemo=Role::where([['email',$request->email],['role','!=','user']])->select('role')->first()->toArray()['role'];
-        if($userTypeDemo=='admin')
+        $userTypeDemo=Role::where([['email',$request->email]])->select('role')->first()->toArray()['role'];
+        if($userTypeDemo=='user')
+        $userType='user';
+        elseif($userTypeDemo=='admin')
         $userType='admins';
         else
         $userType='super_admin';

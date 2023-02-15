@@ -86,7 +86,7 @@ export default {
               let plan_data=JSON.parse(data['plans']['plans']);
               delete plan_data.index;
               delete plan_data.action;
-              delete plan_data.no_of_peoples;
+              delete plan_data.no_of_people;
               this.plans=plan_data;
               }
               this.data_loded=true;

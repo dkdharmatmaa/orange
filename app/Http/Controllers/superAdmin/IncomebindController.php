@@ -24,13 +24,13 @@ class IncomebindController extends Controller
                 $main_fields=json_encode($request[$i]['fields']);
                 $total_paln=count((array)$main_data);
                 for($j=0;$j<$total_paln;$j++){
-                    if(!empty($main_data[$j]['no_of_peoples'])){
+                    if(!empty($main_data[$j]['no_of_people'])){
                     $incomebind=New Incomebind();
                     $incomebind->association_id=$assos_id;
                     $incomebind->branch_id=$branch_id;
                     $incomebind->minmum_range=$request[$i]['minmum_range'];
                     $incomebind->maximum_range=$request[$i]['maximum_range'];
-                    $incomebind->no_of_people=$main_data[$j]['no_of_peoples'];
+                    $incomebind->no_of_people=$main_data[$j]['no_of_people'];
                     $incomebind->plans=json_encode($main_data[$j]);
                     $incomebind->fields=$main_fields;
                     $incomebind->save();
@@ -54,13 +54,13 @@ class IncomebindController extends Controller
         $maximum_range=$request->maximum_range;
         $main_items=$request->items;
         for($j=0;$j<sizeof($main_items);$j++){
-            if(!empty($main_items[$j]['no_of_peoples'])){
+            if(!empty($main_items[$j]['no_of_people'])){
             $incomebind=New Incomebind();
             $incomebind->association_id=$assos_id;
             $incomebind->branch_id=$branch_id;
             $incomebind->minmum_range=$minmum_range;
             $incomebind->maximum_range=$maximum_range;
-            $incomebind->no_of_people=$main_items[$j]['no_of_peoples'];
+            $incomebind->no_of_people=$main_items[$j]['no_of_people'];
             $incomebind->plans=json_encode($main_items[$j]);
             $incomebind->fields=$main_fields;
             $incomebind->save();

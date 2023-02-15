@@ -118,14 +118,13 @@ class EligibiltyRangeController extends Controller
                return json_encode(['status'=>true,'message'=>"Data get from API",'data'=>$data],true);
             }
             else{
-               Eligibilty::where('id',$eligibilty->id)->update(['api_status'=>"No match found",'api_incomebind'=>$total_income]);
-               return json_encode(['status'=>false,'message'=>"- There was no match for this data.",'data'=>$data],false);
+               Eligibilty::where('id',$eligibilty->id)->update(['api_status'=>"Not Qualified"]);
+               return json_encode(['status'=>false,'message'=>"is not qualified for any financial assistance.",'data'=>$data],false);
             }
         }
         else{
-            Eligibilty::where('id',$eligibilty->id)->update(['api_status'=>"Not Qualified"]);
-            $data['details']=$eligibilty;
-            return json_encode(['status'=>false,'message'=>"did not qualify for any financial assistance.",'data'=>$data],false);
+            Eligibilty::where('id',$eligibilty->id)->update(['api_status'=>"No match found",'api_incomebind'=>$total_income]);
+            return json_encode(['status'=>false,'message'=>"- There was no match for this data.",'data'=>$data],false);
         }
     }
     public function add_comment(Request $request,$id){

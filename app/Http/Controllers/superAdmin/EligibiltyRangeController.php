@@ -71,7 +71,7 @@ class EligibiltyRangeController extends Controller
             }
             else{
                 if($request->api_status=='Qualified')
-                $data=Eligibilty::where([['api_status','Qualified'],['created_at','<=',$request->from_date_custome],['created_at','>',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->toArray();
+                $data=Eligibilty::where([['api_status','Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->toArray();
                 elseif($request->api_status=='Not Qualified')
                 $data=Eligibilty::where([['api_status','Not Qualified'],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','first_name','last_name','executive_name','branch_name','no_of_people','created_at','api_status','lead_id')->get()->toArray();
                 elseif($request->api_status=='No match found')
@@ -89,8 +89,6 @@ class EligibiltyRangeController extends Controller
             'first_name' => ['required', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
             'total_people' => ['required', 'string', 'max:100'],
-            // 'phone' => ['required','regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
-            // 'birthday' => ['required', 'string', 'max:20'],
             'street_address' => ['required','string','max:100'],
             'address' => ['nullable','string','max:100'],
             'city' => ['required','string','max:100'],
@@ -144,13 +142,13 @@ class EligibiltyRangeController extends Controller
                return json_encode(['status'=>true,'message'=>"Data get from API",'data'=>$data],true);
             }
             else{
-               Eligibilty::where('id',$eligibilty->id)->update(['api_status'=>"No match found",'api_incomebind'=>$total_income]);
-               return json_encode(['status'=>false,'message'=>"- There was no match for this data.",'data'=>$data],false);
+                Eligibilty::where('id',$eligibilty->id)->update(['api_status'=>"Not Qualified"]);
+                return json_encode(['status'=>false,'message'=>"is not qualified for any financial assistance.",'data'=>$data],false);
             }
         }
         else{
-            Eligibilty::where('id',$eligibilty->id)->update(['api_status'=>"Not Qualified"]);
-            return json_encode(['status'=>false,'message'=>"did not qualify for any financial assistance.",'data'=>$data],false);
+            Eligibilty::where('id',$eligibilty->id)->update(['api_status'=>"No match found",'api_incomebind'=>$total_income]);
+            return json_encode(['status'=>false,'message'=>"- There was no match for this data.",'data'=>$data],false);
         }
     }
     public function add_comment(Request $request,$id){

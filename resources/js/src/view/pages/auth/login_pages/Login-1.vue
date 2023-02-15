@@ -73,8 +73,8 @@
                   Enter your email to reset your password
                 </p>
               </div>
-              <div class="text-success mt-2 ml-2 h5" v-if="email_send">Reset Email is send successfully, please check your inbox.</div>
-              <div class="text-danger mt-2 ml-2" v-if="check_email">Invalid email. Note:- User can't forget password</div>
+              <div class="text-success mt-2 ml-2 h5" v-if="email_send">Password reset link has been sent to your email.</div>
+              <div class="text-danger mt-2 ml-2" v-if="check_email">Invalid email.</div>
               <div class="form-group">
                 <input
                   class="form-control form-control-solid h-auto py-3 px-2 rounded-lg font-size-h6"

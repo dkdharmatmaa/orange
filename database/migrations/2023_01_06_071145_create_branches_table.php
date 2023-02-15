@@ -17,7 +17,7 @@ class CreateBranchesTable extends Migration
             $table->id();
             $table->string('name',50);
             $table->string('branch_id',50);
-            $table->bigInteger('association_id')->unsigned()->index();
+            $table->bigInteger('association_id');
             $table->string('association_name',100)->nullable();
             $table->string('address1',100);
             $table->string('address2',100)->nullable();

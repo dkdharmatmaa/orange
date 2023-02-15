@@ -18,8 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->integer('association_id');
-            $table->bigInteger('branch_id')->unsigned()->index();
-            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
+            $table->bigInteger('branch_id');
             $table->string('branch_name',100);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

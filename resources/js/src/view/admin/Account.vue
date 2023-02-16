@@ -61,17 +61,6 @@
         <b-form-group>
           <b-form-input
             id="input-3"
-            type="text"
-            v-model="association_form.pre_text"
-            required
-            placeholder="Text"
-            class="ml-1 input-box"
-          ></b-form-input>
-          <!-- <has-error :form="form" field="address2"></has-error> -->
-        </b-form-group>
-        <b-form-group>
-          <b-form-input
-            id="input-3"
             v-model="association_form.address1"
             type="email"
             required
@@ -120,8 +109,17 @@
             placeholder="Zip code"
             class="ml-1 input-box"
           ></b-form-input>
-          <!-- <has-error :form="form" field="zip_code"></has-error> -->
+          <b-form-group>
+        </b-form-group>
         </div>
+        <b-form-textarea
+            id="textarea"
+            v-model="association_form.pre_text"
+            required
+            placeholder="Qualify Message"
+            class="ml-1 mb-5 input-box"
+            rows="2"
+        ></b-form-textarea>
         <div class="alert alert-success" role="alert" id="fade2">
           <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
         </div>
@@ -255,7 +253,6 @@ computed: {
     font-weight: 700;
 }
 .input-box{
-    padding: 4%;
     border: 1px silver solid;
 }
 .create_btn{

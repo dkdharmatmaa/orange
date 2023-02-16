@@ -132,7 +132,7 @@ class EligibiltyRangeController extends Controller
         return json_encode(['status'=>true,'message'=>"Data updated successful"]);
     }
     public function user_sumission_detail($id){
-        $main_data=Eligibilty::where('id',$id)->with('plans','association')->select('first_name','last_name','no_of_people','email_id','street_address','address','association_id','branch_id','city','state','zip_code','comment','plan_id','created_at')->first()->toArray();
+        $main_data=Eligibilty::where('id',$id)->with('plans','association')->select('first_name','last_name','no_of_people','email_id','street_address','address','association_id','branch_id','city','state','zip_code','comment','plan_id','created_at','api_status')->first()->toArray();
         return $main_data;
     }
 }

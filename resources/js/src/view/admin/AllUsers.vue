@@ -89,7 +89,7 @@ export default {
     },
   },
   mounted(){
-    this.association_id=this.currentUser.id;
+    this.association_id=this.currentUser.association_id;
      this.get_users();
   },
   computed:{

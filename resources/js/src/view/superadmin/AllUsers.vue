@@ -80,6 +80,7 @@ export default {
       }
     },
     get_users(){
+      this.items=[];
       ApiService.get(`/superadmin/all-user/0/${this.association_id}`)
         .then(({ data }) => {
           this.items=data;

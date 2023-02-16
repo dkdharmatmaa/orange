@@ -12,7 +12,7 @@ class User extends Authenticatable implements JWTSubject
 
 
     public function GetAssosName(){
-        return $this->hasOne('App\Admin', 'id','association_id')->select('id','name');
+        return $this->hasOne('App\Association', 'id','association_id')->select('id','name');
     }
 
     use Notifiable;

@@ -42,7 +42,7 @@
                   />
               </div>
               <div class="">
-                  <div class="float-left d-flex"><input type="checkbox" style="margin-top: 4px;" />&nbsp; <span class="text-muted font-weight-bolder mt-1">Remember me</span></div>
+                  <!-- <div class="float-left d-flex"><input type="checkbox" style="margin-top: 4px;" />&nbsp; <span class="text-muted font-weight-bolder mt-1">Remember me</span></div> -->
                   <a class="text-muted font-weight-bolder float-right" id="kt_login_forgot" @click="showForm('forgot')">Forgot Password ?</a>
               </div>
               <div>

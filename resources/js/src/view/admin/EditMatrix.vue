@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-5" v-if="data_loading">
+  <div class="mt-5">
     <div>
       <h2 class="font-weight-bolder">Edit plans</h2>
     </div>
@@ -18,7 +18,9 @@
           <input type="text" v-model="single_arr.plan_name" style="border: 2px solid silver;" class="rounded p-1" @blur="add_plan()">
           <b-table responsive :items="single_arr.items" :fields="single_arr.fields" style="white-space:nowrap">  
           <template v-for="(field,field_index) in single_arr.fields" v-slot:[`head(${field})`]="data">
-            <span v-if="data.field.key!='index'" v-html="data.field.label" />
+            <span v-if="data.field.key=='index'"></span>
+            <span v-else-if="data.field.key=='action' || data.field.key=='no_of_people'" v-html="data.field.label" />
+            <input type="text" v-else :value="single_arr.fields[field_index]" @blur="edit_plan(field_index)" :id="'field_value_'+field_index" class="field_input">
             <span class="text-danger" v-if="data.field.key!='action' && data.field.key!='index' && data.field.key!='no_of_people'" v-on:click="delete_plan(field_index,data.field.key)"> | <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
             </span>
           </template>
@@ -58,15 +60,30 @@ export default {
        items:[],
      },
      edit_incomebind:false,
-     data_loading:false,
     //  for branch association work
-     association_id:'',
      branch_id:'',
      search_minmum:'',
      search_maximum:'',
     };
-  },
+  },  
   methods: {
+    edit_plan(field_index){
+      let field_name = $('#field_value_'+field_index).val();
+      let arr_field=this.single_arr.fields;
+      let arr_items=this.single_arr.items;
+      let pre_field=arr_field[field_index];
+      if(pre_field!=field_name.trim()){
+        for(let i=0;i<arr_items.length;i++){
+          arr_items[i][field_name] = arr_items[i][pre_field];
+          delete arr_items[i][pre_field];
+      }
+        arr_field[field_index]=field_name;
+        this.single_arr.fields=arr_field;
+        this.single_arr.items=arr_items;
+      this.onSubmit();
+      this.getData();
+      }
+    },
     add_plan(){
       let main_access=this.single_arr;
       let main_plan=main_access.plan_name;
@@ -92,8 +109,7 @@ export default {
     delete_row(delete_index){
       this.single_arr.items.splice(delete_index,1)
     },
-    onSubmit(evt) {
-      evt.preventDefault();
+    onSubmit() {
       ApiService.put(`/admin/edit-matrix/${this.branch_id}/${this.search_minmum}/${this.search_maximum}`, this.single_arr)
         .then(({ data }) => {
           $('#fade').fadeToggle(1000);
@@ -103,8 +119,11 @@ export default {
         });
     },
     getData(){
+    
       ApiService.get(`/admin/single-matrix/${this.branch_id}/${this.search_minmum}/${this.search_maximum}`)
         .then(({ data }) => {
+            this.single_arr.fields=[];
+            this.single_arr.items=[];
             this.single_arr.maximum_range=data[0]['maximum_range'];
             this.single_arr.minmum_range=data[0]['minmum_range'];
             this.single_arr.fields=JSON.parse(data[0]['fields']);
@@ -135,5 +154,9 @@ export default {
 }
 button{
   border: 0 !important;
+}
+.field_input{
+  border: 0;
+  font-weight: 600;
 }
 </style>

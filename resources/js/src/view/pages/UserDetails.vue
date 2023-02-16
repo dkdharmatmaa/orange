@@ -50,9 +50,19 @@
                     <h5>{{branch_detail['comment']}}</h5>
                     
                 </div>
-                <p class="fw mt-5" style="font-size: 18px;">{{branch_detail['first_name']}} is qualified for following membership rates</p>
+                <p class="fw mt-5" style="font-size: 18px;">{{branch_detail['first_name']}}
+                <span v-if="branch_detail['api_status']=='Qualified'"> 
+                  is qualified for the following financial assistance.
+                </span>
+                <span v-else-if="branch_detail['api_status']=='Not Qualified'">
+                  is not qualified for any financial assistance.
+                </span>
+                <span v-else>
+                  - There was no match for this data.
+                </span>
+                </p>
                 <div class="table-responsive text-center bg-white" style="width: 50%">
-                    <table class="table table-striped p-2" v-if="plans">
+                    <table class="table table-striped p-2">
                         <tbody>
                         <tr v-for="(key,value) in plans">
                             <td>{{value}}</td>
@@ -60,7 +70,6 @@
                         </tr>
                         </tbody>
                     </table>
-                    <div v-else><h3>Not qualified</h3></div>
                 </div>
             </div>
         </div>

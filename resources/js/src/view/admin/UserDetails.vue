@@ -91,6 +91,8 @@ export default {
         ApiService.get(`/admin/user-sumission-detail/${this.user_id}`)
           .then(({ data }) => {
               this.branch_detail=data;
+              if(this.branch_detail['zip_code'].toString().length==4)
+               this.branch_detail['zip_code']="0"+this.branch_detail['zip_code'];
               if(data['plans']){
               let plan_data=JSON.parse(data['plans']['plans']);
               delete plan_data.index;
@@ -108,12 +110,12 @@ export default {
   },
 };
 </script>
+<!-- box-shadow: -3px 1px 2px 1px rgb(0 0 0 / 20%); -->
 <style scoped>
 .input-value{
     padding: 1.5%;
     border: 0;
-    font-size: 16px;
-    box-shadow: -3px 1px 2px 1px rgb(0 0 0 / 20%);
+    font-size: 18px;  
 }
 .input-value:focus {
   outline: none;

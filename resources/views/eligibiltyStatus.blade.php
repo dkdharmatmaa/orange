@@ -107,7 +107,12 @@
                     </div>
                     <div style="width:31%;float: right;">
                         <span>Zip code</span><br>
-                        <h6>{{$main_data['zip_code']}}</h6>
+                        <h6>@php 
+                          if(strlen((string)$main_data['zip_code'])==4)
+                           echo "0".$main_data['zip_code'];
+                          else
+                           echo $main_data['zip_code'];
+                        @endphp</h6>
                         <hr>
                     </div>
                     <div style="width:31%;float: right;padding-right: 4%;">

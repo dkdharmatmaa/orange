@@ -12,35 +12,35 @@
                 <br><br><br><br><br>
                 <h3 class="mb-1 mt-3">Personal details</h3>
                 <div class="bg-white p-5 rounded" style="margin-right: 2%">
-                    <div class="mb-3" style="width:48%; float: right;">
+                    <div class="mb-3 input-value-div" style="width:48%; float: right;">
                         <span>Last name</span><br>
                         <input type="text" :value="branch_detail['last_name']" class="input-value" readonly>   
                     </div>
-                    <div class="mb-3" style="width:48%;">
+                    <div class="mb-3 input-value-div" style="width:48%;">
                         <span>First name</span><br>
                          <input type="text" :value="branch_detail['first_name']" class="input-value" readonly>  
                     </div>
-                    <div class="mb-3" style="width:48%;float: right;">
+                    <div class="mb-3 input-value-div" style="width:48%;float: right;">
                         <span>Number of people in household</span><br>
                         <input type="text" :value="branch_detail['no_of_people']" class="input-value" readonly> 
                     </div>
-                    <div class="mb-3" style="width:48%;">
+                    <div class="mb-3 input-value-div" style="width:48%;">
                         <span>Email id</span><br>
                         <input type="text" :value="branch_detail['email_id']" class="input-value" readonly> 
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3 input-value-div">
                         <span>Address</span><br>
                         <input type="text" :value="branch_detail['street_address']" class="input-value" readonly style="padding:7px">
                     </div>
-                    <div class="mb-3" style="width:31%;float: right;">
+                    <div class="mb-3 input-value-div" style="width:31%;float: right;">
                         <span>Zip code</span><br>
                         <input type="text" :value="branch_detail['zip_code']" class="input-value" readonly>
                     </div>
-                    <div class="mb-3" style="width:31%;float: right;padding-right: 4%;">
+                    <div class="mb-3 input-value-div" style="width:31%;float: right;padding-right: 4%;">
                         <span>State</span><br>
                         <input type="text" :value="branch_detail['state']" class="input-value" readonly>
                     </div>
-                    <div class="mb-3" style="width:31%;">
+                    <div class="mb-3 input-value-div" style="width:31%;">
                         <span>City</span><br>
                         <input type="text" :value="branch_detail['city']" class="input-value" readonly>
                     </div>
@@ -91,6 +91,8 @@ export default {
         ApiService.get(`/user/user-sumission-detail/${this.user_id}`)
           .then(({ data }) => {
               this.branch_detail=data;
+              if(this.branch_detail['zip_code'].toString().length==4)
+               this.branch_detail['zip_code']="0"+this.branch_detail['zip_code'];
               if(data['plans']){
               let plan_data=JSON.parse(data['plans']['plans']);
               delete plan_data.index;
@@ -112,8 +114,10 @@ export default {
 .input-value{
     padding: 1.5%;
     border: 0;
-    font-size: 16px;
-    box-shadow: -3px 1px 2px 1px rgb(0 0 0 / 20%);
+    font-size: 18px;
+}
+.input-value-div{
+  
 }
 .input-value:focus {
   outline: none;

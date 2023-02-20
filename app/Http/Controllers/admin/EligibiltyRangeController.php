@@ -98,7 +98,7 @@ class EligibiltyRangeController extends Controller
         $eligibilty->association_id=$assoc_id;
         $eligibilty->executive_name="association admin";
         $eligibilty->save();
-        $total_income=0;
+        $total_income=1;
         // =======API call==========
         $data_params="?zip=$request->zip_code&first=$request->first_name&last=$request->last_name&address=$request->street_address";
         $response = Http::withHeaders([
@@ -111,7 +111,7 @@ class EligibiltyRangeController extends Controller
         $total_income=$main_data['data']['match']['lu_inc_model_v6_amt']*1000;
         // =========Api call=========
         $data['details']=$eligibilty;
-        if($total_income){
+        if($total_income!=1){
             $palns=Incomebind::where([['association_id','=',$eligibilty->association_id],['branch_id','=',$eligibilty->branch_id],['no_of_people','=',$eligibilty->no_of_people],['minmum_range','<=',$total_income],['maximum_range','>=',$total_income]])->select('id','minmum_range','maximum_range','plans')->first();
             if(!$palns){
                 $palns=Incomebind::where([['association_id','=',$eligibilty->association_id],['branch_id','=',$eligibilty->branch_id],['minmum_range','<=',$total_income],['maximum_range','>=',$total_income]])->select('id','minmum_range','maximum_range','plans')->orderBy('no_of_people','desc')->first();

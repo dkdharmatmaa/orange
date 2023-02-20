@@ -4,7 +4,7 @@
 Forgot password link
 
 
-@component('mail::button', ['url' => 'http://52.206.247.236/PasswordForgotForm/'.$token.'/'.$email.'/'.$userType])
+@component('mail::button', ['url' => 'https://facheck.com/PasswordForgotForm/'.$token.'/'.$email.'/'.$userType])
 Click me
 @endcomponent
 

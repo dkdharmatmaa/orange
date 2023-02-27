@@ -67,6 +67,9 @@ class UserController extends Controller
         $user=User::find($id);
         $user->name=$request->name;
         $user->is_admin=$request->is_admin;
+        $branch_data=explode('/////',$request->branch_id);
+        $user->branch_id=$branch_data[0];
+        $user->branch_name=$branch_data[1];
         $user->save();
         if($user){
             return response()->json(['status'=>true]);

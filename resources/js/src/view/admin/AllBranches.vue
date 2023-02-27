@@ -29,6 +29,7 @@
               </template>
               <template #cell(action)="data">
               <b-button variant="success"><router-link :to="'/admin/new-branches/'+data.item['id']" class="text-white">Edit</router-link></b-button>
+              <b-button variant="danger" class="text-white" @click="delete_branch(data.item['id'])">Delete</b-button>
               </template>
            </b-table>
           <!-- for pagination -->
@@ -65,6 +66,17 @@ export default {
     };
   },
   methods: {
+    delete_branch(id){ 
+      if (confirm("Do you want to proceed") == true) {
+        ApiService.delete(`/admin/all-branch/${id}`)
+        .then(({ data }) => {
+          if(data.status)
+          this.get_branches();
+          else
+          alert("Branch user is associated with this branch");
+        })
+      }
+    },
     get_branches(){
       ApiService.get("/admin/all-branch/0/all")
         .then(({ data }) => {

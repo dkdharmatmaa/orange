@@ -85,6 +85,12 @@ class BranchController extends Controller
         }
     }
     public function delete($id){
+        $data=User::where('branch_id',$id)->count();
+        if($data==0){
+        $data=Branch::where('id',$id)->delete();
+        return json_encode(['status'=>true]);
+        }
+        return json_encode(['status'=>false]);
         
     }
 }

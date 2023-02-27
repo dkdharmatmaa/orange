@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth:admin-api','prefix' => 'admin'], function ()
     //branch related work by admin
     Route::post('/create-branch', [AdminBranchController::class,'store']);
     Route::put('/edit-branch/{id}', [AdminBranchController::class,'update']);
+    Route::delete('/all-branch/{id}', [AdminBranchController::class,'delete']);
     Route::get('/all-branch/{id?}/{all_data?}', [AdminBranchController::class,'index']);
     //matrix opertaion
     Route::post('/create-matrix/{branch_id}', [AdminIncomebindController::class,'store']);
@@ -111,6 +112,7 @@ Route::group(['middleware' => 'auth:superAdmin-api','prefix' => 'superadmin'], f
     //branch related work by superadmin
     Route::post('/create-branch', [SuperAdminBranchController::class,'store']);
     Route::put('/edit-branch/{id}', [SuperAdminBranchController::class,'update']);
+    Route::delete('/all-branch/{id}', [SuperAdminBranchController::class,'delete']);
     Route::get('/all-branch/{id?}/{assos_id?}', [SuperAdminBranchController::class,'index']);
     //matrix opertaion
     Route::post('/create-matrix/{assos_id}/{branch_id}', [SuperAdminIncomebindController::class,'store']);

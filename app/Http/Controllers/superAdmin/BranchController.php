@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Branch;
 use App\User;
+use App\Eligibilty;
+use App\Incomebind;
 use Illuminate\Support\Facades\Validator;
 class BranchController extends Controller
 {
@@ -87,7 +89,9 @@ class BranchController extends Controller
     public function delete($id){
         $data=User::where('branch_id',$id)->count();
         if($data==0){
-        $data=Branch::where('id',$id)->delete();
+        Branch::where('id',$id)->delete();
+        Incomebind::where('branch_id',$id)->delete();
+        Eligibilty::where('branch_id',$id)->delete();
         return json_encode(['status'=>true]);
         }
         return json_encode(['status'=>false]);

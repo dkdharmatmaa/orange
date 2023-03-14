@@ -51,11 +51,6 @@ return [
             'provider' => 'admins',
             'hash' => false,
         ],
-        'superAdmin-api' => [
-            'driver' => 'jwt',
-            'provider' => 'superAdmins',
-            'hash' => false,
-        ],
     ],
 
     /*
@@ -83,10 +78,6 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Admin::class,
-        ],
-        'superAdmins' => [
-            'driver' => 'eloquent',
-            'model' => App\SuperAdmin::class,
         ],
 
         // 'users' => [

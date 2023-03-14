@@ -26,13 +26,4 @@ class LoginController extends Controller
         }
         return $this->respondWithToken($token);
     }
-    public function login_superadmin()
-    {
-        $credentials = request(['email', 'password']);
-
-        if (! $token = auth()->guard('superAdmin-api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-        return $this->respondWithToken($token);
-    }
 }

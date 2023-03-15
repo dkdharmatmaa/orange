@@ -6,7 +6,7 @@
       }" id="kt_login">
       <!--begin::Aside-->
       <div class="col-sm-12 col-12 col-md-6 p-0 m-0 image-div">
-       <img src="/media/custome/login/login-image-min.png" class="img-fluid h-100" alt="login image">
+       <!-- <img src="/media/custome/login/login-image-min.png" class="img-fluid h-100" alt="login image"> -->
       </div>
       <!--begin::Aside-->
       <!--begin::Content-->
@@ -17,7 +17,7 @@
           <div class="login-form login-signin">
             <form class="form" novalidate="novalidate" id="kt_login_signin_form">
               <div class="pb-5 pt-lg-0 pt-5 text-center">
-                 <img src="/media/custome/login/main-login.svg" alt="main login image" class="img-fluid" width="100" height="100">
+                 <!-- <img src="/media/custome/login/main-login.svg" alt="main login image" class="img-fluid" width="100" height="100"> -->
               </div>
               <div class="p-3 text-center" v-if="errors=='Unauthorized'"><span class="text-danger h6">Invalid email or password</span></div>
               <div class="form-group">

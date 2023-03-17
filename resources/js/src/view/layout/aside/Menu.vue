@@ -1,26 +1,7 @@
 <template>
   <ul class="menu-nav">
-    <!-- <router-link
-      to="/admin/dashboard"
-       v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-    <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <img src="/media/custome/menu-icons/dashboard.svg" alt="dashboard icon" class="img-fluid" width="18" height="18">
-          &nbsp;&nbsp;&nbsp;<span class="menu-text">Dashboard</span>
-        </a>
-    </li>
-    </router-link> -->
         <router-link
-      to="/admin/eligibilty-report"
+      to="/eligibilty-report"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -40,7 +21,7 @@
       </li>
     </router-link>
         <router-link
-      to="/admin/check-eligibilty"
+      to="/check-eligibilty"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -60,7 +41,7 @@
       </li>
     </router-link>
         <router-link
-      to="/admin/all-branches"
+      to="/all-branches"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -80,8 +61,9 @@
       </li>
     </router-link>
         <router-link
-      to="/admin/all-users"
+      to="/all-users"
       v-slot="{ href, navigate, isActive, isExactActive }"
+      v-if="currentUser.is_admin"
     >
       <li
         aria-haspopup="true"
@@ -100,7 +82,7 @@
       </li>
     </router-link>
         <router-link
-      to="/admin/all-matrix"
+      to="/all-matrix"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -120,7 +102,7 @@
       </li>
     </router-link>
         <router-link
-      to="/admin/account"
+      to="/account"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -165,6 +147,7 @@
 
 <script>
 import { LOGOUT} from "@/core/services/store/auth.module";
+import { mapGetters } from 'vuex';
 export default {
   name: "KTMenu",
   methods: {
@@ -175,6 +158,9 @@ export default {
       this.$store.dispatch(LOGOUT)
           .then(() => this.$router.push('/login'));
     }
+  },
+  computed:{
+    ...mapGetters(['currentUser']),
   }
 };
 </script>

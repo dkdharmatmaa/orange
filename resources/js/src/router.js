@@ -4,21 +4,72 @@ Vue.use(Router);
 export default new Router({
   mode: "history",
   routes: [
-    //-----------users route-------------------
-    {
-      path:"/",
-      redirect:'/home'
-    },
-    {
-      path: "/home",
-      name: "home",
-      component: () => import("@/view/pages/Home.vue"),
-      meta: { userType: 'user' }
-    },
+     //-----------users route-------------------
+     {
+      path: "/",
+      redirect: "/check-eligibilty",
+      component: () => import("@/view/layout/Layout"),
+      children: [
+        {
+          path: "all-branches",
+          name: "user-allbranches",
+          component: () => import("@/view/pages/AllBranches.vue"),
+          meta: { userType: 'user' }
+        },
+        {
+          path: "all-users",
+          name: "user-allusers",
+          component: () => import("@/view/pages/AllUsers.vue"),
+          meta: { userType: 'user' }
+        },
+        {
+          path: "new-users/:id?",
+          name: "user-newusers",
+          component: () => import("@/view/pages/NewUsers.vue"),
+          meta: { userType: 'user' }
+        },
+        {
+          path: "all-matrix",
+          name: "user-allmatrix",
+          component: () => import("@/view/pages/AllMatrix.vue"),
+          meta: { userType: 'user' }
+        },
+        {
+          path: "/check-eligibilty",
+          name: "user-checkeligibilty",
+          component: () => import("@/view/pages/CheckEligibilty.vue"),
+          meta: { userType: 'user' }
+        },
+        {
+          path: "eligibilty-status",
+          name: "user-eligibiltystatus",
+          component: () => import("@/view/pages/EligibiltyStatus.vue"),
+          meta: { userType: 'user' }
+        },
+        {
+          path: "eligibilty-report",
+          name: "user-eligibiltyreport",
+          component: () => import("@/view/pages/EligibiltyReport.vue"),
+          meta: { userType: 'user' }
+        },
+        {
+          path: "user-details/:id?",
+          name: "user-user-details",
+          component: () => import("@/view/pages/UserDetails.vue"),
+          meta: { userType: 'user' }
+        },
+        {
+          path: "account",
+          name: "user-account",
+          component: () => import("@/view/pages/Account.vue"),
+          meta: { userType: 'user' }
+        },
+      ]
+     },
     //-----------admin route-------------------
     {
       path: "/admin/",
-      component: () => import("@/view/layout/Layout"),
+      component: () => import("@/view/layout-admin/Layout"),
       children: [
         {
           path: "dashboard",

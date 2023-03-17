@@ -36,11 +36,10 @@ const actions = {
     return new Promise(resolve => {
       ApiService.post("/login", credentials)
         .then(({ data }) => {
-          console.log("hello i am here");
           context.commit(SET_AUTH, data);
           JwtService.saveToken(data.token); 
           if(data.role=='user')
-          router.push(`/home`);
+          router.push(`/check-eligibilty`);
           else if(data.role=='admin')
           router.push(`/admin/check-eligibilty`);
           resolve(data);

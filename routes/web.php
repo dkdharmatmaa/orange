@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\EligibiltyRangeController;
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +13,10 @@ use App\Http\Controllers\admin\EligibiltyRangeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('generate-pdf/{id}', [EligibiltyRangeController::class, 'print_eligibilty']);
+Route::get('create-order',[PaymentController::class,'createOrderId']);
+Route::get('api-view',function(){
+    return view('apView');
+});
 Route::get('{any}', function () {
     return view('welcome');
-})->where('any', '(?!generate-pdf).*$');
+})->where('any', '(?!api-view)(?!create-order).*$');

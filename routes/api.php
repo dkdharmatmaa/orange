@@ -6,9 +6,9 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\user\UserController;
 use App\Http\Controllers\PasswordResetRequestController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\admin\EligibiltyRangeController as AdminEligibiltyRangeController;
-use App\Http\Controllers\admin\IncomebindController as AdminIncomebindController;
-use App\Http\Controllers\admin\BranchController as AdminBranchController;
+use App\Http\Controllers\admin\EntryController as AdminEntryController;
+use App\Http\Controllers\admin\BranchController;
+use App\Http\Controllers\admin\ProductController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,30 +30,26 @@ Route::post('/admin/register', [AdminController::class,'register']);
 Route::group(['middleware' => 'auth:admin-api','prefix' => 'admin'], function () {
     Route::post('logout', [AdminController::class,'logout']);
     Route::post('verify', [AdminController::class,'me']);
-    Route::put('upadte-detail', [AdminController::class,'update']);
-    Route::put('update-password', [AdminController::class,'update_password']);
     Route::get('admin-report', [AdminController::class,'detail_report']);
-    Route::post('/check-eligibilty', [AdminEligibiltyRangeController::class,'check_eligibilty']);
-    Route::post('/add-eligibilty-comment/{id}', [AdminEligibiltyRangeController::class,'add_comment']);
-    Route::post('/eligibilty-report', [AdminEligibiltyRangeController::class,'index']);
-    Route::get('/user-sumission-detail/{id}', [AdminEligibiltyRangeController::class,'user_sumission_detail']);
     //user related work by admin
-    Route::post('/create-user/{assoc_id?}', [UserController::class,'register']);
+    Route::post('/create-user', [UserController::class,'register']);
     Route::put('/edit-user/{id}', [UserController::class,'update']);
-    Route::put('/update-association/{id}', [AdminController::class,'update_association']);
-    Route::get('/all-user/{id?}/{assoc_id?}', [UserController::class,'index']);
+    Route::get('/all-user/{id?}', [UserController::class,'index']);
     Route::delete('/user/{id?}', [UserController::class,'delete']);
     //branch related work by admin
-    Route::post('/create-branch', [AdminBranchController::class,'store']);
-    Route::put('/edit-branch/{id}', [AdminBranchController::class,'update']);
-    Route::delete('/all-branch/{id}', [AdminBranchController::class,'delete']);
-    Route::get('/all-branch/{id?}/{all_data?}', [AdminBranchController::class,'index']);
-    //matrix opertaion
-    Route::post('/create-matrix/{branch_id}', [AdminIncomebindController::class,'store']);
-    Route::put('/edit-matrix/{branch_id}/{minmum_range}/{maximum_range}', [AdminIncomebindController::class,'update']);
-    Route::delete('/delete-matrix/{minmum_range}/{branch_id}', [AdminIncomebindController::class,'delete']);
-    Route::get('/all-matrix/{branch_id}', [AdminIncomebindController::class,'index']);
-    Route::get('/single-matrix/{branch_id}/{minmum_range}/{maximum_range}', [AdminIncomebindController::class,'single_matrix']);
+    Route::post('/create-branch', [BranchController::class,'store']);
+    Route::put('/edit-branch/{id}', [BranchController::class,'update']);
+    Route::delete('/all-branch/{id}', [BranchController::class,'delete']);
+    Route::get('/all-branch', [BranchController::class,'index']);
+    Route::get('/all-branch-option', [BranchController::class,'option_index']);
+    //product related work by admin
+    Route::get('/all-product/{id?}', [ProductController::class,'index']);
+    Route::get('/product-option', [ProductController::class,'index_option']);
+    Route::post('/create-product', [ProductController::class,'store']);
+    Route::put('/edit-product/{id}', [ProductController::class,'update']);
+    Route::delete('/product/{id}', [ProductController::class,'delete']);
+    //form related work by admin
+    Route::post('/entry', [AdminEntryController::class,'store']);
 });
 
 // =================user section==========================

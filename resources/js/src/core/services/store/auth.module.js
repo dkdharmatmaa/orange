@@ -64,14 +64,14 @@ const actions = {
         .catch(({ response }) => {
           if (response.status == 401) {
               context.dispatch(LOGOUT)
-                  .then(() => router.push({ name: `userlogin` }));
+                  .then(() => router.push({ name: `home` }));
           } else {
               context.commit(SET_ERROR, response.data.errors);
           }
       });
     } else {
       context.commit(PURGE_AUTH);
-      router.push({ name: `userlogin` });
+      router.push({ name: `home` });
     }
   },
   [UPDATE_PASSWORD](context, payload) {

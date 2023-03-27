@@ -10,23 +10,21 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
-    public function index($id=0,$assoc_id=0){
+    public function index($id=0){
         if($id)
-          $data=User::where([['id',$id]])->take(1)->get()->toArray();
+        $data=User::where([['id',$id]])->limit(1)->get()->toArray();
         else
-        $data=User::with('GetAssosName')->where('association_id',$assoc_id)->get()->toArray();
-        
+        $data=User::all()->toArray();
         return json_encode($data);
     }
     public function register(Request $request){
 
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:100'],
+            'phone' => ['required','regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
             'email' => ['required', 'string', 'email', 'max:100', 'unique:admins'],
             'password' => ['required', 'string', 'min:4'],
-            'association_id' => ['required', 'max:100'],
-            'branch_id' => ['required', 'string', 'max:100'],
-            'is_admin' => ['required','boolean'],
+            'branch_id' => ['required', 'integer', 'max:100'],
         ]);
 
         if ($validator->fails()) {
@@ -34,13 +32,10 @@ class UserController extends Controller
         }
         $user=new User();
         $user->name=$request->name;
+        $user->phone=$request->phone;
         $user->email=$request->email;
         $user->password=Hash::make($request->password);
-        $user->association_id=$request->association_id;
-        $branch_data=explode('/////',$request->branch_id);
-        $user->branch_id=$branch_data[0];
-        $user->branch_name=$branch_data[1];
-        $user->is_admin=$request->is_admin;
+        $user->branch_id=$request->branch_id;
         $user->save();
 
         $role=new Role();
@@ -58,7 +53,6 @@ class UserController extends Controller
     public function update(Request $request,$id){
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:100'],
-            'is_admin' => ['required','boolean'],
         ]);
 
         if ($validator->fails()) {
@@ -66,29 +60,8 @@ class UserController extends Controller
         }
         $user=User::find($id);
         $user->name=$request->name;
-        $user->is_admin=$request->is_admin;
-        $branch_data=explode('/////',$request->branch_id);
-        $user->branch_id=$branch_data[0];
-        $user->branch_name=$branch_data[1];
-        $user->save();
-        if($user){
-            return response()->json(['status'=>true]);
-        }
-        else{
-           return response()->json(['status'=>false]);
-        }
-    }
-    public function personal_update(Request $request){
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:100'],
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        $id=auth()->guard('user-api')->user()->id;
-        $user=User::find($id);
-        $user->name=$request->name;
+        $user->phone=$request->phone;
+        $user->branch_id=$request->branch_id;
         $user->save();
         if($user){
             return response()->json(['status'=>true]);

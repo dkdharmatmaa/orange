@@ -5,77 +5,40 @@
       class="w-md-50 fw-700"
     >
       <h3 class="fw-700">{{action_name}} branch</h3>
-      <div class="bg-white p-10 rounded">
-        <div class="d-flex mb-7">
+      <div class="bg-white p-10 mt-5 rounded">
+      <b-form-group>
           <b-form-input
             id="input-1"
-            v-model="branch_form.name"
+            v-model="branch_form.branch_name"
             type="text"
             required
             placeholder="Enter branch name"
             class="mx-1 input-box"
           ></b-form-input>
+      </b-form-group>
           <!-- <has-error :form="form" field="name"></has-error> -->
-          <b-form-input
-            id="input-2"
-            type="text"
-            v-model="branch_form.branch_id"
-            required
-            placeholder="Enter branch id"
-            class="ml-1 input-box"
-          ></b-form-input>
+          <b-form-group>
+            <b-form-input
+              id="input-2"
+              type="text"
+              v-model="branch_form.branch_id"
+              required
+              placeholder="Enter branch id"
+              class="ml-1 input-box"
+            ></b-form-input>
+          </b-form-group>
           <!-- <has-error :form="form" field="number"></has-error> -->
-        </div>
         <b-form-group>
           <b-form-input
             id="input-4"
-            v-model="branch_form.address1"
+            v-model="branch_form.branch_location"
             type="text"
             required
-            placeholder="Address 1"
+            placeholder="Location"
             class="ml-1 input-box"
           ></b-form-input>
           <!-- <has-error :form="form" field="address2"></has-error> -->
         </b-form-group>
-        <b-form-group>
-          <b-form-input
-            id="input-5"
-            v-model="branch_form.address2"
-            type="text"
-            placeholder="Address 2"
-            class="ml-1 input-box"
-          ></b-form-input>
-          <!-- <has-error :form="form" field="address2"></has-error> -->
-        </b-form-group>
-        <div class="d-flex">
-          <b-form-input
-            id="input-6"
-            v-model="branch_form.city"
-            type="text"
-            required
-            placeholder="City"
-            class="mx-1 input-box"
-          ></b-form-input>
-          <!-- <has-error :form="form" field="city"></has-error> -->
-          <b-form-input
-            id="input-7"
-            v-model="branch_form.state"
-            type="text"
-            required
-            placeholder="State"
-            class="mx-1 input-box"
-          ></b-form-input>
-          <!-- <has-error :form="form" field="state"></has-error> -->
-          <b-form-input
-            id="input-8"
-            v-model="branch_form.zip_code"
-            type="number"
-            required
-            placeholder="Zip code"
-            class="ml-1 input-box"
-          ></b-form-input>
-          <!-- <has-error :form="form" field="zip_code"></has-error> -->
-        </div>
         <div class="alert alert-success my-3" role="alert" id="fade">
           <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
         </div>
@@ -91,25 +54,21 @@ export default {
     return {
       branch_form:new Form({  
         id:"",
-        name: "",
+        branch_name: "",
         branch_id: "",
-        address1: "",
-        address2: "",
-        city: "",
-        state: "",
-        zip_code: "",
+        branch_location: "",
       }),
-      action: 'Add',
-      action_name: 'Add',
+      action: 'Create',
+      action_name: 'Create',
     };
   },
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
-      if(this.action=='Add'){
+      if(this.action=='Create'){
         ApiService.post("/admin/create-branch", this.branch_form)
         .then(({ data }) => {
-          this.$router.push('/admin/all-branches');
+          this.$router.push('/admin/branches');
         })
         .catch(err => {
           //   this.openNotification(err);
@@ -124,7 +83,7 @@ export default {
       }
     },
     getData(id){
-      ApiService.get(`/admin/all-branch/${id}`)
+      ApiService.get(`/admin/all-branch`)
         .then(({ data }) => {
           this.branch_form.fill(data[0])
         })
@@ -155,7 +114,7 @@ export default {
     border: 1px silver solid;
 }
 .create_btn{
-    background: #00A1E4;
+    background: #ED700F;
 }
 #fade{
   display: none;

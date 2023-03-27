@@ -1,10 +1,10 @@
 <template>
   <ul class="menu-nav">
-    <!-- <router-link
-      to="/admin/dashboard"
-       v-slot="{ href, navigate, isActive, isExactActive }"
+        <router-link
+      to="/admin/entry"
+      v-slot="{ href, navigate, isActive, isExactActive }"
     >
-    <li
+      <li
         aria-haspopup="true"
         data-menu-toggle="hover"
         class="menu-item"
@@ -14,12 +14,33 @@
         ]"
       >
         <a :href="href" class="menu-link" @click="navigate">
-          <img src="/media/custome/menu-icons/dashboard.svg" alt="dashboard icon" class="img-fluid" width="18" height="18">
-          &nbsp;&nbsp;&nbsp;<span class="menu-text">Dashboard</span>
+          <img src="/media/custome/menu-icons/form.svg" alt="form icon" class="img-fluid" width="18" height="18">
+          &nbsp;&nbsp;&nbsp;
+          <span class="menu-text">Form</span>
         </a>
-    </li>
-    </router-link> -->
-        <router-link
+      </li>
+    </router-link>
+      <router-link
+      to="/admin/product"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active'
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <img src="/media/custome/menu-icons/Vector.svg" alt="vector icon" class="img-fluid" width="18" height="18">
+          &nbsp;&nbsp;&nbsp;
+          <span class="menu-text">Product</span>
+        </a>
+      </li>
+    </router-link>
+      <router-link
       to="/admin/eligibilty-report"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -33,49 +54,9 @@
         ]"
       >
         <a :href="href" class="menu-link" @click="navigate">
-          <img src="/media/custome/menu-icons/graph.svg" alt="reports icon" class="img-fluid" width="18" height="18">
+          <img src="/media/custome/menu-icons/contact.svg" alt="contact icon" class="img-fluid" width="18" height="18">
           &nbsp;&nbsp;&nbsp;
-          <span class="menu-text">Reports</span>
-        </a>
-      </li>
-    </router-link>
-        <router-link
-      to="/admin/check-eligibilty"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <img src="/media/custome/menu-icons/task.svg" alt="check eligiblity icon" class="img-fluid" width="18" height="18">
-          &nbsp;&nbsp;&nbsp;
-          <span class="menu-text">Check eligiblity</span>
-        </a>
-      </li>
-    </router-link>
-        <router-link
-      to="/admin/all-branches"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <img src="/media/custome/menu-icons/office.svg" alt="branches icon" class="img-fluid" width="18" height="18">
-          &nbsp;&nbsp;&nbsp;
-          <span class="menu-text">Branches</span>
+          <span class="menu-text">Transaction Details</span>
         </a>
       </li>
     </router-link>
@@ -93,14 +74,14 @@
         ]"
       >
         <a :href="href" class="menu-link" @click="navigate">
-          <img src="/media/custome/menu-icons/customer.svg" alt="branch users icon" class="img-fluid" width="18" height="18">
+          <img src="/media/custome/menu-icons/users.svg" alt="users icon" class="img-fluid" width="18" height="18">
           &nbsp;&nbsp;&nbsp;
-          <span class="menu-text">Branch users</span>
+          <span class="menu-text">Users</span>
         </a>
       </li>
     </router-link>
-        <router-link
-      to="/admin/all-matrix"
+    <router-link
+      to="/admin/branches"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -113,14 +94,15 @@
         ]"
       >
         <a :href="href" class="menu-link" @click="navigate">
-          <img src="/media/custome/menu-icons/list.svg" alt="financial aid matrix icon" class="img-fluid" width="18" height="18">
+          <img src="/media/custome/menu-icons/office.svg" alt="branch icon" class="img-fluid" width="18" height="18">
           &nbsp;&nbsp;&nbsp;
-          <span class="menu-text">Financial aid matrix</span>
+          <span class="menu-text">Branches</span>
         </a>
       </li>
     </router-link>
-        <router-link
-      to="/admin/account"
+     <router-link
+      to=""
+      @click.native="logout"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -133,28 +115,7 @@
         ]"
       >
         <a :href="href" class="menu-link" @click="navigate">
-          <img src="/media/custome/menu-icons/user.svg" alt="account icon" class="img-fluid" width="18" height="18">
-          &nbsp;&nbsp;&nbsp;
-          <span class="menu-text">Account</span>
-        </a>
-      </li>
-    </router-link>
-        <router-link
-        to=""
-        @click.native="logout"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <img src="/media/custome/menu-icons/logout.svg" alt="logout icon" class="img-fluid" width="18" height="18">
+          <img src="/media/custome/menu-icons/Logout.svg" alt="logout icon" class="img-fluid" width="18" height="18">
           &nbsp;&nbsp;&nbsp;
           <span class="menu-text">Logout</span>
         </a>

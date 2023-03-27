@@ -1,28 +1,16 @@
 <template>
-    <div class="login login-1 row h-100" :class="{
-        'login-signin-on': this.state == 'signin',
-        'login-signup-on': this.state == 'signup',
-        'login-forgot-on': this.state == 'forgot'
-      }" id="kt_login">
-      <!--begin::Aside-->
-      <div class="col-sm-12 col-12 col-md-6 p-0 m-0 image-div">
-       <!-- <img src="/media/custome/login/login-image-min.png" class="img-fluid h-100" alt="login image"> -->
-      </div>
-      <!--begin::Aside-->
-      <!--begin::Content-->
-      <div class="col-sm-12 col-12 col-md-6 align-self-center text-al">
-        <div class="login-content d-flex flex-column justify-content-center">
-        <div class="d-flex flex-column-fluid flex-center">
-          <!--begin::Signin-->
+   <div class="login login-1 row login-banner" :class="{'login-signin-on': this.state == 'signin','login-signup-on': this.state == 'signup','login-forgot-on': this.state == 'forgot',}" id="kt_login">
+   <div class="login-trans w-25">
+   <!--begin::Signin-->
           <div class="login-form login-signin">
             <form class="form" novalidate="novalidate" id="kt_login_signin_form">
-              <div class="pb-5 pt-lg-0 pt-5 text-center">
-                 <!-- <img src="/media/custome/login/main-login.svg" alt="main login image" class="img-fluid" width="100" height="100"> -->
+              <div class="pb-10">
+                 <h2 class="fw-700 text-white">Login</h2>
               </div>
               <div class="p-3 text-center" v-if="errors=='Unauthorized'"><span class="text-danger h6">Invalid email or password</span></div>
               <div class="form-group">
                   <input
-                    class="form-control form-control-solid h-auto py-4 px-2"
+                    class="login-input"
                     type="text"
                     name="email"
                     ref="email"
@@ -32,7 +20,7 @@
               </div>
               <div class="form-group">
                 <input
-                    class="form-control form-control-solid h-auto py-4 px-2 rounded-lg"
+                    class="login-input"
                     type="password"
                     name="password"
                     ref="password"
@@ -42,13 +30,12 @@
                   />
               </div>
               <div class="">
-                  <!-- <div class="float-left d-flex"><input type="checkbox" style="margin-top: 4px;" />&nbsp; <span class="text-muted font-weight-bolder mt-1">Remember me</span></div> -->
-                  <a class="text-muted font-weight-bolder float-right" id="kt_login_forgot" @click="showForm('forgot')">Forgot Password ?</a>
-              </div>
+                  <div class="float-left d-flex" style="margin-top: -3px;"><input type="checkbox" style="margin-top: 4px; width: 15px !important;" />&nbsp; <span class="text-muted font-weight-bolder mt-1">Remember me</span></div>
+                  <a class="text-muted font-weight-bolder float-right cursor-pointer" id="kt_login_forgot" @click="showForm('forgot')">Forgot Password ?</a>
+              </div><br><br>
+              <div><hr class="bg-primary-color"></div>
               <div>
-                <button ref="kt_login_signin_submit" class="btn font-weight-bolder font-size-h6 py-3 w-100 mt-7 text-white btn-color">
-                  Login
-                </button>
+                <button ref="kt_login_signin_submit" class="mt-7 login-btn" type="submit"> Login </button>
               </div>
             </form>
           </div>
@@ -64,20 +51,14 @@
               @submit.prevent="requestResetPassword"
             >
               <div class="pb-5 pt-lg-0 pt-5">
-                <h4
-                  class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg"
-                >
-                  Forgotten Password ?
-                </h4>
-                <p class="text-muted font-weight-bold font-size-h5">
-                  Enter your email to reset your password
-                </p>
+                <h4 class="font-weight-bolder text-white font-size-h4 font-size-h1-lg">Forgotten Password ?</h4>
+                <p class="text-muted font-weight-bold font-size-h5">Enter your email to reset your password</p>
               </div>
               <div class="text-success mt-2 ml-2 h5" v-if="email_send">Password reset link has been sent to your email.</div>
               <div class="text-danger mt-2 ml-2" v-if="check_email">Invalid email.</div>
               <div class="form-group">
                 <input
-                  class="form-control form-control-solid h-auto py-3 px-2 rounded-lg font-size-h6"
+                  class="login-input"
                   type="email"
                   placeholder="Email address"
                   name="email"
@@ -85,34 +66,17 @@
                   v-model="email"
                 />
               </div>
-              <div class="form-group d-flex flex-wrap pb-lg-0">
-                <button
-                  type="submit"
-                  id="kt_login_forgot_submit"
-                  class="btn font-weight-bolder font-size-h6 px-12 btn-color text-white py-3 my-3 mr-4"
-                >
-                  Send Password Reset Link
-                </button>
-                <button
-                  type="button"
-                  id="kt_login_forgot_cancel"
-                  class="btn font-weight-bolder font-size-h6 px-12 btn-color text-white py-3 my-3"
-                  @click="showForm('signin')"
-                >
-                  Cancel
-                </button>
+              <div class="form-group d-flex">
+                <button type="submit" id="kt_login_forgot_submit" class="login-btn text-nowrap">Send Link</button>
+                <button type="button" id="kt_login_forgot_cancel" class="login-btn ml-3" @click="showForm('signin')">Cancel</button>
               </div>
             </form>
           </div>
           <!--end::Forgot-->
-        </div>
-        <!--begin::Content footer-->
-        
-        <!--end::Content footer-->
-        </div>
-      </div>
-      <!--end::Content-->
-    </div>
+   </div>  
+          <!--end::Content-->
+      <img src="/media/custome/orange-logo.png" alt="orange logo" class="logo-pos" />
+   </div>
 </template>
 
 <!-- Load login custom page styles -->
@@ -122,14 +86,14 @@
 
 <script>
 import formValidation from "@/assets/plugins/formvalidation/dist/es6/core/Core";
-import axios from 'axios';
+import axios from "axios";
 // FormValidation plugins
 import Trigger from "@/assets/plugins/formvalidation/dist/es6/plugins/Trigger";
 import Bootstrap from "@/assets/plugins/formvalidation/dist/es6/plugins/Bootstrap";
 import SubmitButton from "@/assets/plugins/formvalidation/dist/es6/plugins/SubmitButton";
 import KTUtil from "@/assets/js/components/util";
 import { mapGetters, mapState } from "vuex";
-import { LOGIN, LOGOUT} from "@/core/services/store/auth.module";
+import { LOGIN, LOGOUT } from "@/core/services/store/auth.module";
 import Swal from "sweetalert2";
 
 export default {
@@ -138,18 +102,18 @@ export default {
     return {
       state: "signin",
       email_send: false,
-      check_email:false,
-      email:'',
+      check_email: false,
+      email: "",
       // Remove this dummy login info
       form: {
         email: "",
-        password: ""
-      }
+        password: "",
+      },
     };
   },
   computed: {
     ...mapState({
-      errors: state => state.auth.errors
+      errors: (state) => state.auth.errors,
     }),
     ...mapGetters(["currentUser"]),
 
@@ -157,7 +121,7 @@ export default {
       return (
         process.env.BASE_URL + "media/svg/illustrations/login-visual-1.svg"
       );
-    }
+    },
   },
   mounted() {
     const signin_form = KTUtil.getById("kt_login_signin_form");
@@ -166,23 +130,23 @@ export default {
         email: {
           validators: {
             notEmpty: {
-              message: "Username is required"
-            }
-          }
+              message: "Username is required",
+            },
+          },
         },
         password: {
           validators: {
             notEmpty: {
-              message: "Password is required"
-            }
-          }
-        }
+              message: "Password is required",
+            },
+          },
+        },
       },
       plugins: {
         trigger: new Trigger(),
         submitButton: new SubmitButton(),
-        bootstrap: new Bootstrap()
-      }
+        bootstrap: new Bootstrap(),
+      },
     });
     this.fv.on("core.form.valid", () => {
       var email = this.form.email;
@@ -192,7 +156,7 @@ export default {
       this.$store.dispatch(LOGOUT);
 
       // send login request
-        this.$store.dispatch(LOGIN, { email, password })
+      this.$store.dispatch(LOGIN, { email, password });
     });
 
     this.fv.on("core.form.invalid", () => {
@@ -201,7 +165,7 @@ export default {
         text: "Please, provide correct data!",
         icon: "error",
         confirmButtonClass: "btn btn-secondary",
-        heightAuto: false
+        heightAuto: false,
       });
     });
   },
@@ -215,36 +179,57 @@ export default {
       );
     },
     requestResetPassword() {
-        axios.post("/Forgotpassword", {email: this.email}).then(result => {
-            this.email_send=true;
-            this.check_email=false;
+      axios
+        .post("/Forgotpassword", { email: this.email })
+        .then((result) => {
+          this.email_send = true;
+          this.check_email = false;
         })
-        .catch(err=>{
-          this.check_email=true;
-          this.email_send=false;
-        })
-    }  
+        .catch((err) => {
+          this.check_email = true;
+          this.email_send = false;
+        });
+    },
   },
 };
 </script>
 <style scoped>
-.btn-color{
-  background:#00A1E4;
+.login-banner {
+  /* The image used */
+  background-image: url("/media/custome/login-banner.png");
+  /* Full height */
+  height: 70%;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-.image-div{
-  height: 100%;
+.logo-pos{
+    width: 25%;
+    height: fit-content;
+    position: absolute;
+    bottom: 15%;
+    left: 20%;
 }
-.text-al{
-  text-align: -webkit-center;
+.login-trans{
+  background: rgba(0, 0, 0, 0.8);
+  padding: 3%;
+  height: fit-content;
+  position: absolute;
+  bottom: 15%;
+  right: 4.5%;
 }
-@media (min-width: 720px){
+.login-input{
+    padding: 5px;
+    width: 100%;
 }
-@media (max-width: 720px){
-  .login-content{
-    padding: 5%;
-  }
-  .image-div{
-    height: 70%;
-  }
+.login-btn{
+    background: #ED700F;
+    border: 0;
+    padding: 2% 8%;
+    border-radius: 20px;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
 }
 </style>

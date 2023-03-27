@@ -4,9 +4,9 @@
       @submit="onSubmit"
       class="w-md-50 fw-700"
     >
-      <h3 class="fw-700">{{action}} users</h3>
-      <div class="bg-white p-10 rounded">
-        <div class="d-flex mb-7">
+      <h3 class="fw-700">{{action_name}} users</h3>
+      <div class="bg-white p-10 mt-5 rounded">
+      <b-form-group>
           <b-form-input
             id="input-1"
             v-model="user_form.name"
@@ -14,8 +14,23 @@
             required
             placeholder="Name"
             class="mx-1 input-box"
+            :class="{ 'is-invalid': user_form.errors.has('name') }"
           ></b-form-input>
-          <!-- <has-error :form="form" field="name"></has-error> -->
+          <has-error :form="user_form" field="name"></has-error>
+          </b-form-group>
+          <b-form-group>
+           <b-form-input
+            id="input-1"
+            v-model="user_form.phone"
+            type="text"
+            required
+            placeholder="Phone Number"
+            class="mx-1 input-box"
+            :class="{ 'is-invalid': user_form.errors.has('phone') }"
+          ></b-form-input>
+          <has-error :form="user_form" field="phone"></has-error>
+          </b-form-group>
+          <b-form-group>
           <b-form-input
             id="input-2"
             v-model="user_form.email"
@@ -24,14 +39,11 @@
             placeholder="Email address"
             class="mx-1 input-box"
             :readonly="action=='Edit'"
+            :class="{ 'is-invalid': user_form.errors.has('email') }"
           ></b-form-input>
-          <!-- <has-error :form="form" field="name"></has-error> -->
-        </div>
-        <b-form-group>
-          <b-form-select id="input-4" v-model="user_form.branch_id" :options="options_branch" class="ml-1 input-box text-seconday" required></b-form-select>
-          <!-- <has-error :form="form" field="address2"></has-error> -->
-        </b-form-group>
-        <b-form-group v-if="action=='Add'">
+          <has-error :form="user_form" field="email"></has-error>
+          </b-form-group>
+          <b-form-group v-if="action=='Create'">
           <b-form-input
             id="input-5"
             v-model="user_form.password"
@@ -39,26 +51,18 @@
             required
             placeholder="Password"
             class="ml-1 input-box"
+            :class="{ 'is-invalid': user_form.errors.has('password') }"
           ></b-form-input>
+          <has-error :form="user_form" field="password"></has-error>
         </b-form-group>
-        <div>
-          <!-- <div class="d-flex">
-                <div class="flex-fill border-top border-2 border-secondary h1"></div>
-                <div class="h6 text-center font-weight-bolder">Permission</div>
-                <div class="flex-fill border-bottom border-2 border-secondary h1"></div>
-          </div> -->
-          <div class="h6 text-center font-weight-bolder">Permission</div>
-          <hr style="margin: -10px 0 7px 0;">
-          <p class="h6">Branch admin</p>
-          <div class="d-flex">
-            <input type="checkbox" value="true" v-model="user_form.is_admin"> &nbsp;<span class="text-muted">Can create / edit more branch users</span>
-          </div>
-        </div>
-        <!-- <has-error :form="form" field="password"></has-error> -->
+        <b-form-group>
+          <b-form-select id="input-4" v-model="user_form.branch_id" :options="options_branch" class="ml-1 input-box text-seconday" :class="{ 'is-invalid': user_form.errors.has('branch_id') }" required></b-form-select>
+          <has-error :form="user_form" field="branch_id"></has-error>
+        </b-form-group>
         <div class="alert alert-success mt-3" role="alert" id="fade">
           <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
         </div>
-         <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white mt-3">{{action}} user</button>
+         <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 bg-primary-color text-white mt-3">{{action}} user</button>
       </div>
     </b-form>
   </div>
@@ -72,21 +76,21 @@ export default {
       user_form:new Form({  
         id:"",
         name: "",
+        phone:"",
         email: "",
         password: "",
-        association_id: "",
         branch_id: "",
-        is_admin: false,
       }),
       options_branch:null,
-      action: 'Add',
+      action: 'Create',
+      action_name: 'Create',
     };
   },
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
-      if(this.action=='Add'){
-        ApiService.post("/admin/create-user", this.user_form)
+      if(this.action=='Create'){
+        this.user_form.post("/admin/create-user")
         .then(({ data }) => {
           this.$router.push('/admin/all-users');
         })
@@ -95,7 +99,7 @@ export default {
         });
       }
       else{
-        ApiService.put(`/admin/edit-user/${this.user_form.id}`, this.user_form)
+        this.user_form.put(`/admin/edit-user/${this.user_form.id}`)
         .then(({ data }) => {
            $('#fade').fadeToggle(1000);
            $('#fade').fadeToggle(1000);
@@ -107,16 +111,15 @@ export default {
         .then(({ data }) => {
           this.user_form.fill(data[0])
           this.getBranches();
-          this.user_form.branch_id=data[0]['branch_id']+"/////"+data[0]['branch_name'];
         })
     },
     getBranches(){
-            ApiService.get(`/admin/all-branch`)
+            ApiService.get(`/admin/all-branch-option`)
             .then(({ data }) => {
                 let branch_option=[];
                 branch_option.push({value:"",text:"Assign branch"})
                 for(let i=0;i<data.length;i++){
-                    branch_option.push({value:data[i]['id']+"/////"+data[i]['name'],text:data[i]['name']});  
+                    branch_option.push({value:data[i]['id'],text:data[i]['branch_name']});  
                 }
                 this.options_branch=branch_option;
             })
@@ -125,10 +128,10 @@ export default {
   mounted(){
    if(this.get_item){
       this.getData(this.get_item);
-      this.action='Edit';
+      this.action='Save';
+      this.action_name='Edit'
    }
    this.getBranches();
-   this.user_form.association_id=this.currentUser.association_id;
   },
   computed: {
     get_item: function(){
@@ -137,7 +140,6 @@ export default {
       else
       return 0;
     },
-    ...mapGetters({currentUser:'currentUser'}),
   },
 };
 </script>
@@ -147,9 +149,6 @@ export default {
 }
 .input-box{
     border: 1px silver solid;
-}
-.create_btn{
-    background: #00A1E4;
 }
 #fade{
   display: none;

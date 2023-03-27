@@ -1,15 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Api view</title>
 </head>
-<link href="https://uat.billdesk.com/jssdk/v1/dist/billdesksdk/billdesksdk.css" rel="stylesheet">
+
 <body onload="window.close();">
-    
+    <button type="button" onclick="pay()" class="btn">Pay</button>
 </body>
-<script type="module" src="https://uat.billdesk.com/jssdk/v1/dist/billdesksdk/billdesksdk.esm.js"></script>
-<script nomodule="" src="https://uat.billdesk.com/jssdk/v1/dist/billdesksdk.js"></script>
+<script src="https://services.billdesk.com/checkout-widget/src/app.bundle.js"></script>
+<script>
+    function pay() {
+
+        $.ajax({
+            type: 'GET',
+            url: '/getChecksum',
+            data: {
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function(data) {
+                alert(data);
+            },
+            error: function(error) {
+
+            }
+        });
+    }
+</script>
+
 </html>

@@ -13,10 +13,10 @@ use App\Http\Controllers\PaymentController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('create-order',[PaymentController::class,'createOrderId']);
+Route::get('getChecksum',[PaymentController::class,'createOrderId']);
 Route::get('api-view',function(){
     return view('apView');
 });
 Route::get('{any}', function () {
     return view('welcome');
-})->where('any', '(?!api-view)(?!create-order).*$');
+})->where('any', '(?!api-view)(?!getChecksum).*$');

@@ -23,6 +23,7 @@ import "@/core/plugins/bootstrap-vue";
 import "@/core/plugins/perfect-scrollbar";
 import "@/core/plugins/inline-svg";
 import "@/core/plugins/metronic";
+import "@/core/plugins/treeselect";
 import "@/core/plugins/formvalidation";
 
 // API service init

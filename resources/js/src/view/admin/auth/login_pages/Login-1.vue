@@ -51,7 +51,7 @@
               </div>
               <div>
                 <button ref="kt_login_signin_submit" class="btn font-weight-bolder font-size-h6 py-3 w-100 mt-7 text-white btn-color">
-                  Login
+                  Login2
                 </button>
               </div>
             </form>

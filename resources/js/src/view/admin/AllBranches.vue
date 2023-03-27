@@ -1,20 +1,20 @@
 <template>
   <div class="mt-5">
-    <div class="d-flex ml-2">
+    <div class="d-flex ml-2 justify-content-between">
           <h2>Branches</h2>&nbsp;&nbsp;&nbsp;
-          <button class="btn create_btn font-weight-bold"><router-link class="text-white" to="/admin/new-branches">Add branches</router-link></button>
+          <button class="btn create_btn font-weight-bold"><router-link class="text-white" to="/admin/new-branches">Create branches</router-link></button>
       </div>
        <div class="mt-2" id="table_data">
            <!-- for number of pages -->
-        <div class="float-left">
-            <b-form-select id="per-page-select" v-model="perPage" :options="pageOptions"></b-form-select>
+        <div class="float-left" style="padding:1% 0 0 1.2%">
+            <b-form-select id="per-page-select" v-model="perPage" :options="pageOptions" style="background: white !important;"></b-form-select>
         </div>
         <!-- end for number of pages -->
         <!-- for filter table -->
-          <div class="float-right">
+          <div class="float-right" style="padding:1% 1.2% 0 0">
            <div class="w-100">
               <b-form-group label-for="filter-input">
-                 <b-form-input id="filter-input" v-model="filter" type="search" placeholder="Type to Search"></b-form-input>
+                 <b-form-input id="filter-input" v-model="filter" type="search" placeholder="Type to Search" style="background: white !important;"></b-form-input>
               </b-form-group>
            </div>
           </div>
@@ -24,12 +24,11 @@
               <template #cell(index)="data">
                 {{ data.index + 1 }}
               </template>
-              <template #cell(address)="data">
-                {{data.item['address1']}}, <span v-if="data.item['address2']">{{data.item['address2']}},</span> {{data.item['city']}}, {{data.item['state']}}
+              <template #cell(edit)="data">
+              <button class="btn-trans-b-0"><router-link :to="'/admin/new-branches/'+data.item['id']" class="text-white"><i class="fas fa-edit text-success"></i></router-link></button>
               </template>
-              <template #cell(action)="data">
-              <b-button variant="success"><router-link :to="'/admin/new-branches/'+data.item['id']" class="text-white">Edit</router-link></b-button>
-              <b-button variant="danger" class="text-white" @click="delete_branch(data.item['id'])">Delete</b-button>
+              <template #cell(delete)="data">
+              <button class="text-white btn-trans-b-0" @click="delete_branch(data.item['id'])"><i class="far fa-trash-alt text-danger"></i></button>
               </template>
            </b-table>
           <!-- for pagination -->
@@ -50,12 +49,11 @@ export default {
     return {
       fields: [
         {label:'Sl',key:'index'},
-        {label:'Name',key:"name"},
+        {label:'Name',key:"branch_name"},
         {label:'Branch_id',key:"branch_id"},
-        {label:'Association Name',key:'association_name'},
-        {label:"Address",key:"address"},
-        {label:"Zip Code",key:"zip_code"},
-        {label:"Action",key:"action"}
+        {label:'Location',key:'branch_location'},
+        {label:'Edit',key:'edit'},
+        {label:'Delete',key:'delete'},
         ],
       items: [],
       filter: null,
@@ -78,7 +76,7 @@ export default {
       }
     },
     get_branches(){
-      ApiService.get("/admin/all-branch/0/all")
+      ApiService.get("/admin/all-branch")
         .then(({ data }) => {
           this.items=data;
           this.totalRows=data.length;
@@ -97,7 +95,7 @@ export default {
 
 <style>
 .create_btn{
-    background: #00A1E4;
+    background: #ED700F;
     padding: 2px 25px;
 }
 </style>

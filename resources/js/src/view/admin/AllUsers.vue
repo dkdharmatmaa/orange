@@ -1,20 +1,20 @@
 <template>
   <div class="mt-5">
-    <div class="d-flex ml-2">
+    <div class="d-flex ml-2 justify-content-between">
           <h2>Users</h2>&nbsp;&nbsp;&nbsp;
-          <button class="btn create_btn font-weight-bold"><router-link class="text-white" to="/admin/new-users">Add Users</router-link></button>
+          <button class="btn create_btn font-weight-bold"><router-link class="text-white" to="/admin/new-users">Create Users</router-link></button>
       </div>
        <div class="mt-2" id="table_data">
            <!-- for number of pages -->
-        <div class="float-left">
-            <b-form-select id="per-page-select" v-model="perPage" :options="pageOptions"></b-form-select>
+        <div class="float-left" style="padding:1% 0 0 1.2%">
+            <b-form-select id="per-page-select" v-model="perPage" :options="pageOptions" style="background: white !important;"></b-form-select>
         </div>
         <!-- end for number of pages -->
         <!-- for filter table -->
-          <div class="float-right">
+          <div class="float-right" style="padding:1% 1.2% 0 0">
            <div class="w-100">
               <b-form-group label-for="filter-input">
-                 <b-form-input id="filter-input" v-model="filter" type="search" placeholder="Type to Search"></b-form-input>
+                 <b-form-input id="filter-input" v-model="filter" type="search" placeholder="Type to Search" style="background: white !important;"></b-form-input>
               </b-form-group>
            </div>
           </div>
@@ -24,12 +24,11 @@
               <template #cell(index)="data">
                 {{ data.index + 1 }}
               </template>
-              <template #cell(get_assos_name)="data">
-               {{data.item['get_assos_name']['name']}}
+              <template #cell(edit)="data">
+              <button class="btn-trans-b-0"><router-link :to="'/admin/new-users/'+data.item['id']" class="text-white"><i class="fas fa-edit text-success"></i></router-link></button>
               </template>
-              <template #cell(action)="data">
-              <b-button variant="success"><router-link :to="'/admin/new-users/'+data.item['id']" class="text-white">Edit</router-link></b-button>
-              <b-button variant="danger" v-on:click="delete_user(data.item['id'])">Delete</b-button>
+              <template #cell(delete)="data">
+              <button class="text-white btn-trans-b-0" @click="delete_user(data.item['id'])"><i class="far fa-trash-alt text-danger"></i></button>
               </template>
            </b-table>
           <!-- for pagination -->
@@ -52,17 +51,16 @@ export default {
       fields: [
         {label:'Sl',key:'index'},
         {label:'Name',key:"name"},
+        {label:'Phone',key:"phone"},
         {label:'Email address',key:"email"},
-        {label:'Association Name',key:'get_assos_name'},
-        {label:'Branch Name',key:'branch_name'},
-        {label:"Action",key:"action"}
+        {label:'Edit',key:'edit'},
+        {label:'Delete',key:'delete'},
         ],
       items: [],
       filter: null,
       totalRows: 0,
       currentPage: 1,
       perPage: 10,
-      association_id:'',
       pageOptions: [10, 15, 20,{ value: 100, text: "Show a lot" }],
     };
   },
@@ -77,7 +75,7 @@ export default {
       }
     },
     get_users(){
-      ApiService.get(`/admin/all-user/0/${this.association_id}`)
+      ApiService.get(`/admin/all-user`)
         .then(({ data }) => {
           this.items=data;
           this.totalRows=data.length;
@@ -89,7 +87,6 @@ export default {
     },
   },
   mounted(){
-    this.association_id=this.currentUser.association_id;
      this.get_users();
   },
   computed:{
@@ -100,7 +97,7 @@ export default {
 
 <style>
 .create_btn{
-    background: #00A1E4;
+    background: #ED700F;
     padding: 2px 25px;
 }
 </style>

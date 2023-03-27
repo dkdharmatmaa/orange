@@ -3,8 +3,8 @@
   <div>
   <div class="brand flex-column-auto" id="kt_brand" ref="kt_brand">
     <div class="text-white mt-15 mb-2 ml-5">
-        <div><h3 class="text-nowrap">{{currentUser.name}}</h3></div>
-        <div><h6 class="text-nowrap">Association admin</h6></div>
+        <div><h1 class="text-nowrap">{{currentUser.name}}</h1></div>
+        <div><h3 class="text-nowrap">Admin</h3></div>
     </div>
     <div class="brand-tools" v-if="allowMinimize">
       <button
@@ -21,7 +21,6 @@
       </button>
     </div>
   </div>
-    <div><hr></div>
   </div>
   <!-- end:: Aside -->
 </template>
@@ -34,7 +33,7 @@
   height: auto !important;
 }
 .brand {
-    background-color: #1B2134 !important;
+    background-color: #2E2E2E  !important;
 }
 @media (max-width: 991.98px){
 .brand {

@@ -13,10 +13,7 @@
       <div id="kt_wrapper" class="d-flex flex-column flex-row-fluid wrapper">
 
         <!-- begin:: Content -->
-        <div
-          id="kt_content"
-          class="content d-flex flex-column flex-column-fluid"
-        >
+        <div id="kt_content" class="content d-flex flex-column flex-column-fluid ml-limit">
           <!-- begin:: Content Head -->
 
           <!-- begin:: Content Head -->
@@ -50,7 +47,7 @@
 </template>
 <style>
 #kt_content{
-  background: #F0F2F5 !important;
+  background: #F1EFEF !important;
 }
 @media (min-width: 992px){
 .header-fixed.subheader-fixed.subheader-enabled .wrapper {
@@ -64,6 +61,9 @@
 }
 .content {
     padding: 15px 0 !important;
+}
+.ml-limit{
+  margin-left: 5%;
 }
 }
 @media (max-width: 991.98px){

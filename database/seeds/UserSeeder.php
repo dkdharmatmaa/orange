@@ -16,10 +16,11 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'dhiraj user',
             'email' => 'user@gmail.com',
-            'association_id' => 1,
-            'branch_id' => 1,
-            'branch_name' => 'dhiraj branch',
             'password' => Hash::make('123456'),
+        ]);
+        DB::table('roles')->insert([
+            "email" => 'user@gmail.com',
+            "role" => 'user',
         ]);
     }
 }

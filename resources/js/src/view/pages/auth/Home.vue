@@ -8,7 +8,7 @@
         <h1 class="text-white fs-35 fw-700">Get in Shape</h1>
         <h1 class="mt-2 fw-700 fs-29 text-primary-color">Start Today</h1>
         <p class="text-white mt-5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-        <div class="mt-10"><router-link to="/login"><button class="login-btn">Login</button></router-link></div>
+        <div class="mt-10"><a href="/login"><button class="login-btn">Login</button></a></div>
        </div>
      </div>
     </div>
@@ -41,10 +41,10 @@ export default {
 .login-btn{
     background: #ED700F;
     border: 0;
-    padding: 2% 8%;
+    padding: 1.5% 6%;
     border-radius: 40px;
     color: white;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
 }
 </style>

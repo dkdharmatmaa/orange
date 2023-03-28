@@ -7,19 +7,25 @@ export default new Router({
      //-----------users route-------------------
      {
       path: "/",
-      redirect: "/check-eligibilty",
+      redirect: "/entry",
       component: () => import("@/view/layout/Layout"),
       children: [
         {
-          path: "/check-eligibilty",
-          name: "user-checkeligibilty",
-          component: () => import("@/view/pages/CheckEligibilty.vue"),
+          path: "/entry",
+          name: "user-entry",
+          component: () => import("@/view/pages/Entry.vue"),
           meta: { userType: 'user' }
         },
         {
-          path: "eligibilty-report",
-          name: "user-eligibiltyreport",
-          component: () => import("@/view/pages/EligibiltyReport.vue"),
+          path: "report",
+          name: "user-report",
+          component: () => import("@/view/pages/Report.vue"),
+          meta: { userType: 'user' }
+        },
+        {
+          path: "report-detail/:id",
+          name: "admin-report-detail",
+          component: () => import("@/view/pages/ReportDetail.vue"),
           meta: { userType: 'user' }
         },
       ]
@@ -72,9 +78,15 @@ export default new Router({
           meta: { userType: 'admin' }
         },
         {
-          path: "eligibilty-report",
-          name: "admin-eligibiltyreport",
-          component: () => import("@/view/admin/EligibiltyReport.vue"),
+          path: "report",
+          name: "admin-report",
+          component: () => import("@/view/admin/Report.vue"),
+          meta: { userType: 'admin' }
+        },
+        {
+          path: "report-detail/:id",
+          name: "admin-report-detail",
+          component: () => import("@/view/admin/ReportDetail.vue"),
           meta: { userType: 'admin' }
         },
         {

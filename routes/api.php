@@ -7,6 +7,7 @@ use App\Http\Controllers\user\UserController;
 use App\Http\Controllers\PasswordResetRequestController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\admin\EntryController as AdminEntryController;
+use App\Http\Controllers\user\EntryController as UserEntryController;
 use App\Http\Controllers\admin\BranchController;
 use App\Http\Controllers\admin\ProductController;
 /*
@@ -50,6 +51,8 @@ Route::group(['middleware' => 'auth:admin-api','prefix' => 'admin'], function ()
     Route::delete('/product/{id}', [ProductController::class,'delete']);
     //form related work by admin
     Route::post('/entry', [AdminEntryController::class,'store']);
+    Route::post('/report', [AdminEntryController::class,'index']);
+    Route::get('/report-single/{id}', [AdminEntryController::class,'index_single']);
 });
 
 // =================user section==========================
@@ -58,6 +61,14 @@ Route::post('/register', [UserController::class,'register']);
 Route::group(['middleware' => 'auth:user-api','prefix' => 'user'], function () {
     Route::post('logout', [UserController::class,'logout']);
     Route::post('verify', [UserController::class,'me']);
+    //form related work by user
+    Route::post('/entry', [UserEntryController::class,'store']);
+    Route::post('/report', [UserEntryController::class,'index']);
+    Route::get('/report-single/{id}', [UserEntryController::class,'index_single']);
+    //product related work by user
+    Route::get('/product-option', [ProductController::class,'index_option']);
+    //branch related work by admin
+    Route::get('/all-branch-option', [BranchController::class,'option_index']);
 });
 
 Route::post('/Forgotpassword',[PasswordResetRequestController::class,'sendEmail']);

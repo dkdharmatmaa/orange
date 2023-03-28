@@ -39,9 +39,9 @@ const actions = {
           context.commit(SET_AUTH, data);
           JwtService.saveToken(data.token); 
           if(data.role=='user')
-          router.push(`/check-eligibilty`);
+          router.push(`/entry`);
           else if(data.role=='admin')
-          router.push(`/admin/check-eligibilty`);
+          router.push(`/admin/entry`);
           resolve(data);
         })
         .catch(({ response }) => {

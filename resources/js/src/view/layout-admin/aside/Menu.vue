@@ -41,7 +41,7 @@
       </li>
     </router-link>
       <router-link
-      to="/admin/eligibilty-report"
+      to="/admin/report"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -94,7 +94,7 @@
         ]"
       >
         <a :href="href" class="menu-link" @click="navigate">
-          <img src="/media/custome/menu-icons/office.svg" alt="branch icon" class="img-fluid" width="18" height="18">
+          <img src="/media/custome/menu-icons/branch.svg" alt="branch icon" class="img-fluid" width="18" height="18">
           &nbsp;&nbsp;&nbsp;
           <span class="menu-text">Branches</span>
         </a>

@@ -1,7 +1,7 @@
 <template>
   <ul class="menu-nav">
         <router-link
-      to="/check-eligibilty"
+      to="/entry"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -21,7 +21,7 @@
       </li>
     </router-link>
       <router-link
-      to="/eligibilty-report"
+      to="/report"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li

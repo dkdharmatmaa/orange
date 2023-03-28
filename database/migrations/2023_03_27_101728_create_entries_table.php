@@ -30,6 +30,8 @@ class CreateEntriesTable extends Migration
             $table->date('installment_to')->nullable();
             $table->float('installment_amount')->default(0);
             $table->integer('no_of_installment')->default(0);
+            $table->string('payment_status',50)->nullable();
+            $table->string('payment_by',100)->nullable();
             $table->integer('branch_id');
             $table->string('comment')->nullable();
             $table->boolean('is_email')->default(0);

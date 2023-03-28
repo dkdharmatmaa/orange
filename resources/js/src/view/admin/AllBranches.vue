@@ -97,5 +97,6 @@ export default {
 .create_btn{
     background: #ED700F;
     padding: 2px 25px;
+    border-radius: 20px;
 }
 </style>

@@ -14,8 +14,8 @@
             class="ml-1 input-box"
             :class="{ 'is-invalid': entry_form.errors.has('name') }"
           >
-            <has-error :form="entry_form" field="name"></has-error>
           </b-form-input>
+          <has-error :form="entry_form" field="name"></has-error>
         </b-form-group>
          <div class="d-flex">
          <div class="mr-3 w-50">
@@ -27,7 +27,7 @@
          </div>
           <div class="ml-3 w-50">
             <b-form-group>
-          <label for="input-3">MBO id</label>
+          <label for="input-3">MBO ID</label>
           <b-form-input
             id="input-3"
             type="text"
@@ -37,8 +37,8 @@
             class="ml-1 input-box"
             :class="{ 'is-invalid': entry_form.errors.has('mbo_id') }"
           >
-          <has-error :form="entry_form" field="mbo_id"></has-error>
           </b-form-input>
+          <has-error :form="entry_form" field="mbo_id"></has-error>
           </b-form-group>
           </div>
         </div>
@@ -55,8 +55,8 @@
             class="mx-1 input-box"
             :class="{ 'is-invalid': entry_form.errors.has('phone_number') }"
           >
-          <has-error :form="entry_form" field="phone_number"></has-error>
           </b-form-input>
+          <has-error :form="entry_form" field="phone_number"></has-error>
           </b-form-group>
          </div>
           <div class="ml-3 w-50">
@@ -71,8 +71,8 @@
             class="ml-1 input-box"
             :class="{ 'is-invalid': entry_form.errors.has('email') }"
           >
-          <has-error :form="entry_form" field="email"></has-error>
           </b-form-input>
+          <has-error :form="entry_form" field="email"></has-error>
           </b-form-group>
           </div>
         </div>
@@ -87,11 +87,11 @@
             required
             :class="{ 'is-invalid': entry_form.errors.has('product_id') }"
           >
-            <has-error :form="entry_form" field="product_id"></has-error>
           </b-form-select>
+          <has-error :form="entry_form" field="product_id"></has-error>
         </b-form-group>
         <b-form-group>
-        <label for="input-7">Payment Type</label>
+        <label for="input-7">Payment type</label>
           <b-form-select
             id="input-7"
             v-model="entry_form.payment_type"
@@ -100,8 +100,8 @@
             required
             :class="{ 'is-invalid': entry_form.errors.has('payment_type') }"
           >
-            <has-error :form="entry_form" field="payment_type"></has-error>
           </b-form-select>
+          <has-error :form="entry_form" field="payment_type"></has-error>
         </b-form-group>
         <b-form-group>
         <label for="input-8">Frequency</label>
@@ -113,8 +113,8 @@
             required
             :class="{ 'is-invalid': entry_form.errors.has('frequency') }"
           >
-            <has-error :form="entry_form" field="frequency"></has-error>
           </b-form-select>
+          <has-error :form="entry_form" field="frequency"></has-error>
         </b-form-group>
         <div class="d-flex mt-2">
          <div class="mr-3">
@@ -130,8 +130,8 @@
             class="mx-1 input-box"
             :class="{ 'is-invalid': entry_form.errors.has('membership_price') }"
           >
-          <has-error :form="entry_form" field="membership_price"></has-error>
           </b-form-input>
+          <has-error :form="entry_form" field="membership_price"></has-error>
           </b-form-group>
          </div>
           <div class="ml-3 mr-3">
@@ -147,8 +147,8 @@
             class="ml-1 input-box"
             :class="{ 'is-invalid': entry_form.errors.has('advance_payment') }"
           >
-          <has-error :form="entry_form" field="advance_payment"></has-error>
           </b-form-input>
+          <has-error :form="entry_form" field="advance_payment"></has-error>
           </b-form-group>
           </div>
           <div class="ml-3">
@@ -164,8 +164,8 @@
             class="ml-1 input-box"
             :class="{ 'is-invalid': entry_form.errors.has('recurring_amount') }"
           >
-          <has-error :form="entry_form" field="recurring_amount"></has-error>
           </b-form-input>
+          <has-error :form="entry_form" field="recurring_amount"></has-error>
           </b-form-group>
           </div>
         </div>
@@ -201,8 +201,8 @@
               class="mx-1 input-box"
               :class="{ 'is-invalid': entry_form.errors.has('installment_amount') }"
             >
-            <has-error :form="entry_form" field="installment_amount"></has-error>
             </b-form-input>
+            <has-error :form="entry_form" field="installment_amount"></has-error>
             </b-form-group>
           </div>
           <div class="ml-3 w-50">
@@ -217,8 +217,8 @@
             class="ml-1 input-box"
             :class="{ 'is-invalid': entry_form.errors.has('no_of_installment') }"
           >
-          <has-error :form="entry_form" field="no_of_installment"></has-error>
           </b-form-input>
+          <has-error :form="entry_form" field="no_of_installment"></has-error>
           </b-form-group>
           </div>
         </div>
@@ -234,8 +234,8 @@
             required
             :class="{ 'is-invalid': entry_form.errors.has('branch_id') }"
           >
-            <has-error :form="entry_form" field="branch_id"></has-error>
           </b-form-select>
+          <has-error :form="entry_form" field="branch_id"></has-error>
         </b-form-group>
         <b-form-group>
         <label for="input-18">Comment</label>
@@ -255,11 +255,13 @@
         <div class="alert alert-success mt-3" role="alert" id="fade">
           <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
         </div>
-        <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-if="entry_form.payment_type=='Online'">Proceed</button>  
-        <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-on:click="onSubmit" v-else>
-          <div class="spinner-border text-white" v-if="submit_spinner"></div>
-          <div v-else>Submit details</div>
-        </button>
+        <div class="w-25">
+          <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-if="entry_form.payment_type=='Online'">Proceed</button>  
+          <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-on:click="onSubmit" v-else>
+            <div class="spinner-border text-white" v-if="submit_spinner"></div>
+            <div class="text-nowrap" v-else>Submit details</div>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -314,12 +316,6 @@ export default {
   methods: {
     onSubmit(e) {
       e.preventDefault();
-      let date=this.entry_form.date;
-      let installment_from=this.entry_form.installment_from;
-      let installment_to=this.entry_form.installment_to;
-      this.entry_form.date=date.toISOString().split('T')[0];
-      this.entry_form.installment_from=installment_from.toISOString().split('T')[0];
-      this.entry_form.installment_to=installment_to.toISOString().split('T')[0];
       this.entry_form.post("/admin/entry")
         .then(({ data }) => {
           this.entry_form.reset();
@@ -379,6 +375,7 @@ export default {
 }
 .create_btn {
   background: #ED700F;
+  border-radius: 20px;
 }
 #fade {
   display: none;
@@ -392,6 +389,8 @@ export default {
   border: 1px solid silver;
   padding: 7px;
   background: #F1EFEF !important;
+  width: 100% !important;
+  border-radius: 0 !important;
 }
 .vdp-datepicker input{
   border: none;

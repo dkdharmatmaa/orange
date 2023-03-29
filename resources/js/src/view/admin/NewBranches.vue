@@ -42,7 +42,7 @@
         <div class="alert alert-success my-3" role="alert" id="fade">
           <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
         </div>
-        <div class="w-25"><button  class="btn font-weight-bolder font-size-h6 py-3 mt-5 w-100 create_btn text-white">{{action}} branch</button></div>
+        <div class="w-25"><button  class="btn font-weight-bolder font-size-h6 py-3 mt-5 w-100 create_btn text-white text-nowrap">{{action}} branch</button></div>
       </div>
     </b-form>
   </div>

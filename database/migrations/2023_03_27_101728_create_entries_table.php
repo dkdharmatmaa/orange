@@ -15,6 +15,7 @@ class CreateEntriesTable extends Migration
     {
         Schema::create('entries', function (Blueprint $table) {
             $table->id();
+            $table->string('transaction_id',100)->nullable();
             $table->string('name',100);
             $table->date('date');
             $table->string('mbo_id',50)->nullable();

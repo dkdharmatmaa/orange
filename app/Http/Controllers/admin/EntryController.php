@@ -5,7 +5,10 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Entry;
+use App\Transaction;
 use Illuminate\Support\Facades\Validator;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 class EntryController extends Controller
 {
     //
@@ -38,7 +41,28 @@ class EntryController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+        //creating order id
+        $orderid=uniqid();
+
+        //first insert transaction
+        $transaction=new Transaction();
+        $transaction->customer_refid="cust".auth()->user()->id.time();
+        $transaction->order_id=$orderid;
+        if($request->installment_amount){
+            $transaction->installment_from=explode("T",$request->installment_from)[0];
+            $transaction->installment_to=explode("T",$request->installment_to)[0];
+            $transaction->installment_amount=$request->installment_amount;
+            $transaction->no_of_installment=$request->no_of_installment;
+            $transaction->payment_installment="EMI";
+        }
+        else{
+            $transaction->payment_installment="oneTime";
+        }
+        $transaction->frequency=$request->frequency;
+        $transaction->save();
+
         $entry=new Entry();
+        $entry->transaction_id=$transaction->id;
         $entry->name=$request->name;
         $entry->date=explode("T",$request->date)[0];
         $entry->mbo_id=$request->mbo_id;
@@ -46,7 +70,6 @@ class EntryController extends Controller
         $entry->phone_number=$request->phone_number;
         $entry->product_id=$request->product_id;
         $entry->payment_type=$request->payment_type;
-        $entry->frequency=$request->frequency;
         $entry->membership_price=$request->membership_price;
         if($request->advance_payment)
         $entry->advance_payment=$request->advance_payment;
@@ -57,15 +80,67 @@ class EntryController extends Controller
         $entry->comment=$request->comment;
         if($request->is_email)
         $entry->is_email=$request->is_email;
-        $entry->payment_status='Success';
-        $entry->transaction_id=auth()->user()->id.time();
         $entry->payment_by=$request->name;
-        $entry->save();
-        if($entry){
-            return response()->json(['status'=>true]);
+        if($request->payment_type=='Online'){
+        $entry->payment_status='Pending';
         }
         else{
-           return response()->json(['status'=>false]);
+        $entry->payment_status='Success';
+        }
+        $entry->save();
+
+        //for online payment
+        if($request->payment_type=='Online'){
+            $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
+            $secretkey=env('security_key');
+            $order_date=date_format(new \DateTime(), DATE_W3C);
+            $order_timestamp=strtotime($order_date);
+            $payload = [
+                'mercid' => env('merchant_id'),
+                'orderid' => $orderid,
+                'amount' => $entry->advance_payment,
+                'order_date' => $order_date,
+                'currency' => "356",
+                'ru' => "https://ot.brandshark.in/paymentresponse",
+                'itemcode' => "DIRECT",
+                "device" => [
+                    'init_channel' => 'internet',
+                    'ip' => env('ip_address'),
+                    'user_agent' => 'Mozilla/5.0'
+                ],
+            ];
+            $curl_payload = JWT::encode($payload, $secretkey, "HS256", null ,$headers);
+            $response = Http::withHeaders([
+                "Content-Type: application/jose",
+                "accept: application/jose",
+                "BD-Traceid: $orderid",
+                "BD-Timestamp: $order_timestamp"
+                ])->post("https://pguat.billdesk.io/payments/ve1_2/orders/create", $curl_payload);
+
+            // Billdesk Response
+        try { 
+            $result_decoded = JWT::decode($result, new Key($secretkey, 'HS256'));
+            $result_array = (array) $result_decoded;
+            if ($result_decoded->status == 'ACTIVE') {
+                $transaction_id = $result_array['links'][1]->parameters->bdorderid;
+                $merchant_id = env('merchant_id');
+                $auth_token = $result_array['links'][1]->headers->authorization;
+    
+                return view('apiView',compact('transaction_id','auth_token','merchant_id'));
+            } else { // Response error
+                return response()->json(['status'=>false,'msg'=>"Response error"]);
+            }
+                            
+        } catch (\Exception $e) {
+            return response()->json(['status'=>false,'msg'=>'Return signature validation FAILED']);
+        }
+        }
+
+        if($entry && $transaction){
+            return response()->json(['status'=>true,'msg'=>'Data inserted successfully']);
+        }
+        else{
+           return response()->json(['status'=>false,'msg'=>'Incorrect parameters passed']);
         } 
     }
 }

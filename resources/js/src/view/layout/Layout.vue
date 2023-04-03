@@ -11,7 +11,6 @@
       <!-- end:: Aside Left -->
 
       <div id="kt_wrapper" class="d-flex flex-column flex-row-fluid wrapper">
-
         <!-- begin:: Content -->
         <div
           id="kt_content"
@@ -32,7 +31,7 @@
             <div
               :class="{
                 'container-fluid': contentFluid,
-                container: !contentFluid
+                container: !contentFluid,
               }"
             >
               <transition name="fade-in-up">
@@ -49,25 +48,40 @@
   </div>
 </template>
 <style>
-#kt_content{
-  background: #F0F2F5 !important;
+#kt_content {
+  background: #f0f2f5 !important;
 }
-@media (min-width: 992px){
-.header-fixed.subheader-fixed.subheader-enabled .wrapper {
-    padding-top: 0 !important; 
-}
-.header-fixed .wrapper {
-    padding-top: 0 !important; 
-}
-.aside-fixed .wrapper {
+@media (min-width: 1650px) {
+  .header-fixed.subheader-fixed.subheader-enabled .wrapper {
+    padding-top: 0 !important;
+  }
+  .header-fixed .wrapper {
+    padding-top: 0 !important;
+  }
+  .aside-fixed .wrapper {
     padding-left: 215px !important;
-}
-.content {
+  }
+  .content {
     padding: 15px 0 !important;
+  }
 }
+@media (min-width: 992px) {
+  .header-fixed.subheader-fixed.subheader-enabled .wrapper {
+    padding-top: 0 !important;
+  }
+  .header-fixed .wrapper {
+    padding-top: 0 !important;
+  }
+  .aside-fixed .wrapper {
+    padding-left: 215px !important;
+  }
+  .content {
+    padding: 15px 5% !important;
+  }
 }
-@media (max-width: 991.98px){
-  .container, .container-fluid{
+@media (max-width: 991.98px) {
+  .container,
+  .container-fluid {
     padding: 10px !important;
   }
 }
@@ -84,7 +98,7 @@ import KTScrollTop from "@/view/layout/extras/ScrollTop";
 import Loader from "@/view/content/Loader.vue";
 import {
   ADD_BODY_CLASSNAME,
-  REMOVE_BODY_CLASSNAME
+  REMOVE_BODY_CLASSNAME,
 } from "@/core/services/store/htmlclass.module.js";
 
 export default {
@@ -96,7 +110,7 @@ export default {
     // KTSubheader,
     KTStickyToolbar,
     KTScrollTop,
-    Loader
+    Loader,
   },
   beforeMount() {
     // show page loading
@@ -119,7 +133,7 @@ export default {
       "isAuthenticated",
       "breadcrumbs",
       "pageTitle",
-      "layoutConfig"
+      "layoutConfig",
     ]),
 
     /**
@@ -166,7 +180,7 @@ export default {
      */
     subheaderDisplay() {
       return !!this.layoutConfig("subheader.display");
-    }
-  }
+    },
+  },
 };
 </script>

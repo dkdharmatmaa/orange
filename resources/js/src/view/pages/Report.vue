@@ -20,7 +20,7 @@
                   :file-type="'xlsx'"
                   :sheet-name="'report'"
                   >
-                  <button class="btn create_btn font-weight-bold py-2 text-white">Export Data</button>
+                  <button class="btn create_btn font-weight-bold py-2 text-white text-nowrap">Export Data</button>
               </vue-excel-xlsx>
              </div>
           </div>
@@ -147,6 +147,11 @@ export default {
 </script>
 
 <style>
+input:read-only {
+  border: 0 !important;
+  width: 100% !important;
+  background: white !important;
+}
 div.excel-export button:first-child{
  border: 0;
 }
@@ -156,14 +161,13 @@ div.excel-export button:first-child{
     border-radius: 20px;
 }
 .vdp-datepicker{
-    border: 1px solid silver !important;
-    padding: 7px !important;
     background: white !important;
+    border-radius: 20px !important;
+    border: 1px solid darkgray;
     width: 30% !important;
-    border-radius: 25px !important;
-}
-.vdp-datepicker input{
-  background: #F1EFEF !important;
+    height: 55%;
+    padding: 6px 2px 1px 3%;
+    margin-left: 4%;
 }
 .date-time{
   display: flex;

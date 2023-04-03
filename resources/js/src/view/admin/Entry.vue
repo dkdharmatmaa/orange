@@ -250,16 +250,16 @@
           <has-error :form="entry_form" field="comment"></has-error>
         </b-form-group>
         <b-form-group>
-          <input type="checkbox" id="scales" name="scales" value="1" v-model="entry_form.is_email"> Send Email Receipt
+          <input type="checkbox" id="scales" name="scales" value="1" v-model="entry_form.is_email" class="w-0"> Send Email Receipt
         </b-form-group>
         <div class="alert alert-success mt-3" role="alert" id="fade">
           <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
         </div>
-        <div class="w-25">
+        <div class="w-lg-25 w-md-50">
           <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-if="entry_form.payment_type=='Online'">Proceed</button>  
           <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-on:click="onSubmit" v-else>
             <div class="spinner-border text-white" v-if="submit_spinner"></div>
-            <div class="text-nowrap" v-else>Submit details</div>
+            <div class="text-nowrap" v-else>Save details</div>
           </button>
         </div>
       </div>
@@ -318,6 +318,7 @@ export default {
       e.preventDefault();
       this.entry_form.post("/admin/entry")
         .then(({ data }) => {
+          console.log(data);
           this.entry_form.reset();
           this.entry_form.clear();
           this.entry_form.date=new Date();

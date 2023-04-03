@@ -62,8 +62,8 @@
         <div class="alert alert-success mt-3" role="alert" id="fade">
           <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
         </div>
-         <div class="w-25">
-           <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 bg-primary-color text-white mt-3" style="border-radius: 20px;">{{action}} user</button>
+         <div class="w-lg-25 w-md-50">
+           <button  class="btn font-weight-bolder font-size-h6 py-3 w-100 bg-primary-color text-white mt-3 text-nowrap" style="border-radius: 20px;">{{action}} user</button>
          </div>
       </div>
     </b-form>

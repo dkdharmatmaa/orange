@@ -23,14 +23,9 @@ class CreateEntriesTable extends Migration
             $table->string('email',50)->nullable();
             $table->integer('product_id');
             $table->string('payment_type',30);
-            $table->string('frequency',20)->nullable();
             $table->float('membership_price',11,2)->default(0);
             $table->float('advance_payment',11,2)->default(0);
             $table->float('recurring_amount',11,2)->nullable();
-            $table->date('installment_from')->nullable();
-            $table->date('installment_to')->nullable();
-            $table->float('installment_amount')->default(0);
-            $table->integer('no_of_installment')->default(0);
             $table->string('payment_status',50)->nullable();
             $table->string('payment_by',100)->nullable();
             $table->integer('branch_id');

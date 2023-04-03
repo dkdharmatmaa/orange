@@ -14,7 +14,7 @@ use App\Http\Controllers\PaymentController;
 |
 */
 Route::get('create-order',[PaymentController::class,'createOrderId']);
-Route::get('paymentresponse',[PaymentController::class,'payment_response']);
+Route::post('paymentresponse',[PaymentController::class,'payment_response']);
 Route::get('api-view',function(){
     return view('apiView');
 });

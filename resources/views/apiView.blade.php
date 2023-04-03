@@ -9,9 +9,9 @@
     <script>
 
         var flow_config = {
-            merchantId: "<?php echo $merchant_id; ?>",
-            bdOrderId: "<?php echo $transaction_id; ?>",
-            authToken: "<?php echo $auth_token; ?>",
+            merchantId: "<?php echo env('merchant_id') ?>",
+            bdOrderId: "<?php echo $data['transaction_id']; ?>",
+            authToken: "<?php echo $data['auth_token']; ?>",
             childWindow: false,
             returnUrl: "https://ot.brandshark.in/paymentresponse",
 			crossButtonHandling: 'Y',
@@ -37,6 +37,5 @@
     
 </head>
 <body>
-
 </body>
 </html>

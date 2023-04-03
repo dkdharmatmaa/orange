@@ -125,22 +125,24 @@ class EntryController extends Controller
                 $transaction_id = $result_array['links'][1]->parameters->bdorderid;
                 $merchant_id = env('merchant_id');
                 $auth_token = $result_array['links'][1]->headers->authorization;
-    
-                return view('apiView',compact('transaction_id','auth_token','merchant_id'));
+                $transaction_update=Transaction::find($transaction->id);
+                $transaction_update->auth_token=$auth_token;
+                $transaction_update->transaction_id=$transaction_id;
+                $transaction_update->save();
             } else { // Response error
-                return response()->json(['status'=>false,'msg'=>"Response error"]);
+                return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'msg'=>"Response error"]);
             }
                             
         } catch (\Exception $e) {
-            return response()->json(['status'=>false,'msg'=>'Return signature validation FAILED']);
+            return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'msg'=>'Return signature validation FAILED']);
         }
         }
 
         if($entry && $transaction){
-            return response()->json(['status'=>true,'msg'=>'Data inserted successfully']);
+            return response()->json(['status'=>true,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'msg'=>'Data inserted successfully']);
         }
         else{
-           return response()->json(['status'=>false,'msg'=>'Incorrect parameters passed']);
+           return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'msg'=>'Incorrect parameters passed']);
         } 
     }
 }

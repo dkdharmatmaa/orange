@@ -141,6 +141,11 @@ class PaymentController extends Controller
         $transaction->charge_amount=$charge_amount;
         $transaction->save();
     }
+
+    public function order_data($order_id){
+        $data=Transaction::where('order_id',$order_id)->select('auth_id','transaction_id')->limit(1)->first()->toArray();
+        return view('apiView',compact('data'));
+    }
 }
 
 

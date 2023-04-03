@@ -17,6 +17,7 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->string('order_id',50)->nullable();
             $table->string('transaction_id',100)->nullable();
+            $table->text('auth_token')->nullable();
             $table->dateTime('transaction_date')->nullable();
             $table->float('charge_amount',7,2)->nullable();
             $table->string('customer_refid',50)->nullable();

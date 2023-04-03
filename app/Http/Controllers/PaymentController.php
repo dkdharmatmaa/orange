@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Firebase\JWT\JWT;
+use JWT;
 class PaymentController extends Controller
 {
     //Config::get('country_codes_value');

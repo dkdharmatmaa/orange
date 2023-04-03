@@ -1,4 +1,3 @@
-.env
 /node_modules
 /vendor
 /public/hot
@@ -9,3 +8,4 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+.env

@@ -55,7 +55,7 @@
         ]"
       >
         <a :href="href" class="menu-link" @click="navigate">
-          <img src="/media/custome/menu-icons/logout.svg" alt="logout icon" class="img-fluid" width="18" height="18">
+          <img src="/media/custome/menu-icons/Logout.svg" alt="logout icon" class="img-fluid" width="18" height="18">
           &nbsp;&nbsp;&nbsp;
           <span class="menu-text">Logout</span>
         </a>

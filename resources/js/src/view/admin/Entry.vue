@@ -256,10 +256,9 @@
           <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
         </div>
         <div class="w-lg-25 w-md-50">
-          <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-if="entry_form.payment_type=='Online'">Proceed</button>  
-          <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-on:click="onSubmit" v-else>
+          <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-on:click="onSubmit">
             <div class="spinner-border text-white" v-if="submit_spinner"></div>
-            <div class="text-nowrap" v-else>Save details</div>
+            <div class="text-nowrap" v-else><span v-if="entry_form.payment_type=='Online'">Save details</span><span v-else>Proceed</span></div>
           </button>
         </div>
       </div>

@@ -4,8 +4,8 @@
           <div class="d-flex">
               <h2 class="font-weight-bolder">Transaction Detail</h2>
               <div class="date-time">
-              <Datepicker v-model="from_date" format="yyyy-MM-dd" @closed="get_report()"></Datepicker>
-              <Datepicker v-model="till_date" format="yyyy-MM-dd" @closed="get_report()"></Datepicker>
+              <Datepicker v-model="from_date" format="yyyy-MM-dd" @closed="get_report()" class="select-date"></Datepicker>
+              <Datepicker v-model="till_date" format="yyyy-MM-dd" @closed="get_report()" class="select-date"></Datepicker>
               </div>
           </div>
           <div class="d-flex">
@@ -160,7 +160,10 @@ div.excel-export button:first-child{
     padding: 9px 25px !important;
     border-radius: 20px;
 }
-.vdp-datepicker{
+.select-date input{
+  background: white !important;
+}
+.select-date{
     background: white !important;
     border-radius: 20px !important;
     border: 1px solid darkgray;

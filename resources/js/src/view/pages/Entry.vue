@@ -21,7 +21,7 @@
          <div class="mr-3 w-50">
           <div>
             <label for="input-2">Date</label>
-            <Datepicker v-model="entry_form.date" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('date') }"></Datepicker>
+            <Datepicker v-model="entry_form.date" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('date') }" class="input-date"></Datepicker>
             <has-error :form="entry_form" field="date"></has-error>
           </div>
          </div>
@@ -176,14 +176,14 @@
           <div class="mr-3 w-50">
           <div>
             <label for="input-12">From</label>
-            <Datepicker v-model="entry_form.installment_from" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('installment_from') }"></Datepicker>
+            <Datepicker v-model="entry_form.installment_from" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('installment_from') }" class="input-date"></Datepicker>
             <has-error :form="entry_form" field="installment_from"></has-error>
           </div>
           </div>
           <div class="ml-3 w-50">
           <div>
             <label for="input-13">To</label>
-            <Datepicker v-model="entry_form.installment_to" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('installment_to') }"></Datepicker>
+            <Datepicker v-model="entry_form.installment_to" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('installment_to') }" class="input-date"></Datepicker>
             <has-error :form="entry_form" field="installment_to"></has-error>
           </div>
           </div>
@@ -390,19 +390,19 @@ export default {
 }
 </style>
 <style>
-.vdp-datepicker{
+.input-date{
   border: 1px solid silver;
   padding: 7px;
   background: #F1EFEF !important;
   width: 100% !important;
   border-radius: 0 !important;
 }
-.vdp-datepicker input{
+.input-date input{
   border: none;
   background: #F1EFEF !important;
   width: 75%;
 }
-.vdp-datepicker input:focus{
+.input-date input:focus{
   border: none !important;
 }
 </style>

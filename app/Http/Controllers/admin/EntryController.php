@@ -111,24 +111,30 @@ class EntryController extends Controller
                 ],
             ];
             $curl_payload = JWT::encode($payload, $secretkey, "HS256", null ,$headers);
-            $response = Http::withHeaders([
+            $ch = curl_init( "https://pguat.billdesk.io/payments/ve1_2/orders/create" );
+            $ch_headers = array(
                 "Content-Type: application/jose",
                 "accept: application/jose",
                 "BD-Traceid: $orderid",
                 "BD-Timestamp: $order_timestamp"
-                ])->post("https://pguat.billdesk.io/payments/ve1_2/orders/create", $curl_payload);
-
+            );
+            curl_setopt( $ch, CURLOPT_HTTPHEADER, $ch_headers);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt( $ch, CURLOPT_POSTFIELDS, $curl_payload);
+            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+                                
+            $result = curl_exec($ch);
+            curl_close($ch);  
             // Billdesk Response
         try { 
             $result_decoded = JWT::decode($result, new Key($secretkey, 'HS256'));
             $result_array = (array) $result_decoded;
             if ($result_decoded->status == 'ACTIVE') {
-                $transaction_id = $result_array['links'][1]->parameters->bdorderid;
-                $merchant_id = env('merchant_id');
+                $bd_order_id = $result_array['links'][1]->parameters->bdorderid;
                 $auth_token = $result_array['links'][1]->headers->authorization;
                 $transaction_update=Transaction::find($transaction->id);
                 $transaction_update->auth_token=$auth_token;
-                $transaction_update->transaction_id=$transaction_id;
+                $transaction_update->bd_order_id=$bd_order_id;
                 $transaction_update->save();
             } else { // Response error
                 return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'msg'=>"Response error"]);

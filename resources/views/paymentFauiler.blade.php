@@ -9,20 +9,20 @@
         background: #EBF0F5;
       }
         h1 {
-          color: #88B04B;
+          color: red;
           font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
           font-weight: 900;
           font-size: 40px;
           margin-bottom: 10px;
         }
         p {
-          color: #404F5E;
+          color: red;
           font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
           font-size:20px;
           margin: 0;
         }
       i {
-        color: #9ABC66;
+        color: red;
         font-size: 100px;
         line-height: 200px;
         margin-left:-15px;
@@ -47,9 +47,9 @@
     <body onload="window.close()">
       <div class="card">
       <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
-        <i class="checkmark">✓</i>
+        <i class="checkmark">✘</i>
       </div>
-        <h1>Success</h1> 
+        <h1>{{$status}}</h1> 
         <a href="/admin/entry" class="back-btn">Back</a>
       </div>
     </body>

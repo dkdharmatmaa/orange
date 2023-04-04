@@ -10,9 +10,9 @@
 
         var flow_config = {
             merchantId: "<?php echo env('merchant_id') ?>",
-            bdOrderId: "<?php echo $data['transaction_id']; ?>",
+            bdOrderId: "<?php echo $data['bd_order_id']; ?>",
             authToken: "<?php echo $data['auth_token']; ?>",
-            childWindow: false,
+            childWindow: true,
             returnUrl: "https://ot.brandshark.in/paymentresponse",
 			crossButtonHandling: 'Y',
 			retryCount: 0
@@ -29,7 +29,6 @@
             flowType: "payments"
         };
         window.onload = function () {
-            alert(config);
             window.loadBillDeskSdk(config);
         };
 

@@ -17,7 +17,7 @@ Route::get('create-order',[PaymentController::class,'createOrderId']);
 Route::post('paymentresponse',[PaymentController::class,'payment_response']);
 Route::get('api-view/{order_id}',[PaymentController::class,'order_data']);
 Route::get('api-data',function(){
-    return view('apiView');
+    return view('paymentSuccess');
 });
 Route::get('{any}', function () {
     return view('welcome');

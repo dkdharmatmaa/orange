@@ -3,8 +3,8 @@
   <div>
   <div class="brand flex-column-auto" id="kt_brand" ref="kt_brand">
     <div class="text-white mt-15 mb-2 ml-5">
-        <div><h1 class="text-nowrap">{{currentUser.name}}</h1></div>
-        <div><h3 class="text-nowrap">Admin</h3></div>
+        <div><h1 class="text-nowrap text-secondary-color">{{currentUser.name}}</h1></div>
+        <div><h3 class="text-nowrap text-secondary-color">Admin</h3></div>
     </div>
     <div class="brand-tools" v-if="allowMinimize">
       <button

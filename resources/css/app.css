@@ -9,9 +9,18 @@
 }
 .fs-35{
     font-size: 35px;
+}
+.fs-36{
+    font-size: 36px;
+} 
+.fs-46{
+    font-size: 46px;
 } 
 .text-primary-color{
     color: #ED700F;
+}
+.text-secondary-color{
+    color: #B8ADA4;
 }
 .bg-primary-color{
     background: #ED700F !important;

@@ -19,9 +19,9 @@
     <!--end::Toolbar-->
 
     <!--begin::Logo-->
-    <a href="/dashboard">
+    <!-- <a href="/entry">
       <img src="/media/custome/login/main-login.svg" alt="Logo" width="50" height="50" class="img-fluid">
-    </a>
+    </a> -->
     <!--end::Logo-->
    
   </div>

@@ -19,9 +19,9 @@
     <!--end::Toolbar-->
 
     <!--begin::Logo-->
-    <router-link to="/superadmin/dashboard">
+    <!-- <router-link to="/admin/entry">
       <img src="/media/custome/login/main-login.svg" alt="Logo" width="50" height="50" class="img-fluid">
-    </router-link>
+    </router-link> -->
     <!--end::Logo-->
    
   </div>

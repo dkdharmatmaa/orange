@@ -220,8 +220,9 @@ export default {
   right: 4.5%;
 }
 .login-input{
-    padding: 5px;
+    padding: 10px;
     width: 100%;
+    border: 0;
 }
 .login-btn{
     background: #ED700F;

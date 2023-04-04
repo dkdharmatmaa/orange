@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <div class="w-md-50 fw-700">
+    <div class="w-md-75 w-lg-50 fw-700">
       <h3 class="fw-700">Form</h3>
       <div class="bg-white p-10 mt-5 rounded">
         <b-form-group>
@@ -324,8 +324,13 @@ export default {
           this.entry_form.installment_from=new Date();
           this.entry_form.installment_to=new Date();
           this.submit_spinner = false;
-          $('#fade').fadeToggle(1000);
+          if(data.payment_type=='Online'){
+          location.href = `/api-view/${data.order_id}`;
+          }
+          else{
            $('#fade').fadeToggle(1000);
+           $('#fade').fadeToggle(1000);
+          }
         })
         .catch((err) => {
           this.submit_spinner = false;
@@ -395,6 +400,7 @@ export default {
 .vdp-datepicker input{
   border: none;
   background: #F1EFEF !important;
+  width: 75%;
 }
 .vdp-datepicker input:focus{
   border: none !important;

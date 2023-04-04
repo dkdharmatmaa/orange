@@ -5,8 +5,8 @@
      </div>
      <div class="p-2-3" style="margin-top: 5%;">
        <div class="home-block" style="width:40%">
-        <h1><i class="text-white fs-35 fw-700">Get in Shape</i></h1>
-        <h1><i class="mt-2 fw-700 fs-29 text-primary-color">Start Today</i></h1>
+        <h1><i class="text-white fs-46 fw-700">Get in Shape</i></h1>
+        <h1><i class="mt-2 fw-700 fs-36 text-primary-color">Start Today</i></h1>
         <p class="text-white mt-5"><i class="text-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</i></p>
         <div class="mt-10"><a href="/login"><button class="login-btn">Login</button></a></div>
        </div>

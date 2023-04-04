@@ -23,7 +23,7 @@ class EntryController extends Controller
         return json_encode($data);
     }
     public function index_single($id){
-        $data=Entry::with('product','branch')->where('id',$id)->first();
+        $data=Entry::with('product','branch','transaction')->where('id',$id)->first();
         return json_encode($data);
     }
     public function store(Request $request){
@@ -60,6 +60,9 @@ class EntryController extends Controller
             $transaction->payment_installment="oneTime";
         }
         $transaction->frequency=$request->frequency;
+        if($request->payment_type!='Online'){
+            $transaction->transaction_id=uniqid();
+        }
         $transaction->save();
 
         $entry=new Entry();

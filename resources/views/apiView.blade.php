@@ -12,7 +12,7 @@
             merchantId: "<?php echo env('merchant_id') ?>",
             bdOrderId: "<?php echo $data['bd_order_id']; ?>",
             authToken: "<?php echo $data['auth_token']; ?>",
-            childWindow: true,
+            childWindow: false,
             returnUrl: "https://ot.brandshark.in/paymentresponse",
 			crossButtonHandling: 'Y',
 			retryCount: 0

@@ -121,7 +121,6 @@ class PaymentController extends Controller
             $success = $this->updateTransactionToDB($result_decoded,'Success');        
             // GenerateReceiptEmail($orderid, 1, $draftreceipt);
             return view('paymentSuccess');
-
         } elseif($result_decoded->auth_status=="0399") { // Error     
             $failure = $this->updateTransactionToDB($result_decoded,'Failure');     
             $status='Failure';

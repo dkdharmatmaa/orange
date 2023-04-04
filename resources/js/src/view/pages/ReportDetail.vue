@@ -114,7 +114,7 @@
           <div class="inner-box-100">
               <div class="b-3 px-2 py-1">
                 <label for="">Transaction ID</label>
-                <h5>{{all_data['transaction_id']}}</h5>
+                <h5>{{all_data['transaction']['transaction_id']}}</h5>
               </div>
           </div>
           <div class="inner-box-full p-3 mt-5">

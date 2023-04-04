@@ -50,7 +50,7 @@
         <i class="checkmark">✘</i>
       </div>
         <h1>{{$status}}</h1> 
-        <a href="/admin/entry" class="back-btn">Back</a>
+        <a href="/admin/report" class="back-btn">Back</a>
       </div>
     </body>
 </html>

@@ -14,4 +14,8 @@ class Entry extends Model
     {
         return $this->hasOne(Branch::class, 'id', 'branch_id')->select('id','branch_name');
     }
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class, 'id', 'transaction_id')->select('id','transaction_id');
+    }
 }

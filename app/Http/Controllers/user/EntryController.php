@@ -84,7 +84,7 @@ class EntryController extends Controller
         $entry->comment=$request->comment;
         if($request->is_email)
         $entry->is_email=$request->is_email;
-        $entry->payment_by=$request->name;
+        $entry->payment_by=auth()->user()->name;
         if($request->payment_type=='Online'){
         $entry->payment_status='Pending';
         }

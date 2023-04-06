@@ -35,7 +35,25 @@ class ProductController extends Controller
         $product=new Product();
         $product->name=$request->name;
         $product->duration=$request->duration;
-        $product->frequency=json_encode($request->frequency);
+        $frequency_pair=array();
+        $frequency_data=$request->frequency;
+        for($i=0;$i<sizeof($frequency_data);$i++){
+            if($frequency_data[$i]=='One time')
+            $frequency_pair[$frequency_data[$i]]=$frequency_data[$i];
+            elseif($frequency_data[$i]=='Weekly')
+            $frequency_pair[$frequency_data[$i]]="week";
+            elseif($frequency_data[$i]=='Monthly')
+            $frequency_pair[$frequency_data[$i]]="mnth";
+            elseif($frequency_data[$i]=='Bi monthly')
+            $frequency_pair[$frequency_data[$i]]="bimn";
+            elseif($frequency_data[$i]=='Quarterly')
+            $frequency_pair[$frequency_data[$i]]="qurt";
+            elseif($frequency_data[$i]=='Half yearly')
+            $frequency_pair[$frequency_data[$i]]="bian";
+            elseif($frequency_data[$i]=='Yearly')
+            $frequency_pair[$frequency_data[$i]]="year";
+        }
+        $product->frequency=json_encode($frequency_pair);
         $product->price=$request->price;
         $product->is_active=1;
         $product->save();
@@ -61,7 +79,25 @@ class ProductController extends Controller
         $product=Product::find($id);
         $product->name=$request->name;
         $product->duration=$request->duration;
-        $product->frequency=json_encode($request->frequency);
+        $frequency_pair=array();
+        $frequency_data=$request->frequency;
+        for($i=0;$i<sizeof($frequency_data);$i++){
+            if($frequency_data[$i]=='One time')
+            $frequency_pair[$frequency_data[$i]]=$frequency_data[$i];
+            elseif($frequency_data[$i]=='Weekly')
+            $frequency_pair[$frequency_data[$i]]="week";
+            elseif($frequency_data[$i]=='Monthly')
+            $frequency_pair[$frequency_data[$i]]="mnth";
+            elseif($frequency_data[$i]=='Bi monthly')
+            $frequency_pair[$frequency_data[$i]]="bimn";
+            elseif($frequency_data[$i]=='Quarterly')
+            $frequency_pair[$frequency_data[$i]]="qurt";
+            elseif($frequency_data[$i]=='Half yearly')
+            $frequency_pair[$frequency_data[$i]]="bian";
+            elseif($frequency_data[$i]=='Yearly')
+            $frequency_pair[$frequency_data[$i]]="year";
+        }
+        $product->frequency=json_encode($frequency_pair);
         $product->price=$request->price;
         $product->is_active=1;
         $product->save();

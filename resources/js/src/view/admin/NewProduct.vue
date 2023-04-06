@@ -111,6 +111,7 @@ export default {
       if(this.action=='Create'){
         this.product_form.post("/admin/create-product")
         .then(({ data }) => {
+          console.log(data);
           this.$router.push('/admin/product');
         })
         .catch(err => {
@@ -128,7 +129,7 @@ export default {
       ApiService.get(`/admin/all-product/${id}`)
         .then(({ data }) => {
           this.product_form.fill(data)
-          this.product_form.frequency=JSON.parse(data['frequency'])
+          this.product_form.frequency=Object.keys(JSON.parse(data['frequency']))
         })
     },
   },

@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call('App\Http\Controllers\PaymentController@generate_invoice')->everyMinute();
+        // $schedule->call('App\Http\Controllers\PaymentController@create_transaction')->dailyAt('13:00');
     }
 
     /**

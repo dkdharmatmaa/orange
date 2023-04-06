@@ -26,7 +26,57 @@ class EntryController extends Controller
         $data=Entry::with('product','branch','transaction')->where('id',$id)->first();
         return json_encode($data);
     }
-    public function store(Request $request){
+
+    //for offline payment
+    public function store_offline(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:100'],
+            'date' => ['required'],
+            'mbo_id' => ['required'],
+            'email' => ['required','email'],
+            'phone_number' => ['required','regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
+            'product_id' => ['required','integer'],
+            'payment_type' => ['required'],
+            'frequency' => ['required'],
+            'membership_price' => ['required'],
+            'branch_id' => ['required','integer'],
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $entry=new Entry();
+        $entry->transaction_id="T".auth()->user()->id.time();
+        $entry->name=$request->name;
+        $entry->date=explode("T",$request->date)[0];
+        $entry->mbo_id=$request->mbo_id;
+        $entry->email=$request->email;
+        $entry->phone_number=$request->phone_number;
+        $entry->product_id=$request->product_id;
+        $entry->payment_type=$request->payment_type;
+        $entry->membership_price=$request->membership_price;
+        if($request->advance_payment)
+        $entry->advance_payment=$request->advance_payment;
+        else
+        $entry->advance_payment=$request->membership_price;
+        $entry->recurring_amount=$request->recurring_amount;
+        $entry->branch_id=$request->branch_id;
+        $entry->comment=$request->comment;
+        if($request->is_email)
+        $entry->is_email=$request->is_email;
+        $entry->payment_by=auth()->user()->name;
+        $entry->payment_status='Success';
+        $entry->save();
+        if($entry){
+            return response()->json(['status'=>true,'msg'=>'Data inserted successfully']);
+        }
+        else{
+           return response()->json(['status'=>false,'msg'=>'Incorrect parameters passed']);
+        } 
+    }
+
+    //for online payment+mandate payment
+    public function store_online_payment(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:100'],
             'date' => ['required'],
@@ -44,10 +94,11 @@ class EntryController extends Controller
         }
         //creating order id
         $orderid=uniqid();
-
+        $rand_number=auth()->user()->id.time();
+        $first_name=explode(" ",$request->name)[0];
         //first insert transaction
         $transaction=new Transaction();
-        $transaction->customer_refid="cust".auth()->user()->id.time();
+        $transaction->customer_refid="cust".$rand_number;
         $transaction->order_id=$orderid;
         if($request->installment_amount){
             $transaction->installment_from=explode("T",$request->installment_from)[0];
@@ -60,9 +111,6 @@ class EntryController extends Controller
             $transaction->payment_installment="oneTime";
         }
         $transaction->frequency=$request->frequency;
-        if($request->payment_type!='Online'){
-            $transaction->transaction_id=uniqid();
-        }
         $transaction->save();
 
         $entry=new Entry();
@@ -85,50 +133,108 @@ class EntryController extends Controller
         if($request->is_email)
         $entry->is_email=$request->is_email;
         $entry->payment_by=auth()->user()->name;
-        if($request->payment_type=='Online'){
         $entry->payment_status='Pending';
-        }
-        else{
-        $entry->payment_status='Success';
-        }
         $entry->save();
 
         //for online payment
-        if($request->payment_type=='Online'){
-            $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
-            $secretkey=env('security_key');
-            $order_date=date_format(new \DateTime(), DATE_W3C);
-            $order_timestamp=strtotime($order_date);
+        $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
+        $secretkey=env('security_key');
+        $order_date=date_format(new \DateTime(), DATE_W3C);
+        $order_timestamp=strtotime($order_date);
+        if($request->payment_method=='payment'){
             $payload = [
                 'mercid' => env('merchant_id'),
                 'orderid' => $orderid,
                 'amount' => $entry->advance_payment,
                 'order_date' => $order_date,
                 'currency' => "356",
-                'ru' => "https://ot.brandshark.in/paymentresponse",
+                'ru' => env("response_url"),
                 'itemcode' => "DIRECT",
                 "device" => [
                     'init_channel' => 'internet',
                     'ip' => env('ip_address'),
                     'user_agent' => 'Mozilla/5.0'
                 ],
+                "invoice"=>[
+                    "invoice_number"=>"INV".$rand_number,
+                    "invoice_display_number"=>"INV".$rand_number,
+                    "customer_name"=>$first_name,
+                    "invoice_date"=>$order_date,
+                    "gst_details"=>[
+                    "cgst"=>"0.00",
+                    "sgst"=>"0.00",
+                    "igst"=>"0.00",
+                    "gst"=>"0.00",
+                    "cess"=>"0.00",
+                    "gstincentive"=>"0.00",
+                    "gstpct"=>"0.00",
+                    "gstin"=>""
+                    ]
+                ],        
             ];
-            $curl_payload = JWT::encode($payload, $secretkey, "HS256", null ,$headers);
-            $ch = curl_init( "https://pguat.billdesk.io/payments/ve1_2/orders/create" );
-            $ch_headers = array(
-                "Content-Type: application/jose",
-                "accept: application/jose",
-                "BD-Traceid: $orderid",
-                "BD-Timestamp: $order_timestamp"
-            );
-            curl_setopt( $ch, CURLOPT_HTTPHEADER, $ch_headers);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt( $ch, CURLOPT_POSTFIELDS, $curl_payload);
-            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-                                
-            $result = curl_exec($ch);
-            curl_close($ch);  
-            // Billdesk Response
+        }
+        else{
+            $payload = [
+                'mercid' => env('merchant_id'),
+                'orderid' => $orderid,
+                'amount' => $entry->advance_payment,
+                'order_date' => $order_date,
+                'currency' => "356",
+                'ru' => env("response_url"),
+                'itemcode' => "DIRECT",
+                "device" => [
+                    'init_channel' => 'internet',
+                    'ip' => env('ip_address'),
+                    'user_agent' => 'Mozilla/5.0'
+                ],
+                "mandate"=>[
+                    "mercid"=>env('merchant_id'),
+                    "currency"=>"356",
+                    "amount"=>$transaction->installment_amount,
+                    "customer_refid"=>$transaction->customer_refid,
+                    "subscription_refid"=>"Sub".$rand_number,
+                    "subscription_desc"=>"Term insurance by dhiraj",
+                    "start_date"=>$transaction->installment_from,
+                    "end_date"=>$transaction->installment_to,
+                    "frequency"=>$transaction->frequency,
+                    "amount_type"=>"max",
+                    "recurrence_rule"=>"after",
+                    "debit_day"=>"1"
+                ],
+                "invoice"=>[
+                    "invoice_number"=>"INV".$rand_number,
+                    "invoice_display_number"=>"INV".$rand_number,
+                    "customer_name"=>$first_name,
+                    "invoice_date"=>$order_date,
+                    "gst_details"=>[
+                    "cgst"=>"0.00",
+                    "sgst"=>"0.00",
+                    "igst"=>"0.00",
+                    "gst"=>"0.00",
+                    "cess"=>"0.00",
+                    "gstincentive"=>"0.00",
+                    "gstpct"=>"0.00",
+                    "gstin"=>""
+                    ]
+                ],  
+            ];
+        }
+        $curl_payload = JWT::encode($payload, $secretkey, "HS256", null ,$headers);
+        $ch = curl_init( "https://pguat.billdesk.io/payments/ve1_2/orders/create" );
+        $ch_headers = array(
+            "Content-Type: application/jose",
+            "accept: application/jose",
+            "BD-Traceid: $orderid",
+            "BD-Timestamp: $order_timestamp"
+        );
+        curl_setopt( $ch, CURLOPT_HTTPHEADER, $ch_headers);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $curl_payload);
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+                            
+        $result = curl_exec($ch);
+        curl_close($ch);  
+        // Billdesk Response
         try { 
             $result_decoded = JWT::decode($result, new Key($secretkey, 'HS256'));
             $result_array = (array) $result_decoded;
@@ -137,22 +243,162 @@ class EntryController extends Controller
                 $auth_token = $result_array['links'][1]->headers->authorization;
                 $transaction_update=Transaction::find($transaction->id);
                 $transaction_update->auth_token=$auth_token;
-                $transaction_update->bd_order_id=$bd_order_id;
+                $transaction_update->auth_id=$bd_order_id;
                 $transaction_update->save();
             } else { // Response error
-                return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'msg'=>"Response error"]);
+                return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_payment",'msg'=>"Response error"]);
             }
                             
         } catch (\Exception $e) {
-            return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'msg'=>'Return signature validation FAILED']);
-        }
+            return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_payment",'msg'=>'Return signature validation FAILED']);
         }
 
         if($entry && $transaction){
-            return response()->json(['status'=>true,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'msg'=>'Data inserted successfully']);
+            return response()->json(['status'=>true,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_payment",'msg'=>'Data inserted successfully']);
         }
         else{
-           return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'msg'=>'Incorrect parameters passed']);
+           return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_payment",'msg'=>'Incorrect parameters passed']);
+        } 
+    }
+
+    //for online only mandate payment
+    public function store_online_mandate(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:100'],
+            'date' => ['required'],
+            'mbo_id' => ['required'],
+            'email' => ['required','email'],
+            'phone_number' => ['required','regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
+            'product_id' => ['required','integer'],
+            'payment_type' => ['required'],
+            'frequency' => ['required'],
+            'membership_price' => ['required'],
+            'branch_id' => ['required','integer'],
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        //creating order id
+        $orderid=uniqid();
+        $rand_number=auth()->user()->id.time();
+        $first_name=explode(" ",$request->name)[0];
+        //first insert transaction
+        $transaction=new Transaction();
+        $transaction->customer_refid="cust".$rand_number;
+        $transaction->order_id=$orderid;
+        $transaction->installment_from=explode("T",$request->installment_from)[0];
+        $transaction->installment_to=explode("T",$request->installment_to)[0];
+        $transaction->installment_amount=$request->installment_amount;
+        $transaction->no_of_installment=$request->no_of_installment;
+        $transaction->payment_installment="EMI";
+        $transaction->frequency=$request->frequency;
+        $transaction->save();
+
+        $entry=new Entry();
+        $entry->transaction_id=$transaction->id;
+        $entry->name=$request->name;
+        $entry->date=explode("T",$request->date)[0];
+        $entry->mbo_id=$request->mbo_id;
+        $entry->email=$request->email;
+        $entry->phone_number=$request->phone_number;
+        $entry->product_id=$request->product_id;
+        $entry->payment_type=$request->payment_type;
+        $entry->membership_price=$request->membership_price;
+        $entry->advance_payment=0;
+        $entry->recurring_amount=$request->recurring_amount;
+        $entry->branch_id=$request->branch_id;
+        $entry->comment=$request->comment;
+        if($request->is_email)
+        $entry->is_email=$request->is_email;
+        $entry->payment_by=auth()->user()->name;
+        $entry->payment_status='Pending';
+        $entry->save();
+
+        //for online payment
+        $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
+        $secretkey=env('security_key');
+        $order_date=date_format(new \DateTime(), DATE_W3C);
+        $order_timestamp=strtotime($order_date);
+        $payload = [
+            "mercid"=>env('merchant_id'),
+            "customer_refid"=>$transaction->customer_refid,
+            "subscription_refid"=>"Sub".$rand_number,
+            "subscription_desc"=>"Term insurance by dhiraj",
+            "currency"=>"356",
+            "frequency"=>$transaction->frequency,
+            "amount_type"=>"max",
+            "amount"=>$transaction->installment_amount,
+            "start_date"=>$transaction->installment_from,
+            "end_date"=>$transaction->installment_to,
+            "recurrence_rule"=>"after",
+            "debit_day"=>"1",
+            "ru"=>env("response_url_only"),            
+            "device" => [
+                'init_channel' => 'internet',
+                'ip' => env('ip_address'),
+                'user_agent' => 'Mozilla/5.0'
+            ],
+            "customer"=>[
+                "first_name"=>$entry->name,
+                "mobile"=>$entry->phone_number,
+                "email"=>$entry->email,
+            ],                
+            "invoice"=>[
+                "invoice_number"=>"INV".$rand_number,
+                "invoice_display_number"=>"INV".$rand_number,
+                "customer_name"=>$first_name,
+                "invoice_date"=>$order_date,
+                "gst_details"=>[
+                "cgst"=>"0.00",
+                "sgst"=>"0.00",
+                "igst"=>"0.00",
+                "gst"=>"0.00",
+                "cess"=>"0.00",
+                "gstincentive"=>"0.00",
+                "gstpct"=>"0.00",
+                "gstin"=>""
+                ]
+            ],  
+        ];
+
+        $curl_payload = JWT::encode($payload, $secretkey, "HS256", null ,$headers);
+        $ch = curl_init("https://pguat.billdesk.io/pgsi/ve1_2/mandatetokens/create");
+        $ch_headers = array(
+            "Content-Type: application/jose",
+            "accept: application/jose",
+            "BD-Traceid: $orderid",
+            "BD-Timestamp: $order_timestamp"
+        );
+        curl_setopt( $ch, CURLOPT_HTTPHEADER, $ch_headers);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $curl_payload);
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );                     
+        $result = curl_exec($ch);
+        curl_close($ch);  
+        // Billdesk Response
+        try { 
+            $result_decoded = JWT::decode($result, new Key($secretkey, 'HS256'));
+            $result_array = (array) $result_decoded;
+            if ($result_decoded->status == 'ACTIVE') {
+                $mandate_token_id = $result_array['links'][1]->parameters->mandate_tokenid;
+                $auth_token = $result_array['links'][1]->headers->authorization;
+                $transaction_update=Transaction::find($transaction->id);
+                $transaction_update->auth_token=$auth_token;
+                $transaction_update->auth_id=$mandate_token_id;
+                $transaction_update->save();
+            } else { // Response error
+                return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_only",'msg'=>"Response error"]);
+            }
+                            
+        } catch (\Exception $e) {
+            return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_only",'msg'=>'Return signature validation FAILED']);
+        }
+
+        if($entry && $transaction){
+            return response()->json(['status'=>true,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_only",'msg'=>'Data inserted successfully']);
+        }
+        else{
+           return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_only",'msg'=>'Incorrect parameters passed']);
         } 
     }
 }

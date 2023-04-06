@@ -17,6 +17,7 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->string('order_id',50)->nullable();
             $table->string('transaction_id',100)->nullable();
+            $table->string('auth_id',50)->nullable();
             $table->text('auth_token')->nullable();
             $table->dateTime('transaction_date')->nullable();
             $table->float('charge_amount',7,2)->nullable();
@@ -26,8 +27,10 @@ class CreateTransactionsTable extends Migration
             $table->date('installment_to')->nullable();
             $table->float('installment_amount')->nullable();
             $table->integer('no_of_installment')->nullable();
+            $table->integer('recived_no_of_installment')->nullable()->default(0);
             $table->string('frequency',20)->nullable();
-            $table->string('debit_day',20)->nullable();
+            $table->string('next_debit_day',20)->nullable();
+            $table->string('payment_method',20)->nullable();
             $table->enum('payment_installment',['oneTime','EMI'])->nullable()->default('oneTime');
             $table->timestamps();
         });

@@ -10,10 +10,10 @@
 
         var flow_config = {
             merchantId: "<?php echo env('merchant_id') ?>",
-            bdOrderId: "<?php echo $data['bd_order_id']; ?>",
+            bdOrderId: "<?php echo $data['auth_id']; ?>",
             authToken: "<?php echo $data['auth_token']; ?>",
             childWindow: false,
-            returnUrl: "https://ot.brandshark.in/paymentresponse",
+            returnUrl: "<?php echo env('response_url') ?>",
 			crossButtonHandling: 'Y',
 			retryCount: 0
         };

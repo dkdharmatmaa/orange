@@ -134,6 +134,45 @@ class PaymentController extends Controller
 
     }
 
+    public function payment_response_only(Request $request){
+        $tx = "";
+        $secretkey=env('security_key');
+        if(!empty($request->all())) { 
+            $tx_array = $request->all();
+            if (isset($tx_array['transaction_response'])) {
+                $tx = $tx_array['transaction_response'];
+            }
+        } else {
+            echo "<br><br>Invalid call<br>";
+            die();
+        }
+
+        // Signature validation
+        try { 
+            $result_decoded = JWT::decode($tx, new Key($secretkey, 'HS256')); 
+        } catch (\Exception $e) {
+            echo "<br><br>Invalid response<br>";
+            die();
+        }
+        // Process info
+        $transactionid = $result_decoded->transactionid;  
+        $retrieve_status=$this->retrieve_transaction($transactionid);
+        if ($result_decoded->auth_status=="0300" && $retrieve_status=='success') {
+            $success = $this->updateTransactionToDB($result_decoded,'Success');        
+            // GenerateReceiptEmail($orderid, 1, $draftreceipt);
+            return view('paymentSuccess');
+        } elseif($result_decoded->auth_status=="0399") { // Error     
+            $failure = $this->updateTransactionToDB($result_decoded,'Failure');     
+            $status='Failure';
+            return view('paymentFauiler',compact('status'));
+        }
+        elseif($result_decoded->auth_status=="0002"){ //pending
+            $failure = $this->updateTransactionToDB($result_decoded,'Pending');     
+            $status='Pending';
+            return view('paymentFauiler',compact('status'));
+        }
+    }
+    
     public function updateTransactionToDB($all_data,$status){
         $orderid = $all_data->orderid;
         $transaction_date = $all_data->transaction_date;
@@ -145,10 +184,13 @@ class PaymentController extends Controller
     }
 
     public function order_data($order_id){
-        $data=Transaction::where('order_id',$order_id)->select('auth_token','bd_order_id')->limit(1)->first()->toArray();
+        $data=Transaction::where('order_id',$order_id)->select('auth_token','auth_id')->limit(1)->first()->toArray();
         return view('apiView',compact('data'));
     }
-
+    public function order_data_only($order_id){
+        $data=Transaction::where('order_id',$order_id)->select('auth_token','auth_id')->limit(1)->first()->toArray();
+        return view('apiViewOnly',compact('data'));
+    }
     public function retrieve_transaction($transaction_id){
         $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
         $data = ['transactionid' => $transaction_id];
@@ -171,6 +213,14 @@ class PaymentController extends Controller
         $result_decoded = JWT::decode($result, new Key(env('security_key'), 'HS256'));
         $result_array = (array) $result_decoded;
         return $result_array['transaction_error_type'];
+    }
+
+    public function generate_invoice(){
+        sleep(125);
+        echo "hello i am in generate invoice";
+    }
+    public function create_transaction(){
+        echo "hello i am in create transaction";
     }
 }
 

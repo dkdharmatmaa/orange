@@ -147,7 +147,7 @@ export default {
 </script>
 
 <style>
-input:read-only {
+.select-date input:read-only {
   border: 0 !important;
   width: 100% !important;
 }

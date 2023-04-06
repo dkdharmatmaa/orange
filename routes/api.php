@@ -50,7 +50,9 @@ Route::group(['middleware' => 'auth:admin-api','prefix' => 'admin'], function ()
     Route::put('/edit-product/{id}', [ProductController::class,'update']);
     Route::delete('/product/{id}', [ProductController::class,'delete']);
     //form related work by admin
-    Route::post('/entry', [AdminEntryController::class,'store']);
+    Route::post('/offline-entry', [AdminEntryController::class,'store_offline']);
+    Route::post('/online-entry-mandate', [AdminEntryController::class,'store_online_mandate']);
+    Route::post('/online-entry-payment', [AdminEntryController::class,'store_online_payment']);
     Route::post('/report', [AdminEntryController::class,'index']);
     Route::get('/report-single/{id}', [AdminEntryController::class,'index_single']);
 });

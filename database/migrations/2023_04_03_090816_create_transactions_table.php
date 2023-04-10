@@ -29,7 +29,7 @@ class CreateTransactionsTable extends Migration
             $table->integer('no_of_installment')->nullable();
             $table->integer('recived_no_of_installment')->nullable()->default(0);
             $table->string('frequency',20)->nullable();
-            $table->string('next_debit_day',20)->nullable();
+            $table->string('next_invoice_day',20)->nullable();
             $table->string('payment_method',20)->nullable();
             $table->enum('payment_installment',['oneTime','EMI'])->nullable()->default('oneTime');
             $table->timestamps();

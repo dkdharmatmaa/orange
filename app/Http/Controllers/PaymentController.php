@@ -1,13 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-
+ini_set('max_execution_time', 180);
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use App\Transaction;
 use App\Entry;
+use App\Error;
+use DB;
+use DateTime;
+use Exception;
 class PaymentController extends Controller
 {
     public function createOrderId(){
@@ -214,10 +218,65 @@ class PaymentController extends Controller
         $result_array = (array) $result_decoded;
         return $result_array['transaction_error_type'];
     }
-
     public function generate_invoice(){
-        sleep(125);
-        echo "hello i am in generate invoice";
+        $all_invoice_data = Transaction::where('next_invoice_day', '=',date('Y-m-d'))->where('installment_from', '<=',date('Y-m-d'))->where('installment_to', '>=',date('Y-m-d'))->where('recived_no_of_installment', '<=', DB::raw('no_of_installment'))->where('payment_installment', '=', 'EMI')->get()->toArray();
+        
+        //API operation
+        $all_size=sizeof($all_invoice_data);
+        try{
+            for($i=0;$i<$all_size;$i++){
+                $track_id=uniqid();
+                $time_stump=time();
+                $rand_number=auth()->user()->id.time();
+                $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
+                $payload = [
+                    'mercid' => env('merchant_id'),
+                    'subscription_refid' => $all_invoice_data[$i]['subscription_refid'],
+                    'customer_refid' => $all_invoice_data[$i]['customer_refid'],
+                    'invoice_number' => "INV".$rand_number,
+                    "invoice_display_number" => "INV".$rand_number,
+                    "invoice_date" => $all_invoice_data[$i]['next_invoice_day'],
+                    "duedate" => date('Y-m-d', strtotime($all_invoice_data[$i]['next_invoice_day']. ' + 7 days')),
+                    "debit_date" => date('Y-m-d', strtotime($all_invoice_data[$i]['next_invoice_day']. ' + 2 days')),
+                    'amount' => $all_invoice_data[$i]['installment_amount'],
+                    "net_amount" => $all_invoice_data[$i]['installment_amount'],
+                    "currency" => "356",
+                    "mandateid" => $all_invoice_data[$i]['auth_id'],
+                    "description" => "Invoice for".date('F, Y', strtotime($all_invoice_data[$i]['next_invoice_day'])),
+                ];
+                $curl_payload = JWT::encode($payload, env('security_key'), "HS256", null ,$headers);
+                $ch = curl_init("https://pguat.billdesk.io/pgsi/ve1_2/invoices/create");
+                $ch_headers = array(
+                    "Content-Type: application/jose",
+                    "accept: application/jose",
+                    "BD-Traceid: $track_id",
+                    "BD-Timestamp: $time_stump"
+                );
+                curl_setopt( $ch, CURLOPT_HTTPHEADER, $ch_headers);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt( $ch, CURLOPT_POSTFIELDS, $curl_payload);
+                curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );                   
+                $result = curl_exec($ch);
+                curl_close($ch);
+                $result_decoded = JWT::decode($result, new Key(env('security_key'), 'HS256'));
+                $result_array = (array) $result_decoded;
+                // return $result_array['transaction_error_type']; $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
+            }
+        }
+        catch(Exception $exception) {
+            $new_error=new Error();
+            $new_error->error_code=$exception->getCode();
+            $new_error->file_path=$exception->getFile();
+            $new_error->line_number=$exception->getLine();
+            $new_error->error_message=$exception->getMessage();
+            $new_error->status="Created";
+            $new_error->error_type="Invoice";
+            $new_error->save();
+        }
+        // $date = new DateTime('2023-03-11');
+        // $date->modify('+1 month');
+        // $date_array=(array)$date;
+        // echo explode(' ',$date_array['date'])[0];
     }
     public function create_transaction(){
         echo "hello i am in create transaction";

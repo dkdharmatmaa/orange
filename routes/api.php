@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\EntryController as AdminEntryController;
 use App\Http\Controllers\user\EntryController as UserEntryController;
 use App\Http\Controllers\admin\BranchController;
 use App\Http\Controllers\admin\ProductController;
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -80,5 +81,6 @@ Route::post('ForgotpasswordActual',[PasswordResetRequestController::class,'forgo
 //common login
 Route::post('/login', [LoginController::class,'login']);
 
+Route::get('get-invoice',[PaymentController::class,'generate_invoice']);
 
 

@@ -99,15 +99,14 @@ export default new Router({
     },
     //-----------for user login-------------------
     {
-      path: "/",
+      name: "home",
+      path: "/home",
       component: () => import("@/view/pages/auth/Home"),
-      children: [
-        {
-          name: "home",
-          path: "/home",
-          component: () => import("@/view/pages/auth/Home"),
-        },
-      ]
+    },
+    {
+      name: "rules",
+      path: "/rules/:role",
+      component: () => import("@/view/pages/auth/Rules"),
     },
     {
       path: "/login",

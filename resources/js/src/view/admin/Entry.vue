@@ -379,6 +379,8 @@ export default {
        }
     },
     getFrequency(){
+      this.options_frequency=[];
+      this.options_frequency.push({ value: "", text: "Select frequency" });
       let options=JSON.parse(this.all_product[this.entry_form.product_id][0]['frequency']);
       for (const [key, value] of Object.entries(options)) {
         this.options_frequency.push({value:value,text:key});

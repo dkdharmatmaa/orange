@@ -65,7 +65,9 @@ Route::group(['middleware' => 'auth:user-api','prefix' => 'user'], function () {
     Route::post('logout', [UserController::class,'logout']);
     Route::post('verify', [UserController::class,'me']);
     //form related work by user
-    Route::post('/entry', [UserEntryController::class,'store']);
+    Route::post('/offline-entry', [UserEntryController::class,'store_offline']);
+    Route::post('/online-entry-mandate', [UserEntryController::class,'store_online_mandate']);
+    Route::post('/online-entry-payment', [UserEntryController::class,'store_online_payment']);
     Route::post('/report', [UserEntryController::class,'index']);
     Route::get('/report-single/{id}', [UserEntryController::class,'index_single']);
     //product related work by user

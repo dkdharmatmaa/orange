@@ -256,8 +256,16 @@
           <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
         </div>
         <div class="w-lg-25 w-md-50">
-          <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-if="entry_form.payment_type=='Online'">Proceed</button>  
-          <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn text-white" v-on:click="onSubmit" v-else>
+            <div v-if="entry_form.payment_type=='Online'">
+              <div class="font-weight-bolder font-size-h6 py-3 px-3 w-100 create_btn_select" v-if="submit_spinner"><div class="spinner-border text-white"></div></div>
+                <select v-model="payment_method" class="font-weight-bolder font-size-h6 py-3 px-3 w-100 create_btn_select text-white" v-on:change="onlinePayment" v-else>
+                  <option value='' selected>Select Payment Type</option>
+                  <option value='payment'>Payment</option>
+                  <option value="payment_mandate">Payment+Mandate</option>
+                  <option value="only_mandate">Only Mandate</option>
+                </select>
+            </div>
+            <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn_select text-white" v-on:click="offlinePayment" v-else>
             <div class="spinner-border text-white" v-if="submit_spinner"></div>
             <div class="text-nowrap" v-else>Save details</div>
           </button>
@@ -295,6 +303,7 @@ export default {
         branch_id: "",
         comment: "",
         is_email: "",
+        payment_method:"",
       }),
       options_branch: [],
       options_product: [],
@@ -311,36 +320,71 @@ export default {
         { value: 'Online', text: 'Online' }
       ],
       submit_spinner: false,
+      payment_method:'',
     };
   },
   methods: {
-    onSubmit(e) {
+    offlinePayment(e) {
       e.preventDefault();
-      this.entry_form.post("/user/entry")
+      this.entry_form.post("/user/offline-entry")
         .then(({ data }) => {
           this.entry_form.reset();
           this.entry_form.clear();
           this.entry_form.date=new Date();
-          this.entry_form.installment_from=new Date();
-          this.entry_form.installment_to=new Date();
           this.submit_spinner = false;
-          if(data.payment_type=='Online'){
-          location.href = `/api-view/${data.order_id}`;
-          }
-          else{
-           $('#fade').fadeToggle(1000);
-           $('#fade').fadeToggle(1000);
-          }
+          $('#fade').fadeToggle(1000);
+          $('#fade').fadeToggle(1000);
         })
         .catch((err) => {
           this.submit_spinner = false;
         });
     },
+    onlinePayment(e){
+       e.preventDefault();
+       if(this.payment_method=='only_mandate'){
+        this.entry_form.post("/user/online-entry-mandate")
+          .then(({ data }) => {
+            this.entry_form.reset();
+            this.entry_form.clear();
+            this.entry_form.date=new Date();
+            this.entry_form.installment_from=new Date();
+            this.entry_form.installment_to=new Date();
+            this.submit_spinner = false;
+            location.href = `/api-view/${data.order_id}`;
+          })
+          .catch((err) => {
+            this.submit_spinner = false;
+          });
+       }
+       else{
+         this.entry_form.payment_method=this.payment_method;
+         this.entry_form.post("/user/online-entry-payment")
+          .then(({ data }) => {
+            this.entry_form.reset();
+            this.entry_form.clear();
+            this.entry_form.date=new Date();
+            this.entry_form.installment_from=new Date();
+            this.entry_form.installment_to=new Date();
+            this.submit_spinner = false;
+            if(data.call_type=='online_payment'){
+            location.href = `/api-view/${data.order_id}`;
+            }
+            else{
+              location.href = `/api-view-only/${data.order_id}`;
+            }
+          })
+          .catch((err) => {
+            this.submit_spinner = false;
+          });
+       }
+    },
     getFrequency(){
-      let option=JSON.parse(this.all_product[this.entry_form.product_id][0]['frequency']);
-      option.forEach((item, index)=>{
-       this.options_frequency.push({value:item,text:item});
-       })
+      this.options_frequency=[];
+      this.options_frequency.push({ value: "", text: "Select frequency" });
+      let options=JSON.parse(this.all_product[this.entry_form.product_id][0]['frequency']);
+      for (const [key, value] of Object.entries(options)) {
+        this.options_frequency.push({value:value,text:key});
+      }
        this.entry_form.membership_price=this.all_product[this.entry_form.product_id][0]['price'];
     },
     getBranches() {
@@ -378,9 +422,12 @@ export default {
 .input-box {
   border: 1px silver solid;
 }
-.create_btn {
-  background: #ED700F;
-  border-radius: 20px;
+.create_btn_select {
+  background: #ED700F !important;
+  border-radius: 20px !important;
+  border: 0;
+  text-align: center;
+  -webkit-appearance: none;
 }
 #fade {
   display: none;

@@ -20,9 +20,9 @@ class CreateInstallmentsTable extends Migration
             $table->string('subscription_refid',50)->nullable();
             $table->float('debit_amount',7,2)->nullable();
             $table->date('actual_debit_date')->nullable();
+            $table->date('due_date')->nullable();
             $table->date('on_debit_date')->nullable();
             $table->enum('payment_status',['Pending','Success','Failed'])->nullable()->default('Pending');
-            $table->tinyInteger('failed_count')->nullable()->default(0);
             $table->timestamps();
         });
     }

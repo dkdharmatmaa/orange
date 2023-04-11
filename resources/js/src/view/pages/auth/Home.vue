@@ -25,15 +25,15 @@
           <li><router-link to="/rules/privacy">Privacy Ploicy</router-link></li>
           <li><router-link to="/rules/refund">Refund Policy</router-link></li>
           <li><router-link to="/rules/cancellation">Cancellation Policy</router-link></li>
-          <li><router-link to="/rules/product">Products/ Services</router-link></li>
+          <li><router-link to="/rules/product">Subscription payment plan policy</router-link></li>
           <li><router-link to="/rules/pricing">Pricing</router-link></li>
         </ul>
       </div>
       <div class="col-12 col-md-4">
         <h2>CONTACT US</h2>
-        <div>
+        <!-- <div>
           <i class="fas fa-phone-alt"></i>&nbsp;<span>Phone Number</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+123456789</span>
-        </div>
+        </div> -->
         <div class="mt-6">
           <i class="fa fa-envelope-open-text"></i>&nbsp;<span>Email</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>support@orangetheoryindia.com</span>
         </div>
@@ -88,8 +88,8 @@ export default {
 }
 ul li{
   font-size: 18px;
-  font-weight: 600;
   cursor: pointer;
+  padding-left: 4px;
 }
 ul{
   list-style-type: none;

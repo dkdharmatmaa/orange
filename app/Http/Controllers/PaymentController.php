@@ -9,6 +9,7 @@ use Firebase\JWT\Key;
 use App\Transaction;
 use App\Entry;
 use App\Error;
+use App\Installment;
 use DB;
 use DateTime;
 use Exception;
@@ -260,7 +261,7 @@ class PaymentController extends Controller
                 curl_close($ch);
                 $result_decoded = JWT::decode($result, new Key(env('security_key'), 'HS256'));
                 $result_array = (array) $result_decoded;
-                // return $result_array['transaction_error_type']; $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
+                // return $result_array['transaction_error_type']; 
             }
         }
         catch(Exception $exception) {
@@ -279,7 +280,11 @@ class PaymentController extends Controller
         // echo explode(' ',$date_array['date'])[0];
     }
     public function create_transaction(){
-        echo "hello i am in create transaction";
+        $all_transaction=Installment::where('actual_debit_date', '>=',date('Y-m-d'))->where('due_date', '<=',date('Y-m-d'))->where('payment_status', '=', 'Pending')->get()->toArray();
+        $all_transaction_size=sizeof($all_transaction);
+        for($i=0;$i<$all_transaction_size;$i++){
+            
+        }
     }
 }
 

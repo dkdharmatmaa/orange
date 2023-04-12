@@ -22,7 +22,7 @@
         <ul>
           <li><router-link to="/rules/about">About us</router-link></li>
           <li><router-link to="/rules/terms">Terms of Use</router-link></li>
-          <li><router-link to="/rules/privacy">Privacy Ploicy</router-link></li>
+          <li><router-link to="/rules/privacy">Privacy Policy</router-link></li>
           <li><router-link to="/rules/refund">Refund Policy</router-link></li>
           <li><router-link to="/rules/cancellation">Cancellation Policy</router-link></li>
           <li><router-link to="/rules/product">Subscription payment plan policy</router-link></li>

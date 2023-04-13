@@ -1,16 +1,16 @@
 <template>
-<div class="container">
+<div class="container-fluid">
   <div class="row mt-20 mb-10">
     <div class="col-3 pr-2p">
       <div class="main-menu">
          <ul>
           <li class="nav-menu" id="about" @click="active_menu('about')">About Us</li>
-          <li class="nav-menu" id="terms" @click="active_menu('terms')">Terms Of Use</li>
+          <li class="nav-menu" id="terms" @click="active_menu('terms')">Terms & Conditions</li>
+          <li class="nav-menu" id="product" @click="active_menu('product')">Subscription Payment Plan</li>
           <li class="nav-menu" id="privacy" @click="active_menu('privacy')">Privacy Policy</li>
           <li class="nav-menu" id="refund" @click="active_menu('refund')">Refund Policy</li>
           <li class="nav-menu" id="cancellation" @click="active_menu('cancellation')">Cancellation Policy</li>
           <li class="nav-menu" id="contact" @click="active_menu('contact')">Contact Us</li>
-          <li class="nav-menu" id="product" @click="active_menu('product')">Subscription payment plan policy</li>
           <li class="nav-menu" id="pricing" @click="active_menu('pricing')">Pricing</li>
          </ul>
       </div>
@@ -306,7 +306,39 @@
       <div class="data-section" id="pricing-data">
         <div>
           <p><strong>Pricing:</strong></p>
-          <p>Our rates and fees vary based on studio, but your first workout is FREE.&nbsp;Contact your local studio&nbsp;to discuss pricing when you redeem your free workout.</p>
+          <p>We offer various packages based on individual choice and commitment. For customers  who are seeking a short term experience we do offer class based packages as well</p>
+          <div>
+            <table>
+             <tr>
+               <td>Membership packages</td>
+               <td>Pricing (Rs.)</td>
+             </tr>
+             <tr>
+               <td>3 Months unlimited usage</td>
+               <td>43000</td>
+             </tr>
+             <tr>
+               <td>6 Months unlimited usage</td>
+               <td>68000</td>
+             </tr>
+             <tr>
+               <td>12 Months  unlimited usage</td>
+               <td>110000</td>
+             </tr>
+             <tr>
+               <td>10 class pack limited usage</td>
+               <td>20000</td>
+             </tr>
+             <tr>
+               <td></td>
+               <td></td>
+             </tr>
+             <tr>
+             <td>Price  includes GST</td>
+             <td></td>
+             </tr>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -363,6 +395,10 @@ export default {
     padding-left: 3%;
 }
 .fs-16{
-  font-size: 16px;
+  font-size: 22px;
+}
+td {
+  padding: 15px;
+  border: 1px solid gray;
 }
 </style>

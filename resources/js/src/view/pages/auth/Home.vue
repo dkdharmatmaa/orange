@@ -2,9 +2,9 @@
   <div>
     <div class="home-banner">
       <div class="p-2-3">
-        <img src="/media/custome/white-logo.png" alt="white logo" style="width: 12%;">
+        <img src="/media/custome/orange-logo.png" alt="white logo" style="width: 25%;">
       </div>
-      <div class="p-2-3" style="margin-top: 5%;">
+      <div class="p-2-3" style="margin-top: 3%;">
         <div class="home-block" style="width:40%">
           <h1><i class="text-white fs-46 fw-700">Get in Shape</i></h1>
           <h1><i class="mt-2 fw-700 fs-36 text-primary-color">Start Today</i></h1>
@@ -21,24 +21,27 @@
         <h2>QUICK LINKS</h2>
         <ul>
           <li><router-link to="/rules/about">About us</router-link></li>
-          <li><router-link to="/rules/terms">Terms of Use</router-link></li>
+          <li><router-link to="/rules/terms">Terms & Conditions</router-link></li>
+          <li><router-link to="/rules/product">Subscription Payment Plan</router-link></li>
           <li><router-link to="/rules/privacy">Privacy Policy</router-link></li>
           <li><router-link to="/rules/refund">Refund Policy</router-link></li>
           <li><router-link to="/rules/cancellation">Cancellation Policy</router-link></li>
-          <li><router-link to="/rules/product">Subscription payment plan policy</router-link></li>
           <li><router-link to="/rules/pricing">Pricing</router-link></li>
         </ul>
       </div>
       <div class="col-12 col-md-4">
         <h2>CONTACT US</h2>
-        <!-- <div>
-          <i class="fas fa-phone-alt"></i>&nbsp;<span>Phone Number</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+123456789</span>
-        </div> -->
+        <div>
+          <i class="far fa-building"></i>&nbsp;<span>Company Name</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Envisage Studios Private Limited</span>
+        </div>
+        <div class="mt-6">
+          <i class="fas fa-phone-alt"></i>&nbsp;<span>Phone Number</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+91 98926 61800</span>
+        </div>
         <div class="mt-6">
           <i class="fa fa-envelope-open-text"></i>&nbsp;<span>Email</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>support@orangetheoryindia.com</span>
         </div>
         <div class="mt-6">
-          <i class="fa fa-map-marker-alt"></i>&nbsp;<span>Address</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>HSR Layout Banglore</span>
+          <i class="fa fa-map-marker-alt"></i>&nbsp;<span>Address</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>D - 211, Ghatkopar Industrial Premises, Behind R - City Mall, Off L.B.S. Marg, Ghatkopar ( West ), Mumbai, Maharashtra 400086</span>
         </div>
       </div>
     </div>

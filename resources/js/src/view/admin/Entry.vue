@@ -142,6 +142,7 @@
             type="number"
             step="0.01"
             v-model="entry_form.advance_payment"
+            v-on:keyup="()=>{this.entry_form.recurring_amount=this.entry_form.membership_price-this.entry_form.advance_payment}"
             required
             placeholder="Enter advance payment"
             class="ml-1 input-box"
@@ -153,7 +154,7 @@
           </div>
           <div class="ml-3">
             <b-form-group>
-          <label for="input-11">Recurring amount</label>
+          <label for="input-11">Total Recurring amount</label>
           <b-form-input
             id="input-11"
             type="number"
@@ -169,29 +170,46 @@
           </b-form-group>
           </div>
         </div>
-        <div class="mb-4" v-if="entry_form.payment_type=='Online'">
+        <div class="mb-4" v-if="entry_form.payment_type=='Online' && entry_form.recurring_amount">
          <label>Billing terms</label>
           <div class="installment-class p-3">
           <div class="d-flex mt-2">
           <div class="mr-3 w-50">
           <div>
-            <label for="input-12">From</label>
+            <label for="input-12">From</label><sup class="text-danger">*</sup>
             <Datepicker v-model="entry_form.installment_from" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('installment_from') }" class="input-date"></Datepicker>
             <has-error :form="entry_form" field="installment_from"></has-error>
           </div>
           </div>
           <div class="ml-3 w-50">
           <div>
-            <label for="input-13">To</label>
+            <label for="input-13">To</label><sup class="text-danger">*</sup>
             <Datepicker v-model="entry_form.installment_to" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('installment_to') }" class="input-date"></Datepicker>
             <has-error :form="entry_form" field="installment_to"></has-error>
           </div>
           </div>
         </div>
         <div class="d-flex mt-2">
-          <div class="mr-3 w-50">
+        <div class="mr-3 w-50">
             <b-form-group>
-          <label for="input-14">Amount per month</label>
+          <label for="input-15">No. of installment</label>
+          <b-form-input
+            id="input-15"
+            type="text"
+            v-model="entry_form.no_of_installment"
+            v-on:keyup="()=>{this.entry_form.installment_amount=this.entry_form.recurring_amount/this.entry_form.no_of_installment}"
+            required
+            placeholder="Enter number of installment"
+            class="ml-1 input-box"
+            :class="{ 'is-invalid': entry_form.errors.has('no_of_installment') }"
+          >
+          </b-form-input>
+          <has-error :form="entry_form" field="no_of_installment"></has-error>
+          </b-form-group>
+          </div>
+          <div class="ml-3 w-50">
+            <b-form-group>
+          <label for="input-14">Amount per cycle</label>
             <b-form-input
               id="input-14"
               v-model="entry_form.installment_amount"
@@ -204,22 +222,6 @@
             </b-form-input>
             <has-error :form="entry_form" field="installment_amount"></has-error>
             </b-form-group>
-          </div>
-          <div class="ml-3 w-50">
-            <b-form-group>
-          <label for="input-15">No. of installment</label>
-          <b-form-input
-            id="input-15"
-            type="text"
-            v-model="entry_form.no_of_installment"
-            required
-            placeholder="Enter number of installment"
-            class="ml-1 input-box"
-            :class="{ 'is-invalid': entry_form.errors.has('no_of_installment') }"
-          >
-          </b-form-input>
-          <has-error :form="entry_form" field="no_of_installment"></has-error>
-          </b-form-group>
           </div>
         </div>
         </div>
@@ -249,26 +251,34 @@
           ></b-form-textarea>
           <has-error :form="entry_form" field="comment"></has-error>
         </b-form-group>
-        <b-form-group>
-          <input type="checkbox" id="scales" name="scales" value="1" v-model="entry_form.is_email" class="w-0"> Send Email Receipt
-        </b-form-group>
+        <div class="d-flex justify-content-between">
+          <b-form-group>
+           <input type="checkbox" id="scales" name="scales" value="1" v-model="entry_form.is_email" class="w-0"> Send Email Receipt
+          </b-form-group>
+          <b-form-group v-if="entry_form.payment_type=='Online'">
+           <input type="checkbox" id="scales" name="scales" value="1" v-model="entry_form.send_link" class="w-0"> Send Payment Link
+          </b-form-group>
+        </div>
         <div class="alert alert-success mt-3" role="alert" id="fade">
           <span class="font-weight-bolder font-size-h6">Saved Successfully</span>
         </div>
         <div class="w-lg-25 w-md-50">
-            <div v-if="entry_form.payment_type=='Online'">
-              <div class="font-weight-bolder font-size-h6 py-3 px-3 w-100 create_btn_select" v-if="submit_spinner"><div class="spinner-border text-white"></div></div>
-                <select v-model="payment_method" class="font-weight-bolder font-size-h6 py-3 px-3 w-100 create_btn_select text-white" v-on:change="onlinePayment" v-else>
-                  <option value='' selected>Select Payment Type</option>
-                  <option value='payment'>Payment</option>
-                  <option value="payment_mandate">Payment+Mandate</option>
-                  <option value="only_mandate">Only Mandate</option>
-                </select>
-            </div>
+            <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn_select text-white" v-on:click="onlinePayment('payment')" v-if="entry_form.payment_type=='Online' && !entry_form.recurring_amount">
+              <div class="spinner-border text-white" v-if="submit_spinner"></div>
+              <div class="text-nowrap" v-else>Payment</div>
+            </button>
+            <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn_select text-white" v-on:click="onlinePayment('payment_mandate')" v-else-if="entry_form.payment_type=='Online' && entry_form.advance_payment && entry_form.recurring_amount">
+              <div class="spinner-border text-white" v-if="submit_spinner"></div>
+              <div class="text-nowrap" v-else>Payment + Mandate</div>
+            </button>
+            <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn_select text-white" v-on:click="onlinePayment('only_mandate')" v-else-if="entry_form.payment_type=='Online' && !entry_form.advance_payment && entry_form.recurring_amount">
+              <div class="spinner-border text-white" v-if="submit_spinner"></div>
+              <div class="text-nowrap" v-else>Only Payment</div>
+            </button>
             <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn_select text-white" v-on:click="offlinePayment" v-else>
-            <div class="spinner-border text-white" v-if="submit_spinner"></div>
-            <div class="text-nowrap" v-else>Save details</div>
-          </button>
+              <div class="spinner-border text-white" v-if="submit_spinner"></div>
+              <div class="text-nowrap" v-else>Save details</div>
+            </button>
         </div>
       </div>
     </div>
@@ -303,6 +313,7 @@ export default {
         branch_id: "",
         comment: "",
         is_email: "",
+        send_link:"",
         payment_method:"",
       }),
       options_branch: [],
@@ -320,7 +331,6 @@ export default {
         { value: 'Online', text: 'Online' }
       ],
       submit_spinner: false,
-      payment_method:'',
     };
   },
   methods: {
@@ -339,8 +349,8 @@ export default {
           this.submit_spinner = false;
         });
     },
-    onlinePayment(e){
-       e.preventDefault();
+    onlinePayment(payment_method){
+       this.entry_form.payment_method=payment_method;
        if(this.payment_method=='only_mandate'){
         this.entry_form.post("/admin/online-entry-mandate")
           .then(({ data }) => {
@@ -350,14 +360,19 @@ export default {
             this.entry_form.installment_from=new Date();
             this.entry_form.installment_to=new Date();
             this.submit_spinner = false;
-            location.href = `/api-view/${data.order_id}`;
+            if(data.call_type){
+            location.href = `/api-view-only/${data.order_id}`;
+            }
+            else{
+              $('#fade').fadeToggle(1000);
+              $('#fade').fadeToggle(1000);
+            }
           })
           .catch((err) => {
             this.submit_spinner = false;
           });
        }
        else{
-         this.entry_form.payment_method=this.payment_method;
          this.entry_form.post("/admin/online-entry-payment")
           .then(({ data }) => {
             this.entry_form.reset();
@@ -366,11 +381,12 @@ export default {
             this.entry_form.installment_from=new Date();
             this.entry_form.installment_to=new Date();
             this.submit_spinner = false;
-            if(data.call_type=='online_payment'){
+            if(data.call_type){
             location.href = `/api-view/${data.order_id}`;
             }
             else{
-              location.href = `/api-view-only/${data.order_id}`;
+              $('#fade').fadeToggle(1000);
+              $('#fade').fadeToggle(1000);
             }
           })
           .catch((err) => {

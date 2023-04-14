@@ -96,6 +96,7 @@ class EntryController extends Controller
         $orderid=uniqid();
         $rand_number=auth()->user()->id.time();
         $first_name=explode(" ",$request->name)[0];
+        $send_link=true;
         //first insert transaction
         $transaction=new Transaction();
         $transaction->customer_refid="cust".$rand_number;
@@ -245,19 +246,28 @@ class EntryController extends Controller
                 $transaction_update->auth_token=$auth_token;
                 $transaction_update->auth_id=$bd_order_id;
                 $transaction_update->save();
+                if($request->send_link){
+                    $send_link=false;
+                    $user['to'] = $entry->email;
+                    $content = env('APP_URL')."/api-view/".$orderid;
+                    Mail::raw($content, function ($message) use ($user) {
+                        $message->to($user['to']);
+                        $message->subject('Payment link of Orange Theory Fitness plan');
+                    });
+                }
             } else { // Response error
-                return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_payment",'msg'=>"Response error"]);
+                return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"false",'msg'=>"Response error"]);
             }
                             
         } catch (\Exception $e) {
-            return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_payment",'msg'=>'Return signature validation FAILED']);
+            return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"false",'msg'=>'Return signature validation FAILED']);
         }
 
         if($entry && $transaction){
-            return response()->json(['status'=>true,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_payment",'msg'=>'Data inserted successfully']);
+            return response()->json(['status'=>true,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"$send_link",'msg'=>'Data inserted successfully']);
         }
         else{
-           return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_payment",'msg'=>'Incorrect parameters passed']);
+           return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"false",'msg'=>'Incorrect parameters passed']);
         } 
     }
 
@@ -282,6 +292,7 @@ class EntryController extends Controller
         $orderid=uniqid();
         $rand_number=auth()->user()->id.time();
         $first_name=explode(" ",$request->name)[0];
+        $send_link=true;
         //first insert transaction
         $transaction=new Transaction();
         $transaction->customer_refid="cust".$rand_number;
@@ -386,19 +397,28 @@ class EntryController extends Controller
                 $transaction_update->auth_token=$auth_token;
                 $transaction_update->auth_id=$mandate_token_id;
                 $transaction_update->save();
+                if($request->send_link){
+                    $send_link=false;
+                    $user['to'] = $entry->email;
+                    $content = env('APP_URL')."/api-view/".$orderid;
+                    Mail::raw($content, function ($message) use ($user) {
+                        $message->to($user['to']);
+                        $message->subject('Payment link of Orange Theory Fitness plan');
+                    });
+                }
             } else { // Response error
-                return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_only",'msg'=>"Response error"]);
+                return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"false",'msg'=>"Response error"]);
             }
                             
         } catch (\Exception $e) {
-            return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_only",'msg'=>'Return signature validation FAILED']);
+            return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"false",'msg'=>'Return signature validation FAILED']);
         }
 
         if($entry && $transaction){
-            return response()->json(['status'=>true,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_only",'msg'=>'Data inserted successfully']);
+            return response()->json(['status'=>true,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"$send_link",'msg'=>'Data inserted successfully']);
         }
         else{
-           return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"online_only",'msg'=>'Incorrect parameters passed']);
+           return response()->json(['status'=>false,'payment_type'=>$request->payment_type,'order_id'=>$orderid,'call_type'=>"false",'msg'=>'Incorrect parameters passed']);
         } 
     }
 }

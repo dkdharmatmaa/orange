@@ -185,7 +185,7 @@ class PaymentController extends Controller
         $charge_amount = $all_data->charge_amount;
         $transaction=Transaction::where('order_id',$orderid)->update(["transaction_id"=>$transactionid,"transaction_date"=>$transaction_date,"charge_amount"=>$charge_amount]);
         $transaction_id=Transaction::where('order_id',$orderid)->select('id')->first()->toArray()['id'];
-        $entry=Entry::where('transaction_id',$transaction_id)->update(['payment_status'=>$status]);
+        $entry=Entry::where('transaction_id',"$transaction_id")->update(["payment_status"=>"$status"]);
     }
 
     public function order_data($order_id){

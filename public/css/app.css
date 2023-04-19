@@ -1,1 +1,50 @@
-.h1{color:red!important}.fw-700{font-weight:700}.fs-29{font-size:29px}.fs-35{font-size:35px}.fs-36{font-size:36px}.fs-46{font-size:46px}.text-primary-color{color:#ed700f}.text-secondary-color{color:#b8ada4}.bg-primary-color{background:#ed700f!important}.btn-trans-b-0{background:transparent;border:0}.vue-treeselect__control,input,select{background:#f1efef!important;border-radius:0!important}.vue-treeselect__control{border:1px solid silver!important}#table_data .rounded{padding-bottom:3.1%!important}.main-hide{background:#f0f2f5!important}
+.h1{
+    color: red !important;
+}
+.fw-700{
+    font-weight: 700;
+} 
+.fs-29{
+    font-size: 29px;
+}
+.fs-35{
+    font-size: 35px;
+}
+.fs-36{
+    font-size: 36px;
+} 
+.fs-46{
+    font-size: 46px;
+} 
+.text-primary-color{
+    color: #ED700F;
+}
+.text-secondary-color{
+    color: #B8ADA4;
+}
+.bg-primary-color{
+    background: #ED700F !important;
+}
+.btn-trans-b-0{
+    background: transparent;
+    border: 0;
+}
+input{
+    background: #F1EFEF !important;
+    border-radius: 0 !important;
+}
+select{
+    background: #F1EFEF !important;
+    border-radius: 0 !important;
+}
+.vue-treeselect__control{
+    background: #F1EFEF !important;
+    border-radius: 0 !important;
+    border: 1px silver solid !important;
+}
+#table_data .rounded{
+    padding-bottom: 3.1% !important;
+}
+.main-hide{
+    background: #f0f2f5 !important;
+}

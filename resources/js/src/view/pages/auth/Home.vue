@@ -62,7 +62,7 @@ export default {
 <style>
 .home-banner { 
   /* The image used */
-  background-image: url("/media/custome/home-banner.jpg");
+  background-image: url("/media/custome/home-banner.png");
   /* Full height */
   height: 100vh;
   /* Center and scale the image nicely */

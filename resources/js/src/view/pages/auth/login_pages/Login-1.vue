@@ -196,7 +196,7 @@ export default {
 <style scoped>
 .login-banner {
   /* The image used */
-  background-image: url("/media/custome/login-banner.png");
+  background-image: url("/media/custome/OT.png");
   /* Full height */
   height: 70%;
   /* Center and scale the image nicely */

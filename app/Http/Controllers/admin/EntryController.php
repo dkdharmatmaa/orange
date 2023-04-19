@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\admin;
-
+set_time_limit(6000);
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Entry;
@@ -11,6 +11,7 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Barryvdh\DomPDF\Facade\Pdf;
 class EntryController extends Controller
 {
     //
@@ -68,6 +69,15 @@ class EntryController extends Controller
         $entry->payment_by=auth()->user()->name;
         $entry->payment_status='Success';
         $entry->save();
+        // ==========Sending mail invoice==========
+        if($entry->is_email){
+            $pdf = Pdf::loadView('payment-invoice',compact('entry'));
+            Mail::raw('', function ($message) use ($entry, $pdf) {
+                $message->to($entry->email)
+                    ->subject("Orange Theory Fitness payment receipt")
+                    ->attachData($pdf->output(), "payment_receipt.pdf");
+            });
+        }
         if($entry){
             return response()->json(['status'=>true,'msg'=>'Data inserted successfully']);
         }

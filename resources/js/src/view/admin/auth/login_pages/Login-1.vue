@@ -11,7 +11,7 @@
     >
       <!--begin::Aside-->
       <div class="login-aside">
-       <img src="/media/custome/login/login-image.png" alt="login image" class="img-fluid1">
+       <img src="/media/custome/login/OT.png" alt="login image" class="img-fluid1">
       </div>
       <!--begin::Aside-->
       <!--begin::Content-->

@@ -19,7 +19,7 @@ Route::post('paymentresponseonly',[PaymentController::class,'payment_response_on
 Route::get('api-view/{order_id}',[PaymentController::class,'order_data']);
 Route::get('api-view-only/{order_id}',[PaymentController::class,'order_data_only']);
 Route::get('api-data',function(){
-    return view('payment-invoice');
+    return view('paymentSuccess');
 });
 Route::get('{any}', function () {
     return view('welcome');

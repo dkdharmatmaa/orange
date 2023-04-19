@@ -67,6 +67,13 @@ class EntryController extends Controller
         $entry->payment_by=auth()->user()->name;
         $entry->payment_status='Success';
         $entry->save();
+        if($entry->is_email){
+            $email=$entry->email;
+            Mail::send( ['html' => 'payment-invoice'], ['amount'=>$entry->advance_payment,'trans_id'=>$entry->transaction_id], function ($message) use ($email) {
+                $message->to($email)
+                    ->subject("Orange Theory Fitness payment receipt");
+            });
+        }
         if($entry){
             return response()->json(['status'=>true,'msg'=>'Data inserted successfully']);
         }

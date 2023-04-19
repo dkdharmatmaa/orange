@@ -28,7 +28,6 @@ class EntryController extends Controller
         $data=Entry::with('product','branch','transaction')->where('id',$id)->first();
         return json_encode($data);
     }
-
     //for offline payment
     public function store_offline(Request $request){
         $validator = Validator::make($request->all(), [
@@ -71,11 +70,10 @@ class EntryController extends Controller
         $entry->save();
         // ==========Sending mail invoice==========
         if($entry->is_email){
-            $pdf = Pdf::loadView('payment-invoice',compact('entry'));
-            Mail::raw('', function ($message) use ($entry, $pdf) {
-                $message->to($entry->email)
-                    ->subject("Orange Theory Fitness payment receipt")
-                    ->attachData($pdf->output(), "payment_receipt.pdf");
+            $email=$entry->email;
+            Mail::send( ['html' => 'payment-invoice'], ['amount'=>$entry->advance_payment,'trans_id'=>$entry->transaction_id], function ($message) use ($email) {
+                $message->to($email)
+                    ->subject("Orange Theory Fitness payment receipt");
             });
         }
         if($entry){

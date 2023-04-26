@@ -254,6 +254,7 @@ class EntryController extends Controller
         try { 
             $result_decoded = JWT::decode($result, new Key($secretkey, 'HS256'));
             $result_array = (array) $result_decoded;
+            return $result_array;
             if ($result_decoded->status == 'ACTIVE') {
                 $bd_order_id = $result_array['links'][1]->parameters->bdorderid;
                 $auth_token = $result_array['links'][1]->headers->authorization;

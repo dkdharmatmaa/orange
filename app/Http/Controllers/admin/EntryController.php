@@ -155,7 +155,7 @@ class EntryController extends Controller
             $payload = [
                 'mercid' => env('merchant_id'),
                 'orderid' => $orderid,
-                'amount' => $entry->advance_payment,
+                'amount' => $entry->advance_payment.".00",
                 'order_date' => $order_date,
                 'currency' => "356",
                 'ru' => env("response_url"),
@@ -190,7 +190,7 @@ class EntryController extends Controller
             $payload = [
                 'mercid' => env('merchant_id'),
                 'orderid' => $orderid,
-                'amount' => $entry->advance_payment,
+                'amount' => $entry->advance_payment.".00",
                 'order_date' => $order_date,
                 'currency' => "356",
                 'ru' => env("response_url"),
@@ -203,10 +203,10 @@ class EntryController extends Controller
                 "mandate"=>[
                     "mercid"=>env('merchant_id'),
                     "currency"=>"356",
-                    "amount"=>$transaction->installment_amount,
+                    "amount"=>$transaction->installment_amount.".00",
                     "customer_refid"=>$transaction->customer_refid,
                     "subscription_refid"=>"Sub".$rand_number,
-                    "subscription_desc"=>"Term insurance by dhiraj",
+                    "subscription_desc"=>"Term insurance by Orange theory fitness",
                     "start_date"=>$transaction->installment_from,
                     "end_date"=>$transaction->installment_to,
                     "frequency"=>$transaction->frequency,
@@ -254,7 +254,6 @@ class EntryController extends Controller
         try { 
             $result_decoded = JWT::decode($result, new Key($secretkey, 'HS256'));
             $result_array = (array) $result_decoded;
-            return $result_array;
             if ($result_decoded->status == 'ACTIVE') {
                 $bd_order_id = $result_array['links'][1]->parameters->bdorderid;
                 $auth_token = $result_array['links'][1]->headers->authorization;
@@ -350,11 +349,11 @@ class EntryController extends Controller
             "mercid"=>env('merchant_id'),
             "customer_refid"=>$transaction->customer_refid,
             "subscription_refid"=>"Sub".$rand_number,
-            "subscription_desc"=>"Term insurance by dhiraj",
+            "subscription_desc"=>"Term insurance by Orange theory fitness",
             "currency"=>"356",
             "frequency"=>$transaction->frequency,
             "amount_type"=>"max",
-            "amount"=>$transaction->installment_amount,
+            "amount"=>$transaction->installment_amount.".00",
             "start_date"=>$transaction->installment_from,
             "end_date"=>$transaction->installment_to,
             "recurrence_rule"=>"after",

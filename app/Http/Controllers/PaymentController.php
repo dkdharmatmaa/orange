@@ -123,8 +123,14 @@ class PaymentController extends Controller
         $transactionid = $result_decoded->transactionid;  
         $retrieve_status=$this->retrieve_transaction($transactionid);
         if ($result_decoded->auth_status=="0300" && $retrieve_status=='success') {
-            $success = $this->updateTransactionToDB($result_decoded,'Success');        
-            // GenerateReceiptEmail($orderid, 1, $draftreceipt);
+            $success = $this->updateTransactionToDB($result_decoded,'Success');
+            $transactionid = $result_decoded->transactionid;    //payment transaction id
+            $charge_amount = $result_decoded->charge_amount;
+            $email= $result_decoded->additional_info->additional_info1;        
+            Mail::send( ['html' => 'payment-invoice'], ['amount'=>$charge_amount,'trans_id'=>$transactionid], function ($message) use ($email) {
+                $message->to($email)
+                    ->subject("Orange Theory Fitness payment receipt");
+            });
             return view('paymentSuccess');
         } elseif($result_decoded->auth_status=="0399") { // Error     
             $failure = $this->updateTransactionToDB($result_decoded,'Failure');     

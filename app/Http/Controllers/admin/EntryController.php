@@ -180,7 +180,10 @@ class EntryController extends Controller
                     "gstpct"=>"0.00",
                     "gstin"=>""
                     ]
-                ],        
+                ],
+                "additional_info"=>[
+                    "additional_info1"=>$entry->email,
+                ]        
             ];
         }
         else{
@@ -226,7 +229,10 @@ class EntryController extends Controller
                     "gstpct"=>"0.00",
                     "gstin"=>""
                     ]
-                ],  
+                ],
+                "additional_info"=>[
+                    "additional_info1"=>$entry->email,
+                ]   
             ];
         }
         $curl_payload = JWT::encode($payload, $secretkey, "HS256", null ,$headers);

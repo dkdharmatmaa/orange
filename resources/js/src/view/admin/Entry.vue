@@ -380,6 +380,7 @@ export default {
             // this.entry_form.date=new Date();
             // this.entry_form.installment_from=new Date();
             // this.entry_form.installment_to=new Date();
+            console.log(data);
             this.submit_spinner = false;
             if(data.call_type){
             location.href = `/api-view/${data.order_id}`;

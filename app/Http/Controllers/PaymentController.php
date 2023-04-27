@@ -115,7 +115,7 @@ class PaymentController extends Controller
         try { 
             $result_decoded = JWT::decode($tx, new Key($secretkey, 'HS256')); 
         } catch (\Exception $e) {
-            echo "<br><br>Invalid response Hello honey<br>";
+            echo "<br><br>Invalid response<br>";
             echo $e->getMessage();
             die();
         }
@@ -152,45 +152,33 @@ class PaymentController extends Controller
         $secretkey=env('security_key');
         if(!empty($request->all())) { 
             $tx_array = $request->all();
-            if (isset($tx_array['transaction_response'])) {
-                $tx = $tx_array['transaction_response'];
+            if (isset($tx_array['mandate_response'])) {
+                $tx = $tx_array['mandate_response'];
             }
         } else {
             echo "<br><br>Invalid call<br>";
             die();
         }
-
         // Signature validation
         try { 
             $result_decoded = JWT::decode($tx, new Key($secretkey, 'HS256')); 
         } catch (\Exception $e) {
-            echo "<br><br>Invalid response<br>";
+            echo "<br><br>Invalid response hello<br>";
+            echo $e->getMessage();
             die();
         }
         // Process info
-        echo "<pre>";
-        print_r($result_decoded);
-        echo "</pre>";
-        die();
-        $transactionid = $result_decoded->transactionid; 
-        $charge_amount = $result_decoded->charge_amount;
         $email= $result_decoded->additional_info->additional_info1;   
-        $retrieve_status=$this->retrieve_transaction($transactionid);
-        if ($result_decoded->auth_status=="0300" && $retrieve_status=='success') {
-            $success = $this->updateTransactionToDB($result_decoded,'Success');        
-            Mail::send( ['html' => 'payment-invoice'], ['amount'=>$charge_amount,'trans_id'=>$transactionid], function ($message) use ($email) {
+        if ($result_decoded->verification_error_code=='TRS0000' && $result_decoded->status=='active') {
+            $success = $this->updateTransactionToDB_only($result_decoded,'Success');        
+            Mail::send( ['html' => 'payment-invoice'], ['amount'=>"0.00",'trans_id'=>"Mandate"], function ($message) use ($email) {
                 $message->to($email)
-                    ->subject("Orange Theory Fitness payment receipt.");
+                    ->subject("Orange Theory Fitness Mandate subscription cofirmation");
             });
             return view('paymentSuccess');
-        } elseif($result_decoded->auth_status=="0399") { // Error     
-            $failure = $this->updateTransactionToDB($result_decoded,'Failure');     
+        } else { // Error     
+            $failure = $this->updateTransactionToDB_only($result_decoded,'Failure');     
             $status='Failure';
-            return view('paymentFauiler',compact('status'));
-        }
-        elseif($result_decoded->auth_status=="0002"){ //pending
-            $failure = $this->updateTransactionToDB($result_decoded,'Pending');     
-            $status='Pending';
             return view('paymentFauiler',compact('status'));
         }
     }
@@ -205,11 +193,23 @@ class PaymentController extends Controller
             $subscription_refid=$all_data->mandate->subscription_refid;
             $start_date=$all_data->mandate->start_date;
             $next_invoice_day=date('Y-m-d', strtotime('-2 day', strtotime($start_date)));
-            $transaction=Transaction::where('order_id',$orderid)->update(["transaction_id"=>"$transactionid","transaction_date"=>"$transaction_date","charge_amount"=>"$charge_amount","payment_method"=>"$payment_method",'subscription_refid'=>"$subscription_refid",'next_invoice_day'=>"$next_invoice_day"]);
+            $transaction=Transaction::where('order_id',$orderid)->update(["transaction_id"=>"$transactionid","transaction_date"=>"$transaction_date","charge_amount"=>"$charge_amount","payment_method"=>"$payment_method",'subscription_refid'=>"$subscription_refid",'next_invoice_day'=>"$next_invoice_day",'status'=>"$status"]);
         }
         else{
-            $transaction=Transaction::where('order_id',$orderid)->update(["transaction_id"=>"$transactionid","transaction_date"=>"$transaction_date","charge_amount"=>"$charge_amount","payment_method"=>"$payment_method"]); 
+            $transaction=Transaction::where('order_id',$orderid)->update(["transaction_id"=>"$transactionid","transaction_date"=>"$transaction_date","charge_amount"=>"$charge_amount","payment_method"=>"$payment_method",'status'=>"$status"]); 
         }
+        $transaction_id=Transaction::where('order_id',$orderid)->select('id')->first()->toArray()['id'];
+        $entry=Entry::where('transaction_id',"$transaction_id")->update(["payment_status"=>"$status"]);
+    }
+    public function updateTransactionToDB_only($all_data,$status){
+        $orderid = $all_data->additional_info->additional_info2;
+        $transaction_date = $all_data->createdon;
+        $transactionid = $all_data->mandateid;    //payment mandate id
+        $subscription_refid=$all_data->subscription_refid;
+        $payment_method = $all_data->payment_method_type;
+        $start_date=$all_data->start_date;
+        $next_invoice_day=date('Y-m-d', strtotime('-2 day', strtotime($start_date)));
+        $transaction=Transaction::where('order_id',$orderid)->update(["transaction_id"=>"$transactionid","transaction_date"=>"$transaction_date","payment_method"=>"$payment_method",'subscription_refid'=>"$subscription_refid",'next_invoice_day'=>"$next_invoice_day",'status'=>"$status"]);
         $transaction_id=Transaction::where('order_id',$orderid)->select('id')->first()->toArray()['id'];
         $entry=Entry::where('transaction_id',"$transaction_id")->update(["payment_status"=>"$status"]);
     }
@@ -246,7 +246,8 @@ class PaymentController extends Controller
         return $result_array['transaction_error_type'];
     }
     public function generate_invoice(){
-        $all_invoice_data = Transaction::where('next_invoice_day', '=',date('Y-m-d'))->where('installment_from', '<=',date('Y-m-d'))->where('installment_to', '>=',date('Y-m-d'))->where('recived_no_of_installment', '<=', DB::raw('no_of_installment'))->where('payment_installment', '=', 'EMI')->get()->toArray();
+        $comp_date=date('Y-m-d');
+        $all_invoice_data = Transaction::where('next_invoice_day', '=',"$comp_date")->where('installment_from', '<=',"$comp_date")->where('installment_to', '>=',"$comp_date")->where('recived_no_of_installment', '<=', DB::raw('no_of_installment'))->where('payment_installment', '=', 'EMI')->get()->toArray();
         
         //API operation
         $all_size=sizeof($all_invoice_data);

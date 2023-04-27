@@ -8,10 +8,10 @@
     <link href="https://uat.billdesk.com/jssdk/v1/dist/billdesksdk/billdesksdk.css" rel="stylesheet">
     <script>
 
-        var flow_config = {
+        var mandate_flow_config = {
             merchantId: "<?php echo env('merchant_id') ?>",
-            mandateTokenId: "<?php echo $data['auth_id']; ?>",
-            authToken: "<?php echo $data['auth_token']; ?>",
+            mandateTokenId: "<?php echo $data['auth_id'] ?>",
+            authToken: "<?php echo $data['auth_token'] ?>",
             childWindow: false,
             returnUrl: "<?php echo env('response_url_only') ?>",
 			crossButtonHandling: 'Y',
@@ -25,8 +25,8 @@
         };
 
         var config = {
-            flowConfig: flow_config,
-            flowType: "payments"
+            flowConfig: mandate_flow_config,
+            flowType: "emandate"
         };
         window.onload = function () {
             window.loadBillDeskSdk(config);

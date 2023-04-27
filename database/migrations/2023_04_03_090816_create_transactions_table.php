@@ -32,6 +32,7 @@ class CreateTransactionsTable extends Migration
             $table->string('next_invoice_day',20)->nullable();
             $table->string('payment_method',20)->nullable();
             $table->enum('payment_installment',['oneTime','EMI'])->nullable()->default('oneTime');
+            $table->string('status',20)->nullable();
             $table->timestamps();
         });
     }

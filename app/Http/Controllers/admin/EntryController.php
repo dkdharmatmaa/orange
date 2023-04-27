@@ -353,7 +353,7 @@ class EntryController extends Controller
             "currency"=>"356",
             "frequency"=>$transaction->frequency,
             "amount_type"=>"max",
-            "amount"=>$transaction->installment_amount,
+            "amount"=>$transaction->installment_amount.".00",
             "start_date"=>$transaction->installment_from,
             "end_date"=>$transaction->installment_to,
             "recurrence_rule"=>"after",
@@ -387,6 +387,7 @@ class EntryController extends Controller
             ],
             "additional_info"=>[
                 "additional_info1"=>$entry->email,
+                "additional_info2"=>$orderid,
             ]   
         ];
 
@@ -408,7 +409,7 @@ class EntryController extends Controller
         try { 
             $result_decoded = JWT::decode($result, new Key($secretkey, 'HS256'));
             $result_array = (array) $result_decoded;
-            if ($result_decoded->status == 'ACTIVE') {
+            if ($result_decoded->status == 'initiated') {
                 $mandate_token_id = $result_array['links'][1]->parameters->mandate_tokenid;
                 $auth_token = $result_array['links'][1]->headers->authorization;
                 $transaction_update=Transaction::find($transaction->id);
@@ -418,7 +419,7 @@ class EntryController extends Controller
                 if($request->send_link){
                     $send_link=false;
                     $user['to'] = $entry->email;
-                    $content = env('APP_URL')."/api-view/".$orderid;
+                    $content = env('APP_URL')."/api-view-only/".$orderid;
                     Mail::raw($content, function ($message) use ($user) {
                         $message->to($user['to']);
                         $message->subject('Payment link of Orange Theory Fitness plan');

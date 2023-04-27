@@ -314,7 +314,6 @@ export default {
         comment: "",
         is_email: "",
         send_link:"",
-        payment_method:"",
       }),
       options_branch: [],
       options_product: [],
@@ -351,14 +350,15 @@ export default {
     },
     onlinePayment(payment_method){
        this.entry_form.payment_method=payment_method;
-       if(this.payment_method=='only_mandate'){
+       if(payment_method=='only_mandate'){
         this.entry_form.post("/admin/online-entry-mandate")
           .then(({ data }) => {
-            this.entry_form.reset();
-            this.entry_form.clear();
-            this.entry_form.date=new Date();
-            this.entry_form.installment_from=new Date();
-            this.entry_form.installment_to=new Date();
+            // this.entry_form.reset();
+            // this.entry_form.clear();
+            // this.entry_form.date=new Date();
+            // this.entry_form.installment_from=new Date();
+            // this.entry_form.installment_to=new Date();
+            console.log(data);
             this.submit_spinner = false;
             if(data.call_type){
             location.href = `/api-view-only/${data.order_id}`;

@@ -288,7 +288,6 @@ class EntryController extends Controller
 
     //for online only mandate payment
     public function store_online_mandate(Request $request){
-        return "hello i am in only mandate";
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:100'],
             'date' => ['required'],

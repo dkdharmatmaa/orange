@@ -288,6 +288,7 @@ class EntryController extends Controller
 
     //for online only mandate payment
     public function store_online_mandate(Request $request){
+        return "hello i am in only mandate";
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:100'],
             'date' => ['required'],
@@ -353,7 +354,7 @@ class EntryController extends Controller
             "currency"=>"356",
             "frequency"=>$transaction->frequency,
             "amount_type"=>"max",
-            "amount"=>$transaction->installment_amount.".00",
+            "amount"=>$transaction->installment_amount,
             "start_date"=>$transaction->installment_from,
             "end_date"=>$transaction->installment_to,
             "recurrence_rule"=>"after",
@@ -384,7 +385,10 @@ class EntryController extends Controller
                 "gstpct"=>"0.00",
                 "gstin"=>""
                 ]
-            ],  
+            ],
+            "additional_info"=>[
+                "additional_info1"=>$entry->email,
+            ]   
         ];
 
         $curl_payload = JWT::encode($payload, $secretkey, "HS256", null ,$headers);

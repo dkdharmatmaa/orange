@@ -13,16 +13,17 @@ use App\Installment;
 use DB;
 use DateTime;
 use Exception;
+use Illuminate\Support\Facades\Mail;
 class PaymentController extends Controller
 {
     public function createOrderId(){
-        $headers = ["alg" => "HS256", "clientid" => "bduatv2ktk", "kid" => "HMAC"];
+        $headers = ["alg" => "HS256", "clientid" => "envisg2uat", "kid" => "HMAC"];
         $secretkey=env('security_key');
         $orderid=uniqid();
         $order_date=date_format(new \DateTime(), DATE_W3C);
         $order_timestamp=strtotime($order_date);
         $payload = [
-            'mercid' => "BDUATV2KTK",
+            'mercid' => "ENVISG2UAT",
             'orderid' => $orderid,
             'amount' => "2.00",
             'order_date' => $order_date,
@@ -35,7 +36,7 @@ class PaymentController extends Controller
                 'user_agent' => 'Mozilla/5.0'
             ],
             "mandate"=>[
-                "mercid"=>"BDUATV2KTK",
+                "mercid"=>"ENVISG2UAT",
                 "currency"=>"356",
                 "amount"=>"1.00",
                 "customer_refid"=>"cust".time(),
@@ -79,9 +80,8 @@ class PaymentController extends Controller
 
         try { 
             $result_decoded = JWT::decode($result, new Key($secretkey, 'HS256'));
-            $result_array = (array) $result_decoded;
             echo "<pre>";
-            print_r($result_array);
+            print_r($result_decoded);
             echo "</pre>";
             die();
             if ($result_decoded->status == 'ACTIVE') {
@@ -111,22 +111,24 @@ class PaymentController extends Controller
             echo "<br><br>Invalid call<br>";
             die();
         }
-
         // Signature validation
         try { 
             $result_decoded = JWT::decode($tx, new Key($secretkey, 'HS256')); 
         } catch (\Exception $e) {
-            echo "<br><br>Invalid response<br>";
+            echo "<br><br>Invalid response Hello honey<br>";
+            echo $e->getMessage();
             die();
         }
         // Process info
-        $transactionid = $result_decoded->transactionid;  
+        // echo "<pre>";
+        // print_r($result_decoded);
+        // echo "</pre>";
+        $transactionid = $result_decoded->transactionid; 
+        $charge_amount = $result_decoded->charge_amount;
+        $email= $result_decoded->additional_info->additional_info1;  
         $retrieve_status=$this->retrieve_transaction($transactionid);
         if ($result_decoded->auth_status=="0300" && $retrieve_status=='success') {
-            $success = $this->updateTransactionToDB($result_decoded,'Success');
-            $transactionid = $result_decoded->transactionid;    //payment transaction id
-            $charge_amount = $result_decoded->charge_amount;
-            $email= $result_decoded->additional_info->additional_info1;        
+            $success = $this->updateTransactionToDB($result_decoded,'Success');       
             Mail::send( ['html' => 'payment-invoice'], ['amount'=>$charge_amount,'trans_id'=>$transactionid], function ($message) use ($email) {
                 $message->to($email)
                     ->subject("Orange Theory Fitness payment receipt.");
@@ -166,11 +168,20 @@ class PaymentController extends Controller
             die();
         }
         // Process info
-        $transactionid = $result_decoded->transactionid;  
+        echo "<pre>";
+        print_r($result_decoded);
+        echo "</pre>";
+        die();
+        $transactionid = $result_decoded->transactionid; 
+        $charge_amount = $result_decoded->charge_amount;
+        $email= $result_decoded->additional_info->additional_info1;   
         $retrieve_status=$this->retrieve_transaction($transactionid);
         if ($result_decoded->auth_status=="0300" && $retrieve_status=='success') {
             $success = $this->updateTransactionToDB($result_decoded,'Success');        
-            // GenerateReceiptEmail($orderid, 1, $draftreceipt);
+            Mail::send( ['html' => 'payment-invoice'], ['amount'=>$charge_amount,'trans_id'=>$transactionid], function ($message) use ($email) {
+                $message->to($email)
+                    ->subject("Orange Theory Fitness payment receipt.");
+            });
             return view('paymentSuccess');
         } elseif($result_decoded->auth_status=="0399") { // Error     
             $failure = $this->updateTransactionToDB($result_decoded,'Failure');     
@@ -189,7 +200,16 @@ class PaymentController extends Controller
         $transaction_date = $all_data->transaction_date;
         $transactionid = $all_data->transactionid;    //payment transaction id
         $charge_amount = $all_data->charge_amount;
-        $transaction=Transaction::where('order_id',$orderid)->update(["transaction_id"=>$transactionid,"transaction_date"=>$transaction_date,"charge_amount"=>$charge_amount]);
+        $payment_method = $all_data->payment_method_type;
+        if(!empty($all_data->mandate)){
+            $subscription_refid=$all_data->mandate->subscription_refid;
+            $start_date=$all_data->mandate->start_date;
+            $next_invoice_day=date('Y-m-d', strtotime('-2 day', strtotime($start_date)));
+            $transaction=Transaction::where('order_id',$orderid)->update(["transaction_id"=>"$transactionid","transaction_date"=>"$transaction_date","charge_amount"=>"$charge_amount","payment_method"=>"$payment_method",'subscription_refid'=>"$subscription_refid",'next_invoice_day'=>"$next_invoice_day"]);
+        }
+        else{
+            $transaction=Transaction::where('order_id',$orderid)->update(["transaction_id"=>"$transactionid","transaction_date"=>"$transaction_date","charge_amount"=>"$charge_amount","payment_method"=>"$payment_method"]); 
+        }
         $transaction_id=Transaction::where('order_id',$orderid)->select('id')->first()->toArray()['id'];
         $entry=Entry::where('transaction_id',"$transaction_id")->update(["payment_status"=>"$status"]);
     }

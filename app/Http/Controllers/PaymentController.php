@@ -192,8 +192,9 @@ class PaymentController extends Controller
         if(!empty($all_data->mandate)){
             $subscription_refid=$all_data->mandate->subscription_refid;
             $start_date=$all_data->mandate->start_date;
+            $mandate_id=$all_data->mandate->mandateid;
             $next_invoice_day=date('Y-m-d', strtotime('-2 day', strtotime($start_date)));
-            $transaction=Transaction::where('order_id',$orderid)->update(["transaction_id"=>"$transactionid","transaction_date"=>"$transaction_date","charge_amount"=>"$charge_amount","payment_method"=>"$payment_method",'subscription_refid'=>"$subscription_refid",'next_invoice_day'=>"$next_invoice_day",'status'=>"$status"]);
+            $transaction=Transaction::where('order_id',$orderid)->update(["transaction_id"=>"$transactionid","mandate_id"=>"$mandate_id","transaction_date"=>"$transaction_date","charge_amount"=>"$charge_amount","payment_method"=>"$payment_method",'subscription_refid'=>"$subscription_refid",'next_invoice_day'=>"$next_invoice_day",'status'=>"$status"]);
         }
         else{
             $transaction=Transaction::where('order_id',$orderid)->update(["transaction_id"=>"$transactionid","transaction_date"=>"$transaction_date","charge_amount"=>"$charge_amount","payment_method"=>"$payment_method",'status'=>"$status"]); 
@@ -201,15 +202,16 @@ class PaymentController extends Controller
         $transaction_id=Transaction::where('order_id',$orderid)->select('id')->first()->toArray()['id'];
         $entry=Entry::where('transaction_id',"$transaction_id")->update(["payment_status"=>"$status"]);
     }
+
     public function updateTransactionToDB_only($all_data,$status){
         $orderid = $all_data->additional_info->additional_info2;
         $transaction_date = $all_data->createdon;
-        $transactionid = $all_data->mandateid;    //payment mandate id
+        $mandate_id = $all_data->mandateid;    //payment mandate id
         $subscription_refid=$all_data->subscription_refid;
         $payment_method = $all_data->payment_method_type;
         $start_date=$all_data->start_date;
         $next_invoice_day=date('Y-m-d', strtotime('-2 day', strtotime($start_date)));
-        $transaction=Transaction::where('order_id',$orderid)->update(["transaction_id"=>"$transactionid","transaction_date"=>"$transaction_date","payment_method"=>"$payment_method",'subscription_refid'=>"$subscription_refid",'next_invoice_day'=>"$next_invoice_day",'status'=>"$status"]);
+        $transaction=Transaction::where('order_id',$orderid)->update(["mandate_id"=>"$mandate_id","transaction_date"=>"$transaction_date","payment_method"=>"$payment_method",'subscription_refid'=>"$subscription_refid",'next_invoice_day'=>"$next_invoice_day",'status'=>"$status"]);
         $transaction_id=Transaction::where('order_id',$orderid)->select('id')->first()->toArray()['id'];
         $entry=Entry::where('transaction_id',"$transaction_id")->update(["payment_status"=>"$status"]);
     }
@@ -218,10 +220,12 @@ class PaymentController extends Controller
         $data=Transaction::where('order_id',$order_id)->select('auth_token','auth_id')->limit(1)->first()->toArray();
         return view('apiView',compact('data'));
     }
+
     public function order_data_only($order_id){
         $data=Transaction::where('order_id',$order_id)->select('auth_token','auth_id')->limit(1)->first()->toArray();
         return view('apiViewOnly',compact('data'));
     }
+
     public function retrieve_transaction($transaction_id){
         $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
         $data = ['transactionid' => $transaction_id];
@@ -245,35 +249,188 @@ class PaymentController extends Controller
         $result_array = (array) $result_decoded;
         return $result_array['transaction_error_type'];
     }
+
     public function generate_invoice(){
         $comp_date=date('Y-m-d');
-        $all_invoice_data = Transaction::where('next_invoice_day', '=',"$comp_date")->where('installment_from', '<=',"$comp_date")->where('installment_to', '>=',"$comp_date")->where('recived_no_of_installment', '<=', DB::raw('no_of_installment'))->where('payment_installment', '=', 'EMI')->get()->toArray();
-        
+        $all_invoice_data = Transaction::where('next_invoice_day', '=',"$comp_date")->where('installment_from', '<=',"$comp_date")->where('installment_to', '>=',"$comp_date")->where('recived_no_of_installment', '<', DB::raw('no_of_installment'))->where('payment_installment', '=', 'EMI')->where('status', '=', 'Success')->get(["id","payment_method","subscription_refid","customer_refid","next_invoice_day","installment_amount","mandate_id","recived_no_of_installment","frequency"])->toArray();
         //API operation
         $all_size=sizeof($all_invoice_data);
-        try{
             for($i=0;$i<$all_size;$i++){
+                try{
+                    $track_id=uniqid();
+                    $time_stump=time();
+                    $rand_number=$i.$time_stump;
+                    $result_decoded="";
+                    $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
+                    if($all_invoice_data[$i]['payment_method']=='upi'){
+                        $payload = [
+                            'mercid' => env('merchant_id'),
+                            'subscription_refid' => $all_invoice_data[$i]['subscription_refid'],
+                            'customer_refid' => $all_invoice_data[$i]['customer_refid'],
+                            'invoice_number' => "INV".$rand_number,
+                            "invoice_display_number" => "INV".$rand_number,
+                            "invoice_date" => $all_invoice_data[$i]['next_invoice_day'],
+                            "duedate" => date('Y-m-d', strtotime($all_invoice_data[$i]['next_invoice_day']. ' + 7 days')),
+                            "debit_date" => date('Y-m-d', strtotime($all_invoice_data[$i]['next_invoice_day']. ' + 2 days')),
+                            'amount' => $all_invoice_data[$i]['installment_amount'].".00",
+                            "net_amount" => $all_invoice_data[$i]['installment_amount'].".00",
+                            "currency" => "356",
+                            "mandateid" => $all_invoice_data[$i]['mandate_id'],
+                            "debit_request_no" => $all_invoice_data[$i]['recived_no_of_installment']+1,
+                            "description" => "Invoice for ".date('F, Y', strtotime($all_invoice_data[$i]['next_invoice_day'])),
+                        ];
+                    }
+                    else{
+                        $payload = [
+                            'mercid' => env('merchant_id'),
+                            'subscription_refid' => $all_invoice_data[$i]['subscription_refid'],
+                            'customer_refid' => $all_invoice_data[$i]['customer_refid'],
+                            'invoice_number' => "INV".$rand_number,
+                            "invoice_display_number" => "INV".$rand_number,
+                            "invoice_date" => $all_invoice_data[$i]['next_invoice_day'],
+                            "duedate" => date('Y-m-d', strtotime($all_invoice_data[$i]['next_invoice_day']. ' + 7 days')),
+                            "debit_date" => date('Y-m-d', strtotime($all_invoice_data[$i]['next_invoice_day']. ' + 2 days')),
+                            'amount' => $all_invoice_data[$i]['installment_amount'].".00",
+                            "net_amount" => $all_invoice_data[$i]['installment_amount'].".00",
+                            "currency" => "356",
+                            "mandateid" => $all_invoice_data[$i]['mandate_id'],
+                            "description" => "Invoice for ".date('F, Y', strtotime($all_invoice_data[$i]['next_invoice_day'])),
+                        ];
+                    }
+                    $curl_payload = JWT::encode($payload, env('security_key'), "HS256", null ,$headers);
+                    $ch = curl_init("https://pguat.billdesk.io/pgsi/ve1_2/invoices/create");
+                    $ch_headers = array(
+                        "Content-Type: application/jose",
+                        "accept: application/jose",
+                        "BD-Traceid: $track_id",
+                        "BD-Timestamp: $time_stump"
+                    );
+                    curl_setopt( $ch, CURLOPT_HTTPHEADER, $ch_headers);
+                    curl_setopt($ch, CURLOPT_POST, 1);
+                    curl_setopt( $ch, CURLOPT_POSTFIELDS, $curl_payload);
+                    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );                   
+                    $result = curl_exec($ch);
+                    curl_close($ch);
+                    $result_decoded = JWT::decode($result, new Key(env('security_key'), 'HS256'));
+                    $installment=new Installment();
+                    $installment->invoice_number=$result_decoded->invoice_number;
+                    $installment->invoice_id=$result_decoded->invoice_id;
+                    $installment->subscription_refid=$result_decoded->subscription_refid;
+                    $installment->mandate_id=$result_decoded->mandateid;
+                    $installment->debit_amount=$result_decoded->net_amount;
+                    $installment->actual_debit_date=$result_decoded->debit_date;
+                    $installment->due_date=$result_decoded->duedate;
+                    $installment->recived_no_of_installment=$all_invoice_data[$i]['recived_no_of_installment'];
+                    $installment->payment_method=$all_invoice_data[$i]['payment_method'];
+                    $installment->payment_status=$result_decoded->status;
+                    $installment->save();
+                }
+                catch(Exception $exception) {
+                    $new_error=new Error();
+                    $new_error->error_code=$exception->getCode();
+                    $new_error->file_path=$exception->getFile();
+                    $new_error->line_number=$exception->getLine();
+                    $new_error->error_message=$exception->getMessage();
+                    $new_error->status="Created";
+                    $new_error->error_type="Invoice";
+                    $new_error->save();
+                }
+                finally {
+                    $recived_count=$all_invoice_data[$i]['recived_no_of_installment']+1;
+                    $trans_id=$all_invoice_data[$i]['id'];
+                    $next_invoice_date="";
+                    if($all_invoice_data[$i]['frequency']=='mnth'){
+                        $next_date=$all_invoice_data[$i]['next_invoice_day'];
+                        $next_temp=date('Y-m-d', strtotime($next_date. ' +1 month'));
+                        $find_date=explode('-',$next_date)[2];
+                        $find_date_temp=explode('-',$next_temp)[2];
+                        if($find_date==$find_date_temp){
+                            $next_invoice_date=$next_temp;
+                        }
+                        else{
+                            $day_temp=date('Y-m-d', strtotime($next_temp. " -$find_date_temp days"));
+                            $next_invoice_date=$day_temp;
+                        }
+                    }
+                    elseif($all_invoice_data[$i]['frequency']=='week'){
+                        $next_invoice_date=date('Y-m-d', strtotime($all_invoice_data[$i]['next_invoice_day']. ' +1 week'));
+                    }
+                    elseif($all_invoice_data[$i]['frequency']=='bimn'){
+                        $next_invoice_date=date('Y-m-d', strtotime($all_invoice_data[$i]['next_invoice_day']. ' +15 days'));
+                    }
+                    elseif($all_invoice_data[$i]['frequency']=='qurt'){
+                        $next_date=$all_invoice_data[$i]['next_invoice_day'];
+                        $next_temp=date('Y-m-d', strtotime($next_date. ' +3 month'));
+                        $find_date=explode('-',$next_date)[2];
+                        $find_date_temp=explode('-',$next_temp)[2];
+                        if($find_date==$find_date_temp){
+                            $next_invoice_date=$next_temp;
+                        }
+                        else{
+                            $day_temp=date('Y-m-d', strtotime($next_temp. " -$find_date_temp days"));
+                            $next_invoice_date=$day_temp;
+                        }
+                    }
+                    elseif($all_invoice_data[$i]['frequency']=='bian'){
+                        $next_date=$all_invoice_data[$i]['next_invoice_day'];
+                        $next_temp=date('Y-m-d', strtotime($next_date. ' +6 month'));
+                        $find_date=explode('-',$next_date)[2];
+                        $find_date_temp=explode('-',$next_temp)[2];
+                        if($find_date==$find_date_temp){
+                            $next_invoice_date=$next_temp;
+                        }
+                        else{
+                            $day_temp=date('Y-m-d', strtotime($next_temp. " -$find_date_temp days"));
+                            $next_invoice_date=$day_temp;
+                        }
+                    }
+                    elseif($all_invoice_data[$i]['frequency']=='year'){
+                        $next_invoice_date=date('Y-m-d', strtotime($all_invoice_data[$i]['next_invoice_day']. ' +1 year'));
+                    }
+                    Transaction::where('id',$trans_id)->update(["recived_no_of_installment"=>$recived_count,"next_invoice_day"=>$next_invoice_date]); 
+                }
+            }
+    }
+    public function create_transaction(){
+        $current_date=date('Y-m-d');
+        $all_transaction=Installment::where('actual_debit_date', '=',$current_date)->where('payment_status', '=', 'unpaid')->get(['id','payment_method','debit_amount','mandate_id','invoice_id','subscription_refid','recived_no_of_installment'])->toArray();
+        $all_transaction_size=sizeof($all_transaction);
+        for($i=0;$i<$all_transaction_size;$i++){
+            try{
                 $track_id=uniqid();
                 $time_stump=time();
-                $rand_number=auth()->user()->id.time();
+                $rand_number=$i.$time_stump;
+                $result_decoded="";
                 $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
-                $payload = [
-                    'mercid' => env('merchant_id'),
-                    'subscription_refid' => $all_invoice_data[$i]['subscription_refid'],
-                    'customer_refid' => $all_invoice_data[$i]['customer_refid'],
-                    'invoice_number' => "INV".$rand_number,
-                    "invoice_display_number" => "INV".$rand_number,
-                    "invoice_date" => $all_invoice_data[$i]['next_invoice_day'],
-                    "duedate" => date('Y-m-d', strtotime($all_invoice_data[$i]['next_invoice_day']. ' + 7 days')),
-                    "debit_date" => date('Y-m-d', strtotime($all_invoice_data[$i]['next_invoice_day']. ' + 2 days')),
-                    'amount' => $all_invoice_data[$i]['installment_amount'],
-                    "net_amount" => $all_invoice_data[$i]['installment_amount'],
-                    "currency" => "356",
-                    "mandateid" => $all_invoice_data[$i]['auth_id'],
-                    "description" => "Invoice for".date('F, Y', strtotime($all_invoice_data[$i]['next_invoice_day'])),
-                ];
+                if($all_transaction[$i]['payment_method']=='upi'){
+                    $payload = [
+                        'mercid' => env('merchant_id'),
+                        'orderid' => $rand_number,
+                        'amount' => $all_transaction[$i]['debit_amount'].".00",
+                        "currency"=>"356",
+                        "itemcode"=>"DIRECT",
+                        "txn_process_type"=>"si",
+                        "mandateid"=>$all_transaction[$i]['mandate_id'],
+                        "invoice_id"=>$all_transaction[$i]['invoice_id'],
+                        "subscription_refid"=>$all_transaction[$i]['subscription_refid'],
+                        'debit_request_no'=>$all_transaction[$i]['recived_no_of_installment']+1,
+                    ];
+                }
+                else{
+                    $payload = [
+                        'mercid' => env('merchant_id'),
+                        'orderid' => $rand_number,
+                        'amount' => $all_transaction[$i]['debit_amount'].".00",
+                        "currency"=>"356",
+                        "itemcode"=>"DIRECT",
+                        "txn_process_type"=>"si",
+                        "mandateid"=>$all_transaction[$i]['mandate_id'],
+                        "invoice_id"=>$all_transaction[$i]['invoice_id'],
+                        "subscription_refid"=>$all_transaction[$i]['subscription_refid'],
+                    ];
+                }
                 $curl_payload = JWT::encode($payload, env('security_key'), "HS256", null ,$headers);
-                $ch = curl_init("https://pguat.billdesk.io/pgsi/ve1_2/invoices/create");
+                $ch = curl_init("https://pguat.billdesk.io/payments/ve1_2/transactions/create");
                 $ch_headers = array(
                     "Content-Type: application/jose",
                     "accept: application/jose",
@@ -287,30 +444,24 @@ class PaymentController extends Controller
                 $result = curl_exec($ch);
                 curl_close($ch);
                 $result_decoded = JWT::decode($result, new Key(env('security_key'), 'HS256'));
-                $result_array = (array) $result_decoded;
-                // return $result_array['transaction_error_type']; 
+                $trans_id=$all_transaction[$i]['id'];
+                if($result_decoded->auth_status=='0300' && $result_decoded->transaction_error_type=='success'){
+                Installment::where('id',$trans_id)->update(['order_id'=>$result_decoded->orderid,'transaction_id'=>$result_decoded->transactionid,'on_debit_date'=>$result_decoded->transaction_date,'payment_status'=>"Success"]);
+                }
+                else{
+                    Installment::where('id',$trans_id)->update(['order_id'=>$result_decoded->orderid,'transaction_id'=>$result_decoded->transactionid,'on_debit_date'=>$result_decoded->transaction_date,'payment_status'=>"Failure"]);
+                }
             }
-        }
-        catch(Exception $exception) {
-            $new_error=new Error();
-            $new_error->error_code=$exception->getCode();
-            $new_error->file_path=$exception->getFile();
-            $new_error->line_number=$exception->getLine();
-            $new_error->error_message=$exception->getMessage();
-            $new_error->status="Created";
-            $new_error->error_type="Invoice";
-            $new_error->save();
-        }
-        // $date = new DateTime('2023-03-11');
-        // $date->modify('+1 month');
-        // $date_array=(array)$date;
-        // echo explode(' ',$date_array['date'])[0];
-    }
-    public function create_transaction(){
-        $all_transaction=Installment::where('actual_debit_date', '>=',date('Y-m-d'))->where('due_date', '<=',date('Y-m-d'))->where('payment_status', '=', 'Pending')->get()->toArray();
-        $all_transaction_size=sizeof($all_transaction);
-        for($i=0;$i<$all_transaction_size;$i++){
-            
+            catch(Exception $exception) {
+                $new_error=new Error();
+                $new_error->error_code=$exception->getCode();
+                $new_error->file_path=$exception->getFile();
+                $new_error->line_number=$exception->getLine();
+                $new_error->error_message=$exception->getMessage();
+                $new_error->status="Created";
+                $new_error->error_type="Installment";
+                $new_error->save();
+            }
         }
     }
 }

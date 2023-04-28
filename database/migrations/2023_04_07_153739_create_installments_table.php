@@ -15,14 +15,19 @@ class CreateInstallmentsTable extends Migration
     {
         Schema::create('installments', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice_number',50)->nullable();
             $table->string('invoice_id',50)->nullable();
-            $table->string('auth_id',50)->nullable();
+            $table->string('mandate_id',50)->nullable();
+            $table->string('order_id',50)->nullable();
+            $table->string('transaction_id',50)->nullable();
             $table->string('subscription_refid',50)->nullable();
             $table->float('debit_amount',7,2)->nullable();
             $table->date('actual_debit_date')->nullable();
             $table->date('due_date')->nullable();
             $table->date('on_debit_date')->nullable();
-            $table->enum('payment_status',['Pending','Success','Failed'])->nullable()->default('Pending');
+            $table->integer('recived_no_of_installment')->nullable();
+            $table->string('payment_method',20)->nullable();
+            $table->string('payment_status',20)->nullable();
             $table->timestamps();
         });
     }

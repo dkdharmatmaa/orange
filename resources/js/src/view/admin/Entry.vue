@@ -176,14 +176,14 @@
           <div class="d-flex mt-2">
           <div class="mr-3 w-50">
           <div>
-            <label for="input-12">From</label><sup class="text-danger">*</sup>
+            <label for="input-12">EMI Start From</label><sup class="text-danger">*</sup>&nbsp;&nbsp;<i class="fa fa-info-circle" v-b-tooltip.hover title="The date from where deduction will start"></i>
             <Datepicker v-model="entry_form.installment_from" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('installment_from') }" class="input-date"></Datepicker>
             <has-error :form="entry_form" field="installment_from"></has-error>
           </div>
           </div>
           <div class="ml-3 w-50">
           <div>
-            <label for="input-13">To</label><sup class="text-danger">*</sup>
+            <label for="input-13">To</label><sup class="text-danger">*</sup>&nbsp;&nbsp;<i class="fa fa-info-circle" v-b-tooltip.hover title="Always keep one month ahead of the last date"></i>
             <Datepicker v-model="entry_form.installment_to" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('installment_to') }" class="input-date"></Datepicker>
             <has-error :form="entry_form" field="installment_to"></has-error>
           </div>
@@ -353,12 +353,11 @@ export default {
        if(payment_method=='only_mandate'){
         this.entry_form.post("/admin/online-entry-mandate")
           .then(({ data }) => {
-            // this.entry_form.reset();
-            // this.entry_form.clear();
-            // this.entry_form.date=new Date();
-            // this.entry_form.installment_from=new Date();
-            // this.entry_form.installment_to=new Date();
-            console.log(data);
+            this.entry_form.reset();
+            this.entry_form.clear();
+            this.entry_form.date=new Date();
+            this.entry_form.installment_from=new Date();
+            this.entry_form.installment_to=new Date();
             this.submit_spinner = false;
             if(data.call_type){
             location.href = `/api-view-only/${data.order_id}`;
@@ -375,12 +374,11 @@ export default {
        else{
          this.entry_form.post("/admin/online-entry-payment")
           .then(({ data }) => {
-            // this.entry_form.reset();
-            // this.entry_form.clear();
-            // this.entry_form.date=new Date();
-            // this.entry_form.installment_from=new Date();
-            // this.entry_form.installment_to=new Date();
-            console.log(data);
+            this.entry_form.reset();
+            this.entry_form.clear();
+            this.entry_form.date=new Date();
+            this.entry_form.installment_from=new Date();
+            this.entry_form.installment_to=new Date();
             this.submit_spinner = false;
             if(data.call_type){
             location.href = `/api-view/${data.order_id}`;
@@ -468,5 +466,13 @@ export default {
 }
 .input-date input:focus{
   border: none !important;
+}
+.tooltip-inner {
+  background: black !important;
+  color: white !important;
+}
+.bs-tooltip-top .arrow::before,
+.bs-tooltip-auto[x-placement^="top"] .arrow::before {
+  border-top-color: black !important;
 }
 </style>

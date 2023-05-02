@@ -24,8 +24,14 @@ export default new Router({
         },
         {
           path: "report-detail/:id",
-          name: "admin-report-detail",
+          name: "user-report-detail",
           component: () => import("@/view/pages/ReportDetail.vue"),
+          meta: { userType: 'user' }
+        },
+        {
+          path: "installment/:id",
+          name: "user-installment",
+          component: () => import("@/view/pages/Installment.vue"),
           meta: { userType: 'user' }
         },
       ]
@@ -87,6 +93,12 @@ export default new Router({
           path: "report-detail/:id",
           name: "admin-report-detail",
           component: () => import("@/view/admin/ReportDetail.vue"),
+          meta: { userType: 'admin' }
+        },
+        {
+          path: "installment/:id",
+          name: "admin-installment",
+          component: () => import("@/view/admin/Installment.vue"),
           meta: { userType: 'admin' }
         },
         {

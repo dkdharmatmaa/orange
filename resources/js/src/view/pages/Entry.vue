@@ -176,14 +176,14 @@
           <div class="d-flex mt-2">
           <div class="mr-3 w-50">
           <div>
-            <label for="input-12">From</label><sup class="text-danger">*</sup>
+            <label for="input-12">EMI Start From</label><sup class="text-danger">*</sup>&nbsp;&nbsp;<i class="fa fa-info-circle" v-b-tooltip.hover title="The date from where deduction will start"></i>
             <Datepicker v-model="entry_form.installment_from" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('installment_from') }" class="input-date"></Datepicker>
             <has-error :form="entry_form" field="installment_from"></has-error>
           </div>
           </div>
           <div class="ml-3 w-50">
           <div>
-            <label for="input-13">To</label><sup class="text-danger">*</sup>
+            <label for="input-13">To</label><sup class="text-danger">*</sup>&nbsp;&nbsp;<i class="fa fa-info-circle" v-b-tooltip.hover title="Always keep one month ahead of the last date"></i>
             <Datepicker v-model="entry_form.installment_to" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('installment_to') }" class="input-date"></Datepicker>
             <has-error :form="entry_form" field="installment_to"></has-error>
           </div>
@@ -314,7 +314,6 @@ export default {
         comment: "",
         is_email: "",
         send_link:"",
-        payment_method:"",
       }),
       options_branch: [],
       options_product: [],
@@ -351,7 +350,7 @@ export default {
     },
     onlinePayment(payment_method){
        this.entry_form.payment_method=payment_method;
-       if(this.payment_method=='only_mandate'){
+       if(payment_method=='only_mandate'){
         this.entry_form.post("/user/online-entry-mandate")
           .then(({ data }) => {
             this.entry_form.reset();
@@ -467,5 +466,13 @@ export default {
 }
 .input-date input:focus{
   border: none !important;
+}
+.tooltip-inner {
+  background: black !important;
+  color: white !important;
+}
+.bs-tooltip-top .arrow::before,
+.bs-tooltip-auto[x-placement^="top"] .arrow::before {
+  border-top-color: black !important;
 }
 </style>

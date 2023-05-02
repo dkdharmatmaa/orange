@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\user;
-
+set_time_limit(6000);
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Entry;
 use App\Transaction;
+use App\Installment;
 use Illuminate\Support\Facades\Validator;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -28,7 +29,10 @@ class EntryController extends Controller
         $data=Entry::with('product','branch','transaction')->where('id',$id)->first();
         return json_encode($data);
     }
-
+    public function get_installment($id){
+        $data=Installment::where('subscription_refid',$id)->orderBy('actual_debit_date','desc')->get(['id','invoice_number','transaction_id','subscription_refid','debit_amount','actual_debit_date','payment_status']);
+        return $data;
+    }
     //for offline payment
     public function store_offline(Request $request){
         $validator = Validator::make($request->all(), [
@@ -69,6 +73,7 @@ class EntryController extends Controller
         $entry->payment_by=auth()->user()->name;
         $entry->payment_status='Success';
         $entry->save();
+        // ==========Sending mail invoice==========
         if($entry->is_email){
             $email=$entry->email;
             Mail::send( ['html' => 'payment-invoice'], ['amount'=>$entry->advance_payment,'trans_id'=>$entry->transaction_id], function ($message) use ($email) {
@@ -155,7 +160,7 @@ class EntryController extends Controller
             $payload = [
                 'mercid' => env('merchant_id'),
                 'orderid' => $orderid,
-                'amount' => $entry->advance_payment,
+                'amount' => $entry->advance_payment.".00",
                 'order_date' => $order_date,
                 'currency' => "356",
                 'ru' => env("response_url"),
@@ -180,14 +185,17 @@ class EntryController extends Controller
                     "gstpct"=>"0.00",
                     "gstin"=>""
                     ]
-                ],        
+                ],
+                "additional_info"=>[
+                    "additional_info1"=>$entry->email,
+                ]        
             ];
         }
         else{
             $payload = [
                 'mercid' => env('merchant_id'),
                 'orderid' => $orderid,
-                'amount' => $entry->advance_payment,
+                'amount' => $entry->advance_payment.".00",
                 'order_date' => $order_date,
                 'currency' => "356",
                 'ru' => env("response_url"),
@@ -200,10 +208,10 @@ class EntryController extends Controller
                 "mandate"=>[
                     "mercid"=>env('merchant_id'),
                     "currency"=>"356",
-                    "amount"=>$transaction->installment_amount,
+                    "amount"=>$transaction->installment_amount.".00",
                     "customer_refid"=>$transaction->customer_refid,
                     "subscription_refid"=>"Sub".$rand_number,
-                    "subscription_desc"=>"Term insurance by dhiraj",
+                    "subscription_desc"=>"Term insurance by Orange theory fitness",
                     "start_date"=>$transaction->installment_from,
                     "end_date"=>$transaction->installment_to,
                     "frequency"=>$transaction->frequency,
@@ -226,7 +234,10 @@ class EntryController extends Controller
                     "gstpct"=>"0.00",
                     "gstin"=>""
                     ]
-                ],  
+                ],
+                "additional_info"=>[
+                    "additional_info1"=>$entry->email,
+                ]   
             ];
         }
         $curl_payload = JWT::encode($payload, $secretkey, "HS256", null ,$headers);
@@ -343,11 +354,11 @@ class EntryController extends Controller
             "mercid"=>env('merchant_id'),
             "customer_refid"=>$transaction->customer_refid,
             "subscription_refid"=>"Sub".$rand_number,
-            "subscription_desc"=>"Term insurance by dhiraj",
+            "subscription_desc"=>"Term insurance by Orange theory fitness",
             "currency"=>"356",
             "frequency"=>$transaction->frequency,
             "amount_type"=>"max",
-            "amount"=>$transaction->installment_amount,
+            "amount"=>$transaction->installment_amount.".00",
             "start_date"=>$transaction->installment_from,
             "end_date"=>$transaction->installment_to,
             "recurrence_rule"=>"after",
@@ -378,7 +389,11 @@ class EntryController extends Controller
                 "gstpct"=>"0.00",
                 "gstin"=>""
                 ]
-            ],  
+            ],
+            "additional_info"=>[
+                "additional_info1"=>$entry->email,
+                "additional_info2"=>$orderid,
+            ]   
         ];
 
         $curl_payload = JWT::encode($payload, $secretkey, "HS256", null ,$headers);
@@ -399,7 +414,7 @@ class EntryController extends Controller
         try { 
             $result_decoded = JWT::decode($result, new Key($secretkey, 'HS256'));
             $result_array = (array) $result_decoded;
-            if ($result_decoded->status == 'ACTIVE') {
+            if ($result_decoded->status == 'initiated') {
                 $mandate_token_id = $result_array['links'][1]->parameters->mandate_tokenid;
                 $auth_token = $result_array['links'][1]->headers->authorization;
                 $transaction_update=Transaction::find($transaction->id);
@@ -409,7 +424,7 @@ class EntryController extends Controller
                 if($request->send_link){
                     $send_link=false;
                     $user['to'] = $entry->email;
-                    $content = env('APP_URL')."/api-view/".$orderid;
+                    $content = env('APP_URL')."/api-view-only/".$orderid;
                     Mail::raw($content, function ($message) use ($user) {
                         $message->to($user['to']);
                         $message->subject('Payment link of Orange Theory Fitness plan');

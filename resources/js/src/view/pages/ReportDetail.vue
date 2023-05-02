@@ -78,20 +78,20 @@
                 <h5>{{all_data['recurring_amount']}}</h5>
               </div>
           </div>
-          <div class="mt-5">
+          <div class="mt-5" v-if="all_data['transaction']">
            <label>Billing Terms</label>
            <div class="p-3" style="border:1px solid silver">
             <div class="d-flex justify-content-between mt-5">
                 <div class="inner-box-45">
                 <div class="b-3 px-2 py-1">
                     <label for="">From</label>
-                    <h5>{{all_data['installment_from']}}</h5>
+                    <h5>{{all_data['transaction']['installment_from']}}</h5>
                 </div>
                 </div>
                 <div class="inner-box-45">
                 <div class="b-3 px-2 py-1">
                     <label for="">To</label>
-                    <h5>{{all_data['installment_to']}}</h5>
+                    <h5>{{all_data['transaction']['installment_to']}}</h5>
                 </div>
                 </div>
             </div>
@@ -99,13 +99,13 @@
                 <div class="inner-box-45">
                 <div class="b-3 px-2 py-1">
                     <label for="">Number of Installments</label>
-                    <h5>{{all_data['no_of_installment']}}</h5>
+                    <h5>{{all_data['transaction']['no_of_installment']}}</h5>
                 </div>
                 </div>
                 <div class="inner-box-45">
                 <div class="b-3 px-2 py-1">
                     <label for="">Amount Per Month</label>
-                    <h5>{{all_data['installment_amount']}}</h5>
+                    <h5>{{all_data['transaction']['installment_amount']}}</h5>
                 </div>
                 </div>
             </div>
@@ -134,6 +134,11 @@
             <h5>{{all_data['branch']['branch_name']}}</h5>
            </div>
           </div>
+        </div>
+        <div class="mt-5 w-50" v-if="all_data['transaction']">
+          <div class="customer-div-45" style="width:100%">
+            <router-link :to="'/installment/'+all_data['transaction']['subscription_refid']" class="h5">Check received installment</router-link>
+           </div>
         </div>   
     </div>
     <div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Entry;
 use App\Transaction;
+use App\Installment;
 use Illuminate\Support\Facades\Validator;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -27,6 +28,10 @@ class EntryController extends Controller
     public function index_single($id){
         $data=Entry::with('product','branch','transaction')->where('id',$id)->first();
         return json_encode($data);
+    }
+    public function get_installment($id){
+        $data=Installment::where('subscription_refid',$id)->orderBy('actual_debit_date','desc')->get(['id','invoice_number','transaction_id','subscription_refid','debit_amount','actual_debit_date','payment_status']);
+        return $data;
     }
     //for offline payment
     public function store_offline(Request $request){

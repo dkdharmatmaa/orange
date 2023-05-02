@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth:admin-api','prefix' => 'admin'], function ()
     Route::post('/online-entry-payment', [AdminEntryController::class,'store_online_payment']);
     Route::post('/report', [AdminEntryController::class,'index']);
     Route::get('/report-single/{id}', [AdminEntryController::class,'index_single']);
+    Route::get('/installment/{id}', [AdminEntryController::class,'get_installment']);
 });
 
 // =================user section==========================
@@ -70,6 +71,7 @@ Route::group(['middleware' => 'auth:user-api','prefix' => 'user'], function () {
     Route::post('/online-entry-payment', [UserEntryController::class,'store_online_payment']);
     Route::post('/report', [UserEntryController::class,'index']);
     Route::get('/report-single/{id}', [UserEntryController::class,'index_single']);
+    Route::get('/installment/{id}', [UserEntryController::class,'get_installment']);
     //product related work by user
     Route::get('/product-option', [ProductController::class,'index_option']);
     //branch related work by admin

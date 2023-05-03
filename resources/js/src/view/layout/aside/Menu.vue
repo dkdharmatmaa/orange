@@ -40,6 +40,46 @@
         </a>
       </li>
     </router-link>
+    <router-link
+      to="/all-installment"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active'
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <img src="/media/custome/menu-icons/transfer-grey.svg" alt="contact icon" class="img-fluid" width="18" height="18">
+          &nbsp;&nbsp;&nbsp;
+          <span class="menu-text">Installment</span>
+        </a>
+      </li>
+    </router-link>
+    <router-link
+      to="/error-log"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active'
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <img src="/media/custome/menu-icons/warning-grey.svg" alt="contact icon" class="img-fluid" width="18" height="18">
+          &nbsp;&nbsp;&nbsp;
+          <span class="menu-text">Error Log</span>
+        </a>
+      </li>
+    </router-link>
         <router-link
         to=""
         @click.native="logout"

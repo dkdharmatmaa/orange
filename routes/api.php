@@ -11,6 +11,7 @@ use App\Http\Controllers\user\EntryController as UserEntryController;
 use App\Http\Controllers\admin\BranchController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ErrorLogController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -57,6 +58,10 @@ Route::group(['middleware' => 'auth:admin-api','prefix' => 'admin'], function ()
     Route::post('/report', [AdminEntryController::class,'index']);
     Route::get('/report-single/{id}', [AdminEntryController::class,'index_single']);
     Route::get('/installment/{id}', [AdminEntryController::class,'get_installment']);
+    Route::post('/all-installment', [AdminEntryController::class,'all_installment']);
+
+    //error related work
+    Route::post('/error', [ErrorLogController::class,'index']);
 });
 
 // =================user section==========================
@@ -72,10 +77,14 @@ Route::group(['middleware' => 'auth:user-api','prefix' => 'user'], function () {
     Route::post('/report', [UserEntryController::class,'index']);
     Route::get('/report-single/{id}', [UserEntryController::class,'index_single']);
     Route::get('/installment/{id}', [UserEntryController::class,'get_installment']);
+    Route::post('/all-installment', [UserEntryController::class,'all_installment']);
     //product related work by user
     Route::get('/product-option', [ProductController::class,'index_option']);
     //branch related work by admin
     Route::get('/all-branch-option', [BranchController::class,'option_index']);
+    
+    //error related work
+    Route::post('/error', [ErrorLogController::class,'index']);
 });
 
 Route::post('/Forgotpassword',[PasswordResetRequestController::class,'sendEmail']);
@@ -84,7 +93,5 @@ Route::post('ForgotpasswordActual',[PasswordResetRequestController::class,'forgo
 
 //common login
 Route::post('/login', [LoginController::class,'login']);
-
-Route::get('get-invoice',[PaymentController::class,'generate_invoice']);
 
 

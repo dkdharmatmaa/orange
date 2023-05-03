@@ -34,6 +34,18 @@ export default new Router({
           component: () => import("@/view/pages/Installment.vue"),
           meta: { userType: 'user' }
         },
+        {
+          path: "all-installment",
+          name: "user-all-installment",
+          component: () => import("@/view/pages/AllInstallment.vue"),
+          meta: { userType: 'user' }
+        },
+        {
+          path: "error-log",
+          name: "user-error-log",
+          component: () => import("@/view/pages/ErrorLog.vue"),
+          meta: { userType: 'user' }
+        },
       ]
      },
     //-----------admin route-------------------
@@ -99,6 +111,18 @@ export default new Router({
           path: "installment/:id",
           name: "admin-installment",
           component: () => import("@/view/admin/Installment.vue"),
+          meta: { userType: 'admin' }
+        },
+        {
+          path: "all-installment",
+          name: "admin-all-installment",
+          component: () => import("@/view/admin/AllInstallment.vue"),
+          meta: { userType: 'admin' }
+        },
+        {
+          path: "error-log",
+          name: "user-error-log",
+          component: () => import("@/view/admin/ErrorLog.vue"),
           meta: { userType: 'admin' }
         },
         {

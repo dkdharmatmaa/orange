@@ -33,6 +33,10 @@ class EntryController extends Controller
         $data=Installment::where('subscription_refid',$id)->orderBy('actual_debit_date','desc')->get(['id','invoice_number','transaction_id','subscription_refid','debit_amount','actual_debit_date','payment_status']);
         return $data;
     }
+    public function all_installment(Request $request){
+        $data=Installment::with('transaction.entry')->where([['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->orderBy('created_at', 'desc')->get(['id','invoice_number','transaction_id','subscription_refid','debit_amount','actual_debit_date','payment_status']);
+        return json_encode($data);
+    }
     //for offline payment
     public function store_offline(Request $request){
         $validator = Validator::make($request->all(), [

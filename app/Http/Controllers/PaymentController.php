@@ -35,20 +35,6 @@ class PaymentController extends Controller
                 'ip' => "3.111.85.79",
                 'user_agent' => 'Mozilla/5.0'
             ],
-            "mandate"=>[
-                "mercid"=>"ENVISG2UAT",
-                "currency"=>"356",
-                "amount"=>"1.00",
-                "customer_refid"=>"cust".time(),
-                "subscription_refid"=>"Sub".time(),
-                "subscription_desc"=>"Term insurance by dhiraj",
-                "start_date"=>"2023-05-01",
-                "end_date"=>"2023-12-01",
-                "frequency"=>"mnth",
-                "amount_type"=>"max",
-                "recurrence_rule"=>"on",
-                "debit_day"=>"6"
-            ],
         ];
         /*****************************************/
             // Encode payload
@@ -246,8 +232,8 @@ class PaymentController extends Controller
         $result = curl_exec($ch);
         curl_close($ch);
         $result_decoded = JWT::decode($result, new Key(env('security_key'), 'HS256'));
-        $result_array = (array) $result_decoded;
-        return $result_array['transaction_error_type'];
+        // return $result_decoded->transaction_error_type;
+        return "pren";
     }
 
     public function generate_invoice(){
@@ -461,6 +447,34 @@ class PaymentController extends Controller
                 $new_error->status="Created";
                 $new_error->error_type="Installment";
                 $new_error->save();
+            }
+        }
+    }
+
+    public function check_pending_transaction(){
+        $comp_date=date('Y-m-d H:i:s', strtotime('-45 minute', strtotime(date("Y-m-d H:i:s"))));
+        $data=Transaction::where('status','Pending')->where('created_at','>=',$comp_date)->get(['id','transaction_id','created_at','updated_at'])->toArray();
+        $all_size=sizeof($data);
+        for($i=0;$i<$all_size;$i++){
+            try{
+                $transaction_id=$data[$i]['transaction_id'];
+                $payment_status=$this->retrieve_transaction($transaction_id);
+                if($payment_status=='success'){
+                    Transaction::where('transaction_id',$transaction_id)->update(['status'=>"Success"]);
+                    Entry::where('transaction_id',$data[$i]['id'])->update(['payment_status'=>'Success']); 
+                }
+                else{
+                    $db_time=date('Y-m-d H:i:s', strtotime($data[$i]['created_at']));
+                    $to_time = strtotime($db_time);
+                    $from_time = strtotime($comp_date);
+                    $time_diff=round(abs($to_time - $from_time) / 60,2);
+                    if($time_diff<=5){
+                        Transaction::where('transaction_id',$transaction_id)->update(['status'=>"Failure"]);
+                        Entry::where('transaction_id',$data[$i]['id'])->update(['payment_status'=>'Failure']); 
+                    }
+                }
+            }
+            catch(Exception $e){
             }
         }
     }

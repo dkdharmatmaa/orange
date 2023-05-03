@@ -232,8 +232,7 @@ class PaymentController extends Controller
         $result = curl_exec($ch);
         curl_close($ch);
         $result_decoded = JWT::decode($result, new Key(env('security_key'), 'HS256'));
-        // return $result_decoded->transaction_error_type;
-        return "pren";
+        return $result_decoded->transaction_error_type;
     }
 
     public function generate_invoice(){

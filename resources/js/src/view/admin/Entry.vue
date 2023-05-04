@@ -273,7 +273,7 @@
             </button>
             <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn_select text-white" v-on:click="onlinePayment('only_mandate')" v-else-if="entry_form.payment_type=='Online' && !entry_form.advance_payment && entry_form.recurring_amount">
               <div class="spinner-border text-white" v-if="submit_spinner"></div>
-              <div class="text-nowrap" v-else>Only Payment</div>
+              <div class="text-nowrap" v-else>Enable Mandate</div>
             </button>
             <button class="btn font-weight-bolder font-size-h6 py-3 w-100 create_btn_select text-white" v-on:click="offlinePayment" v-else>
               <div class="spinner-border text-white" v-if="submit_spinner"></div>

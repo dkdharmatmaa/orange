@@ -18,7 +18,7 @@ Route::post('paymentresponse',[PaymentController::class,'payment_response']);
 Route::post('paymentresponseonly',[PaymentController::class,'payment_response_only']);
 Route::get('api-view/{order_id}',[PaymentController::class,'order_data']);
 Route::get('api-view-only/{order_id}',[PaymentController::class,'order_data_only']);
-Route::get('api-data',[PaymentController::class,'check_pending_transaction']);
+Route::get('api-data',[PaymentController::class,'generate_invoice']);
 Route::get('{any}', function () {
     return view('welcome');
 })->where('any', '(?!api-view)(?!create-order)(?!api-data)(?!api-view-only)(?!paymentresponse)(?!paymentresponseonly).*$');

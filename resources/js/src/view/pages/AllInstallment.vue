@@ -79,7 +79,7 @@ export default {
           from_date_custome:'',
           till_date_custome:'',
       }, 
-      from_date:new Date(),
+      from_date:"",
       till_date:new Date(), 
       fields: [
         {label:'Sl',key:'index'},
@@ -114,6 +114,11 @@ export default {
       };
   },
   methods: {
+    set_from_date(){
+      const date = new Date();
+      this.from_date= new Date(date.getTime());
+      this.from_date.setDate(date.getDate() - 3);
+    },
     get_report(){
       let from_date=this.from_date.toISOString().split('T')[0];
       let till_date=this.till_date.toISOString().split('T')[0];
@@ -134,6 +139,9 @@ export default {
   },
   mounted(){
     this.get_report();
+  },
+  created(){
+    this.set_from_date();
   },
   components: {
       Datepicker

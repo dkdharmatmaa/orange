@@ -237,7 +237,7 @@ class PaymentController extends Controller
 
     public function generate_invoice(){
         $comp_date=date('Y-m-d');
-        $all_invoice_data = Transaction::where('next_invoice_day', '=',"$comp_date")->where('installment_from', '<=',"$comp_date")->where('installment_to', '>=',"$comp_date")->where('recived_no_of_installment', '<', DB::raw('no_of_installment'))->where('payment_installment', '=', 'EMI')->where('status', '=', 'Success')->get(["id","payment_method","subscription_refid","customer_refid","next_invoice_day","installment_amount","mandate_id","recived_no_of_installment","frequency"])->toArray();
+        $all_invoice_data = Transaction::where('next_invoice_day', '=',"$comp_date")->where('recived_no_of_installment', '<', DB::raw('no_of_installment'))->where('payment_installment', '=', 'EMI')->where('status', '=', 'Success')->get(["id","payment_method","subscription_refid","customer_refid","next_invoice_day","installment_amount","mandate_id","recived_no_of_installment","frequency"])->toArray();
         //API operation
         $all_size=sizeof($all_invoice_data);
             for($i=0;$i<$all_size;$i++){

@@ -77,25 +77,36 @@ export default {
       from_date:new Date(),
       till_date:new Date(), 
       fields: [
-        {label:'Sl',key:'index'},
         {label:'Name',key:"name"},
+        {label:'MBO Id',key:"mbo_id"},
         {label:'Product',key:"product.name"},
-        {label:'Total payment',key:"membership_price"},
+        {label:'Total Payment',key:"membership_price"},
+        {label:'Advance Payment',key:"advance_payment"},
+        {label:'Recurring Amount',key:"recurring_amount"},
         {label:'Payment type',key:"payment_type"},
         {label:'Status',key:'payment_status'},
         {label:'Branch',key:'branch.branch_name'},
         {label:"User",key:"payment_by"},
-        {label:"Date",key:"created_at"},
+        {label:'Date',key:"date"},
         ],
       columns: [
         {label:'Name',field:"name"},
+        {label:'MBO Id',field:"mbo_id"},
+        {label:'Phone Number',field:"phone_number"},
+        {label:'Email Id',field:"email"},
         {label:'Product',field:"product.name"},
         {label:'Total payment',field:"membership_price"},
+        {label:'Advance Payment',field:"advance_payment"},
+        {label:'Recurring Amount',field:"recurring_amount"},
         {label:'Payment type',field:"payment_type"},
+        {label:'Installment From',field:"transaction.installment_from"},
+        {label:'Installment To',field:"transaction.installment_to"},
+        {label:'No of installment',field:"transaction.no_of_installment"},
+        {label:'Amount per cycle',field:"transaction.installment_amount"},
         {label:'Status',field:'payment_status'},
         {label:'Branch',field:'branch.branch_name'},
         {label:"User",field:"payment_by"},
-        {label:"Date",field:"created_at"},
+        {label:'Date',field:"date"},
         ],
       items: [],
       filter: null,
@@ -116,8 +127,17 @@ export default {
       this.totalRows=0
       ApiService.post("/admin/report",this.condition_arr)
         .then(({ data }) => {
-          this.items=data;
           this.totalRows=data.length;
+          for(let i=0;i<this.totalRows;i++){
+            if(!data[i].transaction){
+              data[i].transaction=[];
+              data[i].transaction.installment_from="";
+              data[i].transaction.installment_to="";
+              data[i].transaction.no_of_installment="";
+              data[i].transaction.installment_amount="";
+            }
+          }
+          this.items=data;
         })
     },
     getMemberhip(){

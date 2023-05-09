@@ -104,7 +104,7 @@
                 </div>
                 <div class="inner-box-45">
                 <div class="b-3 px-2 py-1">
-                    <label for="">Amount Per Month</label>
+                    <label for="">Amount Per Cycle</label>
                     <h5>{{all_data['transaction']['installment_amount']}}</h5>
                 </div>
                 </div>

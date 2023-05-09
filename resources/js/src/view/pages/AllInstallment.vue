@@ -54,6 +54,9 @@
               <template #cell(email)="data">
                 {{ data.item.transaction.entry.email}}
               </template>
+              <template #cell(mbo_id)="data">
+                {{ data.item.transaction.entry.mbo_id}}
+              </template>
               <template #cell(created_at)="data">
                 {{ moment(data.item.created_at).format('MM-DD-YYYY HH:mm:ss') }}
               </template>
@@ -87,6 +90,7 @@ export default {
         {label:'Name',key:'name'},
         {label:'Phone',key:'phone'},
         {label:'Email',key:'email'},
+        {label:'MBO Id',key:'mbo_id'},
         {label:'Invoice Number',key:"invoice_number"},
         {label:'Transaction Id',key:"transaction_id"},
         {label:'Amount',key:'debit_amount'},
@@ -99,6 +103,7 @@ export default {
         {label:'Name',field:'name'},
         {label:'Phone',field:'phone'},
         {label:'Email',field:'email'},
+        {label:'MBO Id',field:'mbo_id'},
         {label:'Invoice Number',field:"invoice_number"},
         {label:'Transaction Id',field:"transaction_id"},
         {label:'Amount',field:'debit_amount'},

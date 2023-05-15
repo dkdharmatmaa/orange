@@ -28,7 +28,7 @@
     <strong>Customer Email  – </strong><span>{{$email}}</span>
     <br>
     <br>
-    <strong>Customer phone – </strong><span>{{$phone}}</span>
+    <strong>Customer Phone – </strong><span>{{$phone}}</span>
     <br>
     <br>
     <br>

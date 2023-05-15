@@ -117,8 +117,6 @@ class EntryController extends Controller
         $rand_number=auth()->user()->id.time();
         $first_name=explode(" ",$request->name)[0];
         $send_link=true;
-        $client_id=env('client_id');
-        $secretkey=env('security_key');
         //first insert transaction
         $transaction=new Transaction();
         $transaction->customer_refid="cust".$rand_number;
@@ -160,7 +158,8 @@ class EntryController extends Controller
         $entry->save();
 
         //for online payment
-        $headers = ["alg" => "HS256", "clientid" => "$client_id", "kid" => "HMAC"];
+        $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
+        $secretkey=env('security_key');
         $order_date=date_format(new \DateTime(), DATE_W3C);
         $order_timestamp=strtotime($order_date);
         if($request->payment_method=='payment'){
@@ -247,7 +246,7 @@ class EntryController extends Controller
                 ]   
             ];
         }
-        $curl_payload = JWT::encode($payload, "$secretkey", "HS256", null ,$headers);
+        $curl_payload = JWT::encode($payload, $secretkey, "HS256", null ,$headers);
         $ch = curl_init( "https://pguat.billdesk.io/payments/ve1_2/orders/create" );
         $ch_headers = array(
             "Content-Type: application/jose",
@@ -264,7 +263,7 @@ class EntryController extends Controller
         curl_close($ch);  
         // Billdesk Response
         try { 
-            $result_decoded = JWT::decode($result, new Key("$secretkey", 'HS256'));
+            $result_decoded = JWT::decode($result, new Key($secretkey, 'HS256'));
             $result_array = (array) $result_decoded;
             if ($result_decoded->status == 'ACTIVE') {
                 $bd_order_id = $result_array['links'][1]->parameters->bdorderid;

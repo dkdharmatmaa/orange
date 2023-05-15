@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Payment Links</title>
+	<title>Payment Link</title>
 </head>
 <body>
 	<div>
@@ -28,7 +28,7 @@
     <strong>Customer Email  – </strong><span>{{$email}}</span>
     <br>
     <br>
-    <strong>Customer Phone – </strong><span>{{$phone}}</span>
+    <strong>Customer phone – </strong><span>{{$phone}}</span>
     <br>
     <br>
     <br>

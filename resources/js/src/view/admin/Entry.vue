@@ -355,15 +355,14 @@ export default {
        if(payment_method=='only_mandate'){
         this.entry_form.post("/admin/online-entry-mandate")
           .then(({ data }) => {
-            console.log(data);
-            // this.entry_form.reset();
-            // this.entry_form.clear();
-            // this.entry_form.date=new Date();
-            // this.entry_form.installment_from=new Date();
-            // this.entry_form.installment_to=new Date();
+            this.entry_form.reset();
+            this.entry_form.clear();
+            this.entry_form.date=new Date();
+            this.entry_form.installment_from=new Date();
+            this.entry_form.installment_to=new Date();
             this.submit_spinner = false;
             if(data.call_type){
-            // location.href = `/api-view-only/${data.order_id}`;
+            location.href = `/api-view-only/${data.order_id}`;
             }
             else{
               $('#fade').fadeToggle(1000);
@@ -377,15 +376,14 @@ export default {
        else{
          this.entry_form.post("/admin/online-entry-payment")
           .then(({ data }) => {
-            console.log(data);
-            // this.entry_form.reset();
-            // this.entry_form.clear();
-            // this.entry_form.date=new Date();
-            // this.entry_form.installment_from=new Date();
-            // this.entry_form.installment_to=new Date();
+            this.entry_form.reset();
+            this.entry_form.clear();
+            this.entry_form.date=new Date();
+            this.entry_form.installment_from=new Date();
+            this.entry_form.installment_to=new Date();
             this.submit_spinner = false;
             if(data.call_type){
-            // location.href = `/api-view/${data.order_id}`;
+            location.href = `/api-view/${data.order_id}`;
             }
             else{
               $('#fade').fadeToggle(1000);

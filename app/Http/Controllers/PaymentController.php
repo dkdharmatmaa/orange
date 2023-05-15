@@ -17,13 +17,13 @@ use Illuminate\Support\Facades\Mail;
 class PaymentController extends Controller
 {
     public function createOrderId(){
-        $headers = ["alg" => "HS256", "clientid" => "envisg2uat", "kid" => "HMAC"];
+        $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
         $secretkey=env('security_key');
         $orderid=uniqid();
         $order_date=date_format(new \DateTime(), DATE_W3C);
         $order_timestamp=strtotime($order_date);
         $payload = [
-            'mercid' => "ENVISG2UAT",
+            'mercid' => env('merchant_id'),
             'orderid' => $orderid,
             'amount' => "2.00",
             'order_date' => $order_date,
@@ -34,6 +34,20 @@ class PaymentController extends Controller
                 'init_channel' => 'internet',
                 'ip' => "3.111.85.79",
                 'user_agent' => 'Mozilla/5.0'
+            ],
+            "mandate"=>[
+                "mercid"=>env('merchant_id'),
+                "currency"=>"356",
+                "amount"=>"1.00",
+                "customer_refid"=>"hvh313",
+                "subscription_refid"=>"Sub266",
+                "subscription_desc"=>"Term insurance by Orange theory fitness",
+                "start_date"=>"2023-05-18",
+                "end_date"=>"2023-07-18",
+                "frequency"=>"mnth",
+                "amount_type"=>"max",
+                "recurrence_rule"=>"after",
+                "debit_day"=>"1"
             ],
         ];
         /*****************************************/

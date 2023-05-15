@@ -247,7 +247,7 @@ class EntryController extends Controller
                 ]   
             ];
         }
-        $curl_payload = JWT::encode("$payload", "$secretkey", "HS256", null ,$headers);
+        $curl_payload = JWT::encode($payload, "$secretkey", "HS256", null ,$headers);
         $ch = curl_init( "https://pguat.billdesk.io/payments/ve1_2/orders/create" );
         $ch_headers = array(
             "Content-Type: application/jose",
@@ -264,7 +264,7 @@ class EntryController extends Controller
         curl_close($ch);  
         // Billdesk Response
         try { 
-            $result_decoded = JWT::decode("$result", new Key("$secretkey", 'HS256'));
+            $result_decoded = JWT::decode($result, new Key("$secretkey", 'HS256'));
             $result_array = (array) $result_decoded;
             if ($result_decoded->status == 'ACTIVE') {
                 $bd_order_id = $result_array['links'][1]->parameters->bdorderid;

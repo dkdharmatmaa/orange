@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Entry;
 use App\Transaction;
 use App\Installment;
+use App\Product;
+use App\Branch;
 use Illuminate\Support\Facades\Validator;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;

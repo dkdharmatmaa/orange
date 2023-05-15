@@ -335,6 +335,7 @@ export default {
   methods: {
     offlinePayment(e) {
       e.preventDefault();
+      this.submit_spinner=true;
       this.entry_form.post("/user/offline-entry")
         .then(({ data }) => {
           this.entry_form.reset();
@@ -350,6 +351,7 @@ export default {
     },
     onlinePayment(payment_method){
        this.entry_form.payment_method=payment_method;
+       this.submit_spinner=true;
        if(payment_method=='only_mandate'){
         this.entry_form.post("/user/online-entry-mandate")
           .then(({ data }) => {

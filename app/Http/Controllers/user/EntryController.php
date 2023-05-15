@@ -274,9 +274,19 @@ class EntryController extends Controller
                     $send_link=false;
                     $user['to'] = $entry->email;
                     $content = env('APP_URL')."/api-view/".$orderid;
-                    Mail::raw($content, function ($message) use ($user) {
-                        $message->to($user['to']);
-                        $message->subject('Payment link of Orange Theory Fitness plan');
+                    $product_name=Product::where('id',$entry->product_id)->first('name')->toArray()['name'];
+                    $branch_name=Branch::where('id',$entry->branch_id)->first('branch_name')->toArray()['branch_name'];
+                    $mail_data=[
+                        'link'=>$content,
+                        'full_name'=>$entry->name,
+                        'email'=>$entry->email,
+                        'phone'=>$entry->phone_number,
+                        'product_name'=>$product_name,
+                        'branch_name'=>$branch_name,
+                    ];
+                    Mail::send( ['html' => 'payment-link'], $mail_data, function ($message) use ($user) {
+                        $message->to($user['to'])
+                            ->subject("Payment link of Orange Theory Fitness plan");
                     });
                 }
             } else { // Response error
@@ -428,10 +438,20 @@ class EntryController extends Controller
                 if($request->send_link){
                     $send_link=false;
                     $user['to'] = $entry->email;
-                    $content = env('APP_URL')."/api-view-only/".$orderid;
-                    Mail::raw($content, function ($message) use ($user) {
-                        $message->to($user['to']);
-                        $message->subject('Payment link of Orange Theory Fitness plan');
+                    $content = env('APP_URL')."/api-view/".$orderid;
+                    $product_name=Product::where('id',$entry->product_id)->first('name')->toArray()['name'];
+                    $branch_name=Branch::where('id',$entry->branch_id)->first('branch_name')->toArray()['branch_name'];
+                    $mail_data=[
+                        'link'=>$content,
+                        'full_name'=>$entry->name,
+                        'email'=>$entry->email,
+                        'phone'=>$entry->phone_number,
+                        'product_name'=>$product_name,
+                        'branch_name'=>$branch_name,
+                    ];
+                    Mail::send( ['html' => 'payment-link'], $mail_data, function ($message) use ($user) {
+                        $message->to($user['to'])
+                            ->subject("Payment link of Orange Theory Fitness plan");
                     });
                 }
             } else { // Response error

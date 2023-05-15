@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Payment Link</title>
+	<title>Payment Links</title>
 </head>
 <body>
 	<div>

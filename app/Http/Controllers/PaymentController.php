@@ -25,7 +25,7 @@ class PaymentController extends Controller
         $payload = [
             'mercid' => env('merchant_id'),
             'orderid' => $orderid,
-            'amount' => "2.00",
+            'amount' => "1.00",
             'order_date' => $order_date,
             'currency' => "356",
             'ru' => "https://ot.brandshark.in/paymentresponse",
@@ -35,20 +35,20 @@ class PaymentController extends Controller
                 'ip' => "3.111.85.79",
                 'user_agent' => 'Mozilla/5.0'
             ],
-            "mandate"=>[
-                "mercid"=>env('merchant_id'),
-                "currency"=>"356",
-                "amount"=>"1.00",
-                "customer_refid"=>"hvh313",
-                "subscription_refid"=>"Sub266",
-                "subscription_desc"=>"Term insurance by Orange theory fitness",
-                "start_date"=>"2023-05-18",
-                "end_date"=>"2023-07-18",
-                "frequency"=>"mnth",
-                "amount_type"=>"max",
-                "recurrence_rule"=>"after",
-                "debit_day"=>"1"
-            ],
+            // "mandate"=>[
+            //     "mercid"=>env('merchant_id'),
+            //     "currency"=>"356",
+            //     "amount"=>"1.00",
+            //     "customer_refid"=>"hvh313",
+            //     "subscription_refid"=>"Sub266",
+            //     "subscription_desc"=>"Term insurance by Orange theory fitness",
+            //     "start_date"=>"2023-05-18",
+            //     "end_date"=>"2023-07-18",
+            //     "frequency"=>"mnth",
+            //     "amount_type"=>"max",
+            //     "recurrence_rule"=>"after",
+            //     "debit_day"=>"1"
+            // ],
         ];
         /*****************************************/
             // Encode payload
@@ -59,7 +59,7 @@ class PaymentController extends Controller
         /*****************************************/
             // Submit to Billdesk
         /*****************************************/
-        $ch = curl_init( "https://pguat.billdesk.io/payments/ve1_2/orders/create" );
+        $ch = curl_init( "https://api.billdesk.com/payments/ve1_2/orders/create" );
         $ch_headers = array(
             "Content-Type: application/jose",
             "accept: application/jose",
@@ -120,9 +120,6 @@ class PaymentController extends Controller
             die();
         }
         // Process info
-        // echo "<pre>";
-        // print_r($result_decoded);
-        // echo "</pre>";
         $transactionid = $result_decoded->transactionid; 
         $charge_amount = $result_decoded->charge_amount;
         $email= $result_decoded->additional_info->additional_info1;  
@@ -232,7 +229,7 @@ class PaymentController extends Controller
         $curl_payload = JWT::encode($data, env('security_key'), "HS256", null ,$headers);
         $track_id=uniqid();
         $time_stump=time();
-        $ch = curl_init( "https://pguat.billdesk.io/payments/ve1_2/transactions/get" );
+        $ch = curl_init( "https://api.billdesk.com/payments/ve1_2/transactions/get" );
         $ch_headers = array(
             "Content-Type: application/jose",
             "accept: application/jose",

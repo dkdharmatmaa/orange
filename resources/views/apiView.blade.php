@@ -3,9 +3,9 @@
     <meta charset="utf-8" />
     <title></title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <script type="module" src="https://uat.billdesk.com/jssdk/v1/dist/billdesksdk/billdesksdk.esm.js"></script>
-    <script nomodule="" src="https://uat.billdesk.com/jssdk/v1/dist/billdesksdk.js"></script>
-    <link href="https://uat.billdesk.com/jssdk/v1/dist/billdesksdk/billdesksdk.css" rel="stylesheet">
+    <script type="module" src="https://pay.billdesk.com/jssdk/v1/dist/billdesksdk/billdesksdk.esm.js"></script>
+    <script nomodule="" src="https://pay.billdesk.com/jssdk/v1/dist/billdesksdk.js "></script>
+    <link href="https://pay.billdesk.com/jssdk/v1/dist/billdesksdk/billdesksdk.css" rel="stylesheet">
     <script>
 
         var flow_config = {
@@ -36,5 +36,9 @@
     
 </head>
 <body>
+    <?php
+    // print_r($data);
+    // echo env('merchant_id');
+    ?>
 </body>
 </html>

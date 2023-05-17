@@ -294,7 +294,7 @@ class PaymentController extends Controller
                         ];
                     }
                     $curl_payload = JWT::encode($payload, env('security_key'), "HS256", null ,$headers);
-                    $ch = curl_init("https://pguat.billdesk.io/pgsi/ve1_2/invoices/create");
+                    $ch = curl_init("https://api.billdesk.com/pgsi/ve1_2/invoices/create");
                     $ch_headers = array(
                         "Content-Type: application/jose",
                         "accept: application/jose",
@@ -426,7 +426,7 @@ class PaymentController extends Controller
                     ];
                 }
                 $curl_payload = JWT::encode($payload, env('security_key'), "HS256", null ,$headers);
-                $ch = curl_init("https://pguat.billdesk.io/payments/ve1_2/transactions/create");
+                $ch = curl_init("https://api.billdesk.com/payments/ve1_2/transactions/create");
                 $ch_headers = array(
                     "Content-Type: application/jose",
                     "accept: application/jose",

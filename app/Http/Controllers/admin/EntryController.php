@@ -413,7 +413,7 @@ class EntryController extends Controller
         ];
 
         $curl_payload = JWT::encode($payload, $secretkey, "HS256", null ,$headers);
-        $ch = curl_init("https://pguat.billdesk.io/pgsi/ve1_2/mandatetokens/create");
+        $ch = curl_init("https://api.billdesk.com/pgsi/ve1_2/mandatetokens/create");
         $ch_headers = array(
             "Content-Type: application/jose",
             "accept: application/jose",

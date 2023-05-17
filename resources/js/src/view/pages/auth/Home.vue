@@ -45,6 +45,9 @@
         </div>
       </div>
     </div>
+    <div class="row back-b text-white justify-content-center p-3" style="border: 1px solid #ED700F;">
+     <strong class="text-white"><i class="fas fa-copyright"></i> Copyright reserved Orange theory Fitness</strong>
+    </div>
   </div>
 </template>
 <script>

@@ -14,6 +14,7 @@ use App\Http\Controllers\PaymentController;
 |
 */
 Route::get('create-order',[PaymentController::class,'createOrderId']);
+Route::get('create-order-only',[PaymentController::class,'createOrderIdOnly']);
 Route::post('paymentresponse',[PaymentController::class,'payment_response']);
 Route::post('paymentresponseonly',[PaymentController::class,'payment_response_only']);
 Route::get('api-view/{order_id}',[PaymentController::class,'order_data']);
@@ -21,4 +22,4 @@ Route::get('api-view-only/{order_id}',[PaymentController::class,'order_data_only
 Route::get('api-data',[PaymentController::class,'generate_invoice']);
 Route::get('{any}', function () {
     return view('welcome');
-})->where('any', '(?!api-view)(?!create-order)(?!api-data)(?!api-view-only)(?!paymentresponse)(?!paymentresponseonly).*$');
+})->where('any', '(?!api-view)(?!create-order)(?!create-order-only)(?!api-data)(?!api-view-only)(?!paymentresponse)(?!paymentresponseonly).*$');

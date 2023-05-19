@@ -35,20 +35,20 @@ class PaymentController extends Controller
                 'ip' => "3.111.85.79",
                 'user_agent' => 'Mozilla/5.0'
             ],
-            // "mandate"=>[
-            //     "mercid"=>env('merchant_id'),
-            //     "currency"=>"356",
-            //     "amount"=>"1.00",
-            //     "customer_refid"=>"hvh313",
-            //     "subscription_refid"=>"Sub266",
-            //     "subscription_desc"=>"Term insurance by Orange theory fitness",
-            //     "start_date"=>"2023-05-18",
-            //     "end_date"=>"2023-07-18",
-            //     "frequency"=>"mnth",
-            //     "amount_type"=>"max",
-            //     "recurrence_rule"=>"after",
-            //     "debit_day"=>"1"
-            // ],
+            "mandate"=>[
+                "mercid"=>env('merchant_id'),
+                "currency"=>"356",
+                "amount"=>"1.00",
+                "customer_refid"=>"hvh313",
+                "subscription_refid"=>"Sub266",
+                "subscription_desc"=>"Term insurance by Orange theory fitness",
+                "start_date"=>"2023-06-18",
+                "end_date"=>"2023-12-18",
+                "frequency"=>"mnth",
+                "amount_type"=>"max",
+                "recurrence_rule"=>"after",
+                "debit_day"=>"1"
+            ],
         ];
         /*****************************************/
             // Encode payload
@@ -74,6 +74,76 @@ class PaymentController extends Controller
         $result = curl_exec($ch);
         curl_close($ch);
 
+        /*****************************************/
+            // Billdesk Response
+        /*****************************************/
+
+        try { 
+            $result_decoded = JWT::decode($result, new Key($secretkey, 'HS256'));
+            echo "<pre>";
+            print_r($result_decoded);
+            echo "</pre>";
+            die();
+            if ($result_decoded->status == 'ACTIVE') {
+                $transaction_id = $result_array['links'][1]->parameters->bdorderid;
+                $merchant_id = $result_array['links'][1]->parameters->mercid;
+                $auth_token = $result_array['links'][1]->headers->authorization;
+
+                return view('apiView',compact('transaction_id','auth_token','merchant_id'));
+            } else { // Response error
+                echo "Response error";
+            }
+                            
+        } catch (\Exception $e) {
+            echo "<br><br>Return signature validation FAILED: $e";
+        }
+    }
+    public function createOrderIdOnly(){
+        $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
+        $secretkey=env('security_key');
+        $orderid=uniqid();
+        $order_date=date_format(new \DateTime(), DATE_W3C);
+        $order_timestamp=strtotime($order_date);
+        $payload = [
+            "mercid"=>env('merchant_id'),
+            "customer_refid"=>"cust".time(),
+            "subscription_refid"=>"Sub".time(),
+            "subscription_desc"=>"Term insurance by Orange theory fitness",
+            "currency"=>"356",
+            "frequency"=>'mnth',
+            "amount_type"=>"max",
+            "amount"=>"1.00",
+            "start_date"=>"2023-06-18",
+            "end_date"=>"2023-12-18",
+            "recurrence_rule"=>"after",
+            "debit_day"=>"1",
+            "ru"=>env("response_url_only"),            
+            "device" => [
+                'init_channel' => 'internet',
+                'ip' => env('ip_address'),
+                'user_agent' => 'Mozilla/5.0'
+            ],
+            "customer"=>[
+                "first_name"=>"Dhiraj",
+                "mobile"=>"8920602400",
+                "email"=>"dimpybca@gmail.com",
+            ],                
+        ];
+
+        $curl_payload = JWT::encode($payload, $secretkey, "HS256", null ,$headers);
+        $ch = curl_init("https://api.billdesk.com/pgsi/ve1_2/mandatetokens/create");
+        $ch_headers = array(
+            "Content-Type: application/jose",
+            "accept: application/jose",
+            "BD-Traceid: $orderid",
+            "BD-Timestamp: $order_timestamp"
+        );
+        curl_setopt( $ch, CURLOPT_HTTPHEADER, $ch_headers);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $curl_payload);
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );                     
+        $result = curl_exec($ch);
+        curl_close($ch);  
         /*****************************************/
             // Billdesk Response
         /*****************************************/

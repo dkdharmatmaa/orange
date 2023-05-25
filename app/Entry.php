@@ -16,6 +16,6 @@ class Entry extends Model
     }
     public function transaction()
     {
-        return $this->hasOne(Transaction::class, 'id', 'transaction_id')->select('id','transaction_id','installment_from','installment_to','no_of_installment','installment_amount','subscription_refid');
+        return $this->hasOne(Transaction::class, 'id', 'transaction_id')->select('id','transaction_id','mandate_id','auth_id','installment_from','installment_to','no_of_installment','installment_amount','subscription_refid');
     }
 }

@@ -13,8 +13,11 @@ use Illuminate\Support\Facades\Validator;
 class BranchController extends Controller
 {
     //
-    public function index(){
-        $data=Branch::all()->toArray();
+    public function index($id=0){
+        if($id)
+        $data=Branch::where('id',$id)->first();
+        else
+        $data=Branch::all();
         return json_encode($data);
     }
     public function option_index(){

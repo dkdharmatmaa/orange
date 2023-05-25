@@ -111,11 +111,25 @@
             </div>
            </div>
           </div>
-          <div class="inner-box-100">
+          <div class="d-flex justify-content-between mt-5">
+            <div class="inner-box-45">
+                <div class="b-3 px-2 py-1">
+                  <label for="">Transaction ID</label>
+                  <h5 v-if="all_data['transaction']">{{all_data['transaction']['transaction_id']}}</h5>
+                  <h5 v-else>{{all_data['transaction_id']}}</h5>
+                </div>
+            </div>
+            <div class="inner-box-45">
+                <div class="b-3 px-2 py-1">
+                  <label for="">Mandate Id</label>
+                  <h5 v-if="all_data['transaction']">{{all_data['transaction']['mandate_id']}}</h5>
+                </div>
+            </div>
+          </div>
+          <div class="inner-box-100" v-if="all_data['transaction']">
               <div class="b-3 px-2 py-1">
-                <label for="">Transaction ID</label>
-                <h5 v-if="all_data['transaction']">{{all_data['transaction']['transaction_id']}}</h5>
-                <h5 v-else>{{all_data['transaction_id']}}</h5>
+                <label for="">Billdesk Order Id</label>
+                <h5>{{all_data['transaction']['auth_id']}}</h5>
               </div>
           </div>
           <div class="inner-box-full p-3 mt-5">

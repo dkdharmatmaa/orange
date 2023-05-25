@@ -43,7 +43,7 @@ Route::group(['middleware' => 'auth:admin-api','prefix' => 'admin'], function ()
     Route::post('/create-branch', [BranchController::class,'store']);
     Route::put('/edit-branch/{id}', [BranchController::class,'update']);
     Route::delete('/all-branch/{id}', [BranchController::class,'delete']);
-    Route::get('/all-branch', [BranchController::class,'index']);
+    Route::get('/all-branch/{id?}', [BranchController::class,'index']);
     Route::get('/all-branch-option', [BranchController::class,'option_index']);
     //product related work by admin
     Route::get('/all-product/{id?}', [ProductController::class,'index']);

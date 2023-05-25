@@ -83,9 +83,9 @@ export default {
       }
     },
     getData(id){
-      ApiService.get(`/admin/all-branch`)
+      ApiService.get(`/admin/all-branch/${id}`)
         .then(({ data }) => {
-          this.branch_form.fill(data[0])
+          this.branch_form.fill(data)
         })
     },
   },

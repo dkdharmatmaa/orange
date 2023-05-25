@@ -355,19 +355,20 @@ export default {
        if(payment_method=='only_mandate'){
         this.entry_form.post("/user/online-entry-mandate")
           .then(({ data }) => {
-            this.entry_form.reset();
-            this.entry_form.clear();
-            this.entry_form.date=new Date();
-            this.entry_form.installment_from=new Date();
-            this.entry_form.installment_to=new Date();
-            this.submit_spinner = false;
-            if(data.call_type){
-            location.href = `/api-view-only/${data.order_id}`;
-            }
-            else{
-              $('#fade').fadeToggle(1000);
-              $('#fade').fadeToggle(1000);
-            }
+            console.log(data);
+            // this.entry_form.reset();
+            // this.entry_form.clear();
+            // this.entry_form.date=new Date();
+            // this.entry_form.installment_from=new Date();
+            // this.entry_form.installment_to=new Date();
+            // this.submit_spinner = false;
+            // if(data.call_type){
+            // location.href = `/api-view-only/${data.order_id}`;
+            // }
+            // else{
+            //   $('#fade').fadeToggle(1000);
+            //   $('#fade').fadeToggle(1000);
+            // }
           })
           .catch((err) => {
             this.submit_spinner = false;
@@ -376,19 +377,20 @@ export default {
        else{
          this.entry_form.post("/user/online-entry-payment")
           .then(({ data }) => {
-            this.entry_form.reset();
-            this.entry_form.clear();
-            this.entry_form.date=new Date();
-            this.entry_form.installment_from=new Date();
-            this.entry_form.installment_to=new Date();
-            this.submit_spinner = false;
-            if(data.call_type){
-            location.href = `/api-view/${data.order_id}`;
-            }
-            else{
-              $('#fade').fadeToggle(1000);
-              $('#fade').fadeToggle(1000);
-            }
+            console.log(data);
+            // this.entry_form.reset();
+            // this.entry_form.clear();
+            // this.entry_form.date=new Date();
+            // this.entry_form.installment_from=new Date();
+            // this.entry_form.installment_to=new Date();
+            // this.submit_spinner = false;
+            // if(data.call_type){
+            // location.href = `/api-view/${data.order_id}`;
+            // }
+            // else{
+            //   $('#fade').fadeToggle(1000);
+            //   $('#fade').fadeToggle(1000);
+            // }
           })
           .catch((err) => {
             this.submit_spinner = false;

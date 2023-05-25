@@ -324,6 +324,7 @@ class EntryController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+        return $request->all();
         //creating order id
         $orderid=uniqid();
         $rand_number=auth()->user()->id.time();

@@ -45,7 +45,6 @@ const actions = {
           resolve(data);
         })
         .catch(({ response }) => {
-          console.log(response);
           context.commit(SET_ERROR, 'Unauthorized');
         });
     });

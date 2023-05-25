@@ -324,7 +324,6 @@ class EntryController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        return $request->all();
         //creating order id
         $orderid=uniqid();
         $rand_number=auth()->user()->id.time();
@@ -387,7 +386,7 @@ class EntryController extends Controller
                 'user_agent' => 'Mozilla/5.0'
             ],
             "customer"=>[
-                "first_name"=>$entry->name,
+                "first_name"=>$first_name,
                 "mobile"=>$entry->phone_number,
                 "email"=>$entry->email,
             ],                
@@ -412,7 +411,6 @@ class EntryController extends Controller
                 "additional_info2"=>$orderid,
             ]   
         ];
-
         $curl_payload = JWT::encode($payload, $secretkey, "HS256", null ,$headers);
         $ch = curl_init("https://api.billdesk.com/pgsi/ve1_2/mandatetokens/create");
         $ch_headers = array(

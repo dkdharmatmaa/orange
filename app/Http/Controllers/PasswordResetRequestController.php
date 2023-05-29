@@ -23,7 +23,7 @@ class PasswordResetRequestController extends Controller
     {
         $userTypeDemo=Role::where([['email',$request->email]])->select('role')->first()->toArray()['role'];
         if($userTypeDemo=='user')
-        $userType='user';
+        $userType='users';
         elseif($userTypeDemo=='admin')
         $userType='admins';
         else

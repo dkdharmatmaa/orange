@@ -50,7 +50,6 @@
             id="input-4"
             v-model="entry_form.phone_number"
             type="text"
-            required
             placeholder="Enter phone number"
             class="mx-1 input-box"
             :class="{ 'is-invalid': entry_form.errors.has('phone_number') }"
@@ -351,7 +350,7 @@ export default {
     },
     onlinePayment(payment_method){
        this.entry_form.payment_method=payment_method;
-      //  this.submit_spinner=true;
+       this.submit_spinner=true;
        if(payment_method=='only_mandate'){
         this.entry_form.post("/admin/online-entry-mandate")
           .then(({ data }) => {

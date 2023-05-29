@@ -20,10 +20,10 @@ class EntryController extends Controller
     //
     public function index(Request $request){
         if($request->membership_type){
-            $data=Entry::with('product','branch','transaction')->where([['product_id',$request->membership_type],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','transaction_id','name','mbo_id','phone_number','email','date','recurring_amount','advance_payment','membership_price','payment_type','product_id','branch_id','payment_status','payment_by','created_at')->orderBy('created_at', 'desc')->get();
+            $data=Entry::with('product','branch','transaction')->where([['product_id',$request->membership_type],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','transaction_id','name','mbo_id','comment','phone_number','email','date','recurring_amount','advance_payment','membership_price','payment_type','product_id','branch_id','payment_status','payment_by','created_at')->orderBy('created_at', 'desc')->get();
         }
         else{
-            $data=Entry::with('product','branch','transaction')->where([['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','transaction_id','name','mbo_id','phone_number','email','date','recurring_amount','advance_payment','membership_price','payment_type','product_id','branch_id','payment_status','payment_by','created_at')->orderBy('created_at', 'desc')->get();
+            $data=Entry::with('product','branch','transaction')->where([['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','transaction_id','name','mbo_id','comment','phone_number','email','date','recurring_amount','advance_payment','membership_price','payment_type','product_id','branch_id','payment_status','payment_by','created_at')->orderBy('created_at', 'desc')->get();
         }
         return json_encode($data);
     }
@@ -46,7 +46,6 @@ class EntryController extends Controller
             'date' => ['required'],
             'mbo_id' => ['required'],
             'email' => ['required','email'],
-            'phone_number' => ['required','regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
             'product_id' => ['required','integer'],
             'payment_type' => ['required'],
             'frequency' => ['required'],
@@ -102,7 +101,6 @@ class EntryController extends Controller
             'date' => ['required'],
             'mbo_id' => ['required'],
             'email' => ['required','email'],
-            'phone_number' => ['required','regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
             'product_id' => ['required','integer'],
             'payment_type' => ['required'],
             'frequency' => ['required'],
@@ -314,7 +312,6 @@ class EntryController extends Controller
             'date' => ['required'],
             'mbo_id' => ['required'],
             'email' => ['required','email'],
-            'phone_number' => ['required','regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
             'product_id' => ['required','integer'],
             'payment_type' => ['required'],
             'frequency' => ['required'],
@@ -386,7 +383,7 @@ class EntryController extends Controller
                 'user_agent' => 'Mozilla/5.0'
             ],
             "customer"=>[
-                "first_name"=>$entry->name,
+                "first_name"=>$first_name,
                 "mobile"=>$entry->phone_number,
                 "email"=>$entry->email,
             ],                

@@ -50,7 +50,6 @@
             id="input-4"
             v-model="entry_form.phone_number"
             type="text"
-            required
             placeholder="Enter phone number"
             class="mx-1 input-box"
             :class="{ 'is-invalid': entry_form.errors.has('phone_number') }"

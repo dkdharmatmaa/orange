@@ -106,6 +106,7 @@ export default {
         {label:'Status',field:'payment_status'},
         {label:'Branch',field:'branch.branch_name'},
         {label:"User",field:"payment_by"},
+        {label:"Comment",field:"comment"},
         {label:'Date',field:"date"},
         ],
       items: [],

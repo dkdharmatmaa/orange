@@ -16,6 +16,9 @@ use Exception;
 use Illuminate\Support\Facades\Mail;
 class PaymentController extends Controller
 {
+    public function check(){
+        return env('MAIL_PORT');
+    }
     public function createOrderId(){
         $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
         $secretkey=env('security_key');
@@ -195,11 +198,15 @@ class PaymentController extends Controller
         $email= $result_decoded->additional_info->additional_info1;  
         $retrieve_status=$this->retrieve_transaction($transactionid);
         if ($result_decoded->auth_status=="0300" && $retrieve_status=='success') {
-            $success = $this->updateTransactionToDB($result_decoded,'Success');       
-            Mail::send( ['html' => 'payment-invoice'], ['amount'=>$charge_amount,'trans_id'=>$transactionid], function ($message) use ($email) {
-                $message->to($email)
-                    ->subject("Orange Theory Fitness payment receipt.");
-            });
+            $success = $this->updateTransactionToDB($result_decoded,'Success');     
+            try{  
+                Mail::send( ['html' => 'payment-invoice'], ['amount'=>$charge_amount,'trans_id'=>$transactionid], function ($message) use ($email) {
+                    $message->to($email)
+                        ->subject("Orange Theory Fitness payment receipt.");
+                });
+            }
+            catch (\Exception $e) {
+            }
             return view('paymentSuccess');
         } elseif($result_decoded->auth_status=="0399") { // Error     
             $failure = $this->updateTransactionToDB($result_decoded,'Failure');     
@@ -237,11 +244,15 @@ class PaymentController extends Controller
         // Process info
         $email= $result_decoded->additional_info->additional_info1;   
         if ($result_decoded->verification_error_code=='TRS0000' && $result_decoded->status=='active') {
-            $success = $this->updateTransactionToDB_only($result_decoded,'Success');        
-            Mail::send( ['html' => 'payment-invoice'], ['amount'=>"0.00",'trans_id'=>"Mandate"], function ($message) use ($email) {
-                $message->to($email)
-                    ->subject("Orange Theory Fitness Mandate subscription cofirmation");
-            });
+            $success = $this->updateTransactionToDB_only($result_decoded,'Success');   
+            try{
+                Mail::send( ['html' => 'payment-invoice'], ['amount'=>"0.00",'trans_id'=>"Mandate"], function ($message) use ($email) {
+                    $message->to($email)
+                        ->subject("Orange Theory Fitness Mandate subscription cofirmation");
+                });
+            }
+            catch (\Exception $e) {
+            }
             return view('paymentSuccess');
         } else { // Error     
             $failure = $this->updateTransactionToDB_only($result_decoded,'Failure');     

@@ -437,7 +437,7 @@ class EntryController extends Controller
                 if($request->send_link){
                     $send_link=false;
                     $user['to'] = $entry->email;
-                    $content = env('APP_URL')."/api-view/".$orderid;
+                    $content = env('APP_URL')."/api-view-only/".$orderid;
                     $product_name=Product::where('id',$entry->product_id)->first('name')->toArray()['name'];
                     $branch_name=Branch::where('id',$entry->branch_id)->first('branch_name')->toArray()['branch_name'];
                     $mail_data=[

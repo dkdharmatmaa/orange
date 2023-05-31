@@ -19,11 +19,12 @@ class EntryController extends Controller
 {
     //
     public function index(Request $request){
+        $user_name=auth()->user()->name;
         if($request->membership_type){
-            $data=Entry::with('product','branch','transaction')->where([['product_id',$request->membership_type],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','transaction_id','name','mbo_id','comment','phone_number','email','date','recurring_amount','advance_payment','membership_price','payment_type','product_id','branch_id','payment_status','payment_by','created_at')->orderBy('created_at', 'desc')->get();
+            $data=Entry::with('product','branch','transaction')->where([['payment_by',$user_name],['product_id',$request->membership_type],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','transaction_id','name','mbo_id','comment','phone_number','email','date','recurring_amount','advance_payment','membership_price','payment_type','product_id','branch_id','payment_status','payment_by','created_at')->orderBy('created_at', 'desc')->get();
         }
         else{
-            $data=Entry::with('product','branch','transaction')->where([['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','transaction_id','name','mbo_id','comment','phone_number','email','date','recurring_amount','advance_payment','membership_price','payment_type','product_id','branch_id','payment_status','payment_by','created_at')->orderBy('created_at', 'desc')->get();
+            $data=Entry::with('product','branch','transaction')->where([['payment_by',$user_name],['created_at','>=',$request->from_date_custome],['created_at','<=',$request->till_date_custome]])->select('id','transaction_id','name','mbo_id','comment','phone_number','email','date','recurring_amount','advance_payment','membership_price','payment_type','product_id','branch_id','payment_status','payment_by','created_at')->orderBy('created_at', 'desc')->get();
         }
         return json_encode($data);
     }
@@ -81,9 +82,11 @@ class EntryController extends Controller
         // ==========Sending mail invoice==========
         if($entry->is_email){
             $email=$entry->email;
-            Mail::send( ['html' => 'payment-invoice'], ['amount'=>$entry->advance_payment,'trans_id'=>$entry->transaction_id], function ($message) use ($email) {
+            $cc=auth()->user()->email;
+            Mail::send( ['html' => 'payment-invoice'], ['amount'=>$entry->advance_payment,'trans_id'=>$entry->transaction_id], function ($message) use ($email,$cc) {
                 $message->to($email)
-                    ->subject("Orange Theory Fitness payment receipt");
+                    ->cc($cc)
+                    ->subject("OrangeTheory Fitness payment receipt");
             });
         }
         if($entry){
@@ -215,7 +218,7 @@ class EntryController extends Controller
                     "amount"=>$transaction->installment_amount.".00",
                     "customer_refid"=>$transaction->customer_refid,
                     "subscription_refid"=>"Sub".$rand_number,
-                    "subscription_desc"=>"Term insurance by Orange theory fitness",
+                    "subscription_desc"=>"Term insurance by OrangeTheory fitness",
                     "start_date"=>$transaction->installment_from,
                     "end_date"=>$transaction->installment_to,
                     "frequency"=>$transaction->frequency,
@@ -273,6 +276,7 @@ class EntryController extends Controller
                 if($request->send_link){
                     $send_link=false;
                     $user['to'] = $entry->email;
+                    $cc=auth()->user()->email;
                     $content = env('APP_URL')."/api-view/".$orderid;
                     $product_name=Product::where('id',$entry->product_id)->first('name')->toArray()['name'];
                     $branch_name=Branch::where('id',$entry->branch_id)->first('branch_name')->toArray()['branch_name'];
@@ -284,9 +288,10 @@ class EntryController extends Controller
                         'product_name'=>$product_name,
                         'branch_name'=>$branch_name,
                     ];
-                    Mail::send( ['html' => 'payment-link'], $mail_data, function ($message) use ($user) {
+                    Mail::send( ['html' => 'payment-link'], $mail_data, function ($message) use ($user,$cc) {
                         $message->to($user['to'])
-                            ->subject("Payment link of Orange Theory Fitness plan");
+                            ->cc($cc)
+                            ->subject("Payment link of OrangeTheory Fitness plan");
                     });
                 }
             } else { // Response error
@@ -367,7 +372,7 @@ class EntryController extends Controller
             "mercid"=>env('merchant_id'),
             "customer_refid"=>$transaction->customer_refid,
             "subscription_refid"=>"Sub".$rand_number,
-            "subscription_desc"=>"Term insurance by Orange theory fitness",
+            "subscription_desc"=>"Term insurance by OrangeTheory fitness",
             "currency"=>"356",
             "frequency"=>$transaction->frequency,
             "amount_type"=>"max",
@@ -437,6 +442,7 @@ class EntryController extends Controller
                 if($request->send_link){
                     $send_link=false;
                     $user['to'] = $entry->email;
+                    $cc=auth()->user()->email;
                     $content = env('APP_URL')."/api-view-only/".$orderid;
                     $product_name=Product::where('id',$entry->product_id)->first('name')->toArray()['name'];
                     $branch_name=Branch::where('id',$entry->branch_id)->first('branch_name')->toArray()['branch_name'];
@@ -448,9 +454,10 @@ class EntryController extends Controller
                         'product_name'=>$product_name,
                         'branch_name'=>$branch_name,
                     ];
-                    Mail::send( ['html' => 'payment-link'], $mail_data, function ($message) use ($user) {
+                    Mail::send( ['html' => 'payment-link'], $mail_data, function ($message) use ($user,$cc) {
                         $message->to($user['to'])
-                            ->subject("Payment link of Orange Theory Fitness plan");
+                            ->cc($cc)
+                            ->subject("Payment link of OrangeTheory Fitness plan");
                     });
                 }
             } else { // Response error

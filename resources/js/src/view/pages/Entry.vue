@@ -4,7 +4,7 @@
       <h3 class="fw-700">Form</h3>
       <div class="bg-white p-10 mt-5 rounded">
         <b-form-group>
-        <label for="input-1">Name</label>
+        <label for="input-1">Name</label><strong class="text-danger h4">*</strong>
           <b-form-input
             id="input-1"
             type="text"
@@ -20,14 +20,14 @@
          <div class="d-flex">
          <div class="mr-3 w-50">
           <div>
-            <label for="input-2">Date</label>
+            <label for="input-2">Date</label><strong class="text-danger h4">*</strong>
             <Datepicker v-model="entry_form.date" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('date') }" class="input-date"></Datepicker>
             <has-error :form="entry_form" field="date"></has-error>
           </div>
          </div>
           <div class="ml-3 w-50">
             <b-form-group>
-          <label for="input-3">MBO ID</label>
+          <label for="input-3">MBO ID</label><strong class="text-danger h4">*</strong>
           <b-form-input
             id="input-3"
             type="text"
@@ -60,7 +60,7 @@
          </div>
           <div class="ml-3 w-50">
             <b-form-group>
-          <label for="input-5">Email</label>
+          <label for="input-5">Email</label><strong class="text-danger h4">*</strong>
           <b-form-input
             id="input-5"
             type="text"
@@ -76,7 +76,7 @@
           </div>
         </div>
         <b-form-group>
-        <label for="input-6">Product</label>
+        <label for="input-6">Product</label><strong class="text-danger h4">*</strong>
           <b-form-select
             id="input-6"
             v-model="entry_form.product_id"
@@ -90,7 +90,7 @@
           <has-error :form="entry_form" field="product_id"></has-error>
         </b-form-group>
         <b-form-group>
-        <label for="input-7">Payment type</label>
+        <label for="input-7">Payment type</label><strong class="text-danger h4">*</strong>
           <b-form-select
             id="input-7"
             v-model="entry_form.payment_type"
@@ -103,7 +103,7 @@
           <has-error :form="entry_form" field="payment_type"></has-error>
         </b-form-group>
         <b-form-group>
-        <label for="input-8">Frequency</label>
+        <label for="input-8">Frequency</label><strong class="text-danger h4">*</strong>
           <b-form-select
             id="input-8"
             v-model="entry_form.frequency"
@@ -226,7 +226,7 @@
         </div>
         </div>
         <b-form-group class="mb-7">
-        <label for="input-17">Branch</label>
+        <label for="input-17">Branch</label><strong class="text-danger h4">*</strong>
           <b-form-select
             id="input-17"
             v-model="entry_form.branch_id"

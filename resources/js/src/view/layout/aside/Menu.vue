@@ -40,7 +40,7 @@
         </a>
       </li>
     </router-link>
-    <router-link
+    <!-- <router-link
       to="/all-installment"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -59,7 +59,7 @@
           <span class="menu-text">Installment</span>
         </a>
       </li>
-    </router-link>
+    </router-link> -->
     <router-link
       to="/error-log"
       v-slot="{ href, navigate, isActive, isExactActive }"

@@ -41,7 +41,7 @@ class PaymentController extends Controller
                 "amount"=>"1.00",
                 "customer_refid"=>"hvh313",
                 "subscription_refid"=>"Sub266",
-                "subscription_desc"=>"Term insurance by Orange theory fitness",
+                "subscription_desc"=>"Term insurance by OrangeTheory fitness",
                 "start_date"=>"2023-06-18",
                 "end_date"=>"2023-12-18",
                 "frequency"=>"mnth",
@@ -108,7 +108,7 @@ class PaymentController extends Controller
             "mercid"=>env('merchant_id'),
             "customer_refid"=>"cust".time(),
             "subscription_refid"=>"Sub".time(),
-            "subscription_desc"=>"Term insurance by Orange theory fitness",
+            "subscription_desc"=>"Term insurance by OrangeTheory fitness",
             "currency"=>"356",
             "frequency"=>'mnth',
             "amount_type"=>"max",
@@ -199,7 +199,7 @@ class PaymentController extends Controller
             try{  
                 Mail::send( ['html' => 'payment-invoice'], ['amount'=>$charge_amount,'trans_id'=>$transactionid], function ($message) use ($email) {
                     $message->to($email)
-                        ->subject("Orange Theory Fitness payment receipt.");
+                        ->subject("OrangeTheory Fitness payment receipt.");
                 });
             }
             catch (\Exception $e) {
@@ -245,7 +245,7 @@ class PaymentController extends Controller
             try{
                 Mail::send( ['html' => 'payment-invoice'], ['amount'=>"0.00",'trans_id'=>"Mandate"], function ($message) use ($email) {
                     $message->to($email)
-                        ->subject("Orange Theory Fitness Mandate subscription cofirmation");
+                        ->subject("OrangeTheory Fitness Mandate subscription cofirmation");
                 });
             }
             catch (\Exception $e) {

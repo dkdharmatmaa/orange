@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Mail;
 class PaymentController extends Controller
 {
     public function check_env(){
-        return env('MAIL_HOST');
+        echo env('MAIL_HOST')."<br>";
+        echo env('MAIL_PORT')."<br>";
     }
     public function createOrderId(){
         $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];

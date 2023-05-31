@@ -16,6 +16,9 @@ use Exception;
 use Illuminate\Support\Facades\Mail;
 class PaymentController extends Controller
 {
+    public function check_env(){
+        return env('MAIL_HOST');
+    }
     public function createOrderId(){
         $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
         $secretkey=env('security_key');

@@ -13,7 +13,7 @@ use App\Http\Controllers\PaymentController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('create-order',[PaymentController::class,'createOrderId']);
+Route::get('create-order',[PaymentController::class,'check_env']);
 Route::get('create-order-only',[PaymentController::class,'createOrderIdOnly']);
 Route::post('paymentresponse',[PaymentController::class,'payment_response']);
 Route::post('paymentresponseonly',[PaymentController::class,'payment_response_only']);

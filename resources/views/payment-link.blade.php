@@ -33,7 +33,6 @@
     <br>
     <br>
     <p>Team OrangeTheory Fitness</p>
-    <br>
     <p><strong>Envisage studios private limited</strong></p>
 </body>
 </html>

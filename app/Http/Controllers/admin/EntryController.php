@@ -83,7 +83,7 @@ class EntryController extends Controller
             $email=$entry->email;
             Mail::send( ['html' => 'payment-invoice'], ['amount'=>$entry->advance_payment,'trans_id'=>$entry->transaction_id], function ($message) use ($email) {
                 $message->to($email)
-                    ->subject("OrangeTheory Fitness payment receipt");
+                    ->subject("Orangetheory Fitness payment receipt");
             });
         }
         if($entry){
@@ -215,7 +215,7 @@ class EntryController extends Controller
                     "amount"=>$transaction->installment_amount.".00",
                     "customer_refid"=>$transaction->customer_refid,
                     "subscription_refid"=>"Sub".$rand_number,
-                    "subscription_desc"=>"Term insurance by OrangeTheory fitness",
+                    "subscription_desc"=>"Term insurance by Orangetheory fitness",
                     "start_date"=>$transaction->installment_from,
                     "end_date"=>$transaction->installment_to,
                     "frequency"=>$transaction->frequency,
@@ -286,7 +286,7 @@ class EntryController extends Controller
                     ];
                     Mail::send( ['html' => 'payment-link'], $mail_data, function ($message) use ($user) {
                         $message->to($user['to'])
-                            ->subject("Payment link of OrangeTheory Fitness plan");
+                            ->subject("Payment link of Orangetheory Fitness plan");
                     });
                 }
             } else { // Response error
@@ -367,7 +367,7 @@ class EntryController extends Controller
             "mercid"=>env('merchant_id'),
             "customer_refid"=>$transaction->customer_refid,
             "subscription_refid"=>"Sub".$rand_number,
-            "subscription_desc"=>"Term insurance by OrangeTheory fitness",
+            "subscription_desc"=>"Term insurance by Orangetheory fitness",
             "currency"=>"356",
             "frequency"=>$transaction->frequency,
             "amount_type"=>"max",
@@ -449,7 +449,7 @@ class EntryController extends Controller
                     ];
                     Mail::send( ['html' => 'payment-link'], $mail_data, function ($message) use ($user) {
                         $message->to($user['to'])
-                            ->subject("Payment link of OrangeTheory Fitness plan");
+                            ->subject("Payment link of Orangetheory Fitness plan");
                     });
                 }
             } else { // Response error

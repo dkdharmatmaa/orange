@@ -32,7 +32,7 @@
     <br>
     <br>
     <br>
-    <p>Team OrangeTheory Fitness</p>
+    <p>Team Orangetheory Fitness</p>
     <p><strong>Envisage studios private limited</strong></p>
 </body>
 </html>

@@ -16,10 +16,6 @@ use Exception;
 use Illuminate\Support\Facades\Mail;
 class PaymentController extends Controller
 {
-    public function check_env(){
-        echo env('MAIL_HOST')."<br>";
-        echo env('MAIL_PORT')."<br>";
-    }
     public function createOrderId(){
         $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
         $secretkey=env('security_key');
@@ -45,7 +41,7 @@ class PaymentController extends Controller
                 "amount"=>"1.00",
                 "customer_refid"=>"hvh313",
                 "subscription_refid"=>"Sub266",
-                "subscription_desc"=>"Term insurance by OrangeTheory fitness",
+                "subscription_desc"=>"Term insurance by Orangetheory fitness",
                 "start_date"=>"2023-06-18",
                 "end_date"=>"2023-12-18",
                 "frequency"=>"mnth",
@@ -112,7 +108,7 @@ class PaymentController extends Controller
             "mercid"=>env('merchant_id'),
             "customer_refid"=>"cust".time(),
             "subscription_refid"=>"Sub".time(),
-            "subscription_desc"=>"Term insurance by OrangeTheory fitness",
+            "subscription_desc"=>"Term insurance by Orangetheory fitness",
             "currency"=>"356",
             "frequency"=>'mnth',
             "amount_type"=>"max",
@@ -203,7 +199,7 @@ class PaymentController extends Controller
             try{  
                 Mail::send( ['html' => 'payment-invoice'], ['amount'=>$charge_amount,'trans_id'=>$transactionid], function ($message) use ($email) {
                     $message->to($email)
-                        ->subject("OrangeTheory Fitness payment receipt.");
+                        ->subject("Orangetheory Fitness payment receipt.");
                 });
             }
             catch (\Exception $e) {
@@ -249,7 +245,7 @@ class PaymentController extends Controller
             try{
                 Mail::send( ['html' => 'payment-invoice'], ['amount'=>"0.00",'trans_id'=>"Mandate"], function ($message) use ($email) {
                     $message->to($email)
-                        ->subject("OrangeTheory Fitness Mandate subscription cofirmation");
+                        ->subject("Orangetheory Fitness Mandate subscription cofirmation");
                 });
             }
             catch (\Exception $e) {

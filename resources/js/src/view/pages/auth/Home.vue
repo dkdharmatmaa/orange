@@ -38,7 +38,7 @@
           <i class="fas fa-phone-alt"></i>&nbsp;<span>Phone Number</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>+91 98926 61800</span>
         </div>
         <div class="mt-6">
-          <i class="fa fa-envelope-open-text"></i>&nbsp;<span>Email</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>support@orangetheoryindia.com</span>
+          <i class="fa fa-envelope-open-text"></i>&nbsp;<span>Email</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>support@Orangetheoryindia.com</span>
         </div>
         <div class="mt-6">
           <i class="fa fa-map-marker-alt"></i>&nbsp;<span>Address</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>D - 211, Ghatkopar Industrial Premises, Behind R - City Mall, Off L.B.S. Marg, Ghatkopar ( West ), Mumbai, Maharashtra 400086</span>
@@ -46,7 +46,7 @@
       </div>
     </div>
     <div class="row back-b text-white justify-content-center p-3" style="border: 1px solid #ED700F;">
-     <strong class="text-white"><i class="fas fa-copyright"></i> Copyright reserved OrangeTheory Fitness</strong>
+     <strong class="text-white"><i class="fas fa-copyright"></i> Copyright reserved Orangetheory Fitness</strong>
     </div>
   </div>
 </template>

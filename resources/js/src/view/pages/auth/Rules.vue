@@ -50,7 +50,7 @@
           <p>&nbsp;</p>
           <p><strong>Participation in Online Classes</strong>. We kindly ask that registration and participation in online classes be limited to your individual participation only.</p>
           <p>&nbsp;</p>
-          <p><strong>Rules</strong>: All rules and modifications to rules as provided and as posted in the studio or at www.orangetheoryfitness.com are part of your Studio User Documents, and you agree to comply with the same. If you fail to comply, your Studio User Documents may be terminated.</p>
+          <p><strong>Rules</strong>: All rules and modifications to rules as provided and as posted in the studio or at www.Orangetheoryfitness.com are part of your Studio User Documents, and you agree to comply with the same. If you fail to comply, your Studio User Documents may be terminated.</p>
           <p><strong>&nbsp;</strong></p>
           <p>&nbsp;</p>
           <p><strong>Freeze Policy: </strong>Every membership comes with an option where the member can freeze their membership. Freezes can only be done for a minimum and maximum period of 15 days at once.&nbsp;</p>
@@ -83,7 +83,7 @@
           <p>&nbsp;</p>
           <p><strong>Upgrade Policy:</strong><strong>&nbsp;</strong>Membership or Class Packages cannot be upgraded at any point during membership, or the Class Packages are active.&nbsp;</p>
           <p>&nbsp;</p>
-          <p><strong>Contact Us</strong><strong>: </strong>Your feedback is crucial to us in deciding our future services and where we can improve them. To help us do our best, please share your feedback with us. You can write it us at <a href="mailto:support@orangetheoryindia.com">support@orangetheoryindia.com</a></p>
+          <p><strong>Contact Us</strong><strong>: </strong>Your feedback is crucial to us in deciding our future services and where we can improve them. To help us do our best, please share your feedback with us. You can write it us at <a href="mailto:support@Orangetheoryindia.com">support@Orangetheoryindia.com</a></p>
           <p>&nbsp;</p>
           <p>&nbsp;</p>
           <p><strong>Privacy policy:</strong> please click here to refer to our <a href="http://www.privacypolicy.com/">privacy policy</a></p>
@@ -101,7 +101,7 @@
           <p><strong><em>Privacy Policy</em></strong></p>
           <p><strong>EFFECTIVE DATE: January 27, 2021</strong></p>
           <p>&nbsp;</p>
-          <p>Ultimate Fitness Group, LLC d/b/a Orangetheory&reg; Fitness (&ldquo;Ultimate,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) values your privacy. In this Privacy Policy (&ldquo;Policy&rdquo;), we describe how we collect, use, and disclose information we obtain about visitors to our website, www.orangetheoryfitness.com &nbsp;(the &ldquo;Site&rdquo;), users of our mobile applications (the &ldquo;App&rdquo; or &ldquo;Apps&rdquo;), visitors to Orangetheory&reg; Fitness studios (whether owned by Ultimate or one of our franchisees), and the services available through our Site and App, and how we use and disclose that information.</p>
+          <p>Ultimate Fitness Group, LLC d/b/a Orangetheory&reg; Fitness (&ldquo;Ultimate,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) values your privacy. In this Privacy Policy (&ldquo;Policy&rdquo;), we describe how we collect, use, and disclose information we obtain about visitors to our website, www.Orangetheoryfitness.com &nbsp;(the &ldquo;Site&rdquo;), users of our mobile applications (the &ldquo;App&rdquo; or &ldquo;Apps&rdquo;), visitors to Orangetheory&reg; Fitness studios (whether owned by Ultimate or one of our franchisees), and the services available through our Site and App, and how we use and disclose that information.</p>
           <p>This Policy does not apply to a franchisee&rsquo;s collection, use, and disclosure of your information, except as described in this policy with regard to data sharing and change of a franchisee.</p>
           <p>By visiting the Site, using, or downloading the App, or using any of our services, you acknowledge that your personal information will be handled as described in this Policy. Where required under applicable law, we will obtain your consent to collect, use, transfer, or disclose your personal information. Your use of our Site, App, or services, and any dispute over privacy, is subject to this Policy and our Terms of Use, including its applicable limitations on damages and the resolution of disputes. The Terms of Use are incorporated by reference into this Policy.</p>
           <p>&nbsp;</p>
@@ -216,7 +216,7 @@
           <li>CONTACT US</li>
           </ol>
           <p>&nbsp;</p>
-          <p>If you have questions about the privacy aspects of our Services or would like to make a complaint, please contact us at&nbsp;privacy@orangetheoryfitness.com&nbsp;or by contacting your local studio.</p>
+          <p>If you have questions about the privacy aspects of our Services or would like to make a complaint, please contact us at&nbsp;privacy@Orangetheoryfitness.com&nbsp;or by contacting your local studio.</p>
           <p>You may also have rights under applicable laws to lodge a complaint with your country&rsquo;s supervisory authority in relation to how we collect, use, or disclose your personal information.</p>
           <ol start="11">
           <li>CHANGES TO THIS POLICY</li>
@@ -237,7 +237,7 @@
      </div>
       <div class="data-section" id="contact-data">
        <div>
-         <p><strong>Contact Us</strong><strong>: </strong>Your feedback is crucial to us in deciding our future services and where we can improve them. To help us do our best, please share your feedback with us. You can write it us at <a href="mailto:support@orangetheoryindia.com">support@orangetheoryindia.com</a></p>
+         <p><strong>Contact Us</strong><strong>: </strong>Your feedback is crucial to us in deciding our future services and where we can improve them. To help us do our best, please share your feedback with us. You can write it us at <a href="mailto:support@Orangetheoryindia.com">support@Orangetheoryindia.com</a></p>
        </div>
       </div>
       <div class="data-section" id="product-data">

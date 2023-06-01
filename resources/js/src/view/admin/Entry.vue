@@ -108,6 +108,7 @@
             id="input-8"
             v-model="entry_form.frequency"
             :options="options_frequency"
+            @change="claculate_date"
             class="ml-1 input-box text-seconday"
             required
             :class="{ 'is-invalid': entry_form.errors.has('frequency') }"
@@ -169,9 +170,45 @@
           </b-form-group>
           </div>
         </div>
-        <div class="mb-4" v-if="entry_form.payment_type=='Online' && entry_form.recurring_amount">
+        <div class="mb-4"  v-if="entry_form.payment_type=='Online' && entry_form.recurring_amount && entry_form.frequency!='One time'">
          <label>Billing terms</label>
           <div class="installment-class p-3">
+          <div class="d-flex mt-2">
+          <div class="mr-3 w-50">
+              <b-form-group>
+            <label for="input-15">No. of installment</label>
+            <b-form-input
+              id="input-15"
+              type="text"
+              v-model="entry_form.no_of_installment"
+              v-on:keyup="()=>{this.entry_form.installment_amount=this.entry_form.recurring_amount/this.entry_form.no_of_installment}"
+              @blur="claculate_date"
+              required
+              placeholder="Enter number of installment"
+              class="ml-1 input-box"
+              :class="{ 'is-invalid': entry_form.errors.has('no_of_installment') }"
+            >
+            </b-form-input>
+            <has-error :form="entry_form" field="no_of_installment"></has-error>
+            </b-form-group>
+            </div>
+            <div class="ml-3 w-50">
+              <b-form-group>
+            <label for="input-14">Amount per cycle</label>
+              <b-form-input
+                id="input-14"
+                v-model="entry_form.installment_amount"
+                type="text"
+                required
+                placeholder="Enter installment amount"
+                class="mx-1 input-box"
+                :class="{ 'is-invalid': entry_form.errors.has('installment_amount') }"
+              >
+              </b-form-input>
+              <has-error :form="entry_form" field="installment_amount"></has-error>
+              </b-form-group>
+            </div>
+          </div>
           <div class="d-flex mt-2">
           <div class="mr-3 w-50">
           <div>
@@ -183,46 +220,11 @@
           <div class="ml-3 w-50">
           <div>
             <label for="input-13">To</label><sup class="text-danger">*</sup>&nbsp;&nbsp;<i class="fa fa-info-circle" v-b-tooltip.hover title="Always keep one month ahead of the last date"></i>
-            <Datepicker v-model="entry_form.installment_to" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('installment_to') }" class="input-date"></Datepicker>
+            <Datepicker v-model="entry_form.installment_to" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('installment_to') }" class="input-date" placeholder="Select To Date"></Datepicker>
             <has-error :form="entry_form" field="installment_to"></has-error>
           </div>
           </div>
-        </div>
-        <div class="d-flex mt-2">
-        <div class="mr-3 w-50">
-            <b-form-group>
-          <label for="input-15">No. of installment</label>
-          <b-form-input
-            id="input-15"
-            type="text"
-            v-model="entry_form.no_of_installment"
-            v-on:keyup="()=>{this.entry_form.installment_amount=this.entry_form.recurring_amount/this.entry_form.no_of_installment}"
-            required
-            placeholder="Enter number of installment"
-            class="ml-1 input-box"
-            :class="{ 'is-invalid': entry_form.errors.has('no_of_installment') }"
-          >
-          </b-form-input>
-          <has-error :form="entry_form" field="no_of_installment"></has-error>
-          </b-form-group>
           </div>
-          <div class="ml-3 w-50">
-            <b-form-group>
-          <label for="input-14">Amount per cycle</label>
-            <b-form-input
-              id="input-14"
-              v-model="entry_form.installment_amount"
-              type="text"
-              required
-              placeholder="Enter installment amount"
-              class="mx-1 input-box"
-              :class="{ 'is-invalid': entry_form.errors.has('installment_amount') }"
-            >
-            </b-form-input>
-            <has-error :form="entry_form" field="installment_amount"></has-error>
-            </b-form-group>
-          </div>
-        </div>
         </div>
         </div>
         <b-form-group class="mb-7">
@@ -306,7 +308,7 @@ export default {
         advance_payment: "",
         recurring_amount: "",
         installment_from: new Date(),
-        installment_to: new Date(),
+        installment_to:"",
         installment_amount: "",
         no_of_installment: "",
         branch_id: "",
@@ -332,6 +334,40 @@ export default {
     };
   },
   methods: {
+    claculate_date(){
+      this.entry_form.installment_from=new Date();
+      this.entry_form.installment_from.setDate(this.entry_form.installment_from.getDate() + 3);
+      if(this.entry_form.frequency=='mnth'){
+        let number_of_days=this.entry_form.no_of_installment*31+30;
+        this.entry_form.installment_to=new Date();
+        this.entry_form.installment_to.setDate(this.entry_form.installment_to.getDate() + number_of_days);
+      }
+      else if(this.entry_form.frequency=='week'){
+        let number_of_days=this.entry_form.no_of_installment*7+30;
+        this.entry_form.installment_to=new Date();
+        this.entry_form.installment_to.setDate(this.entry_form.installment_to.getDate() + number_of_days);
+      }
+      else if(this.entry_form.frequency=='bimn'){
+        let number_of_days=this.entry_form.no_of_installment*16+30;
+        this.entry_form.installment_to=new Date();
+        this.entry_form.installment_to.setDate(this.entry_form.installment_to.getDate() + number_of_days);
+      }
+      else if(this.entry_form.frequency=='qurt'){
+        let number_of_days=this.entry_form.no_of_installment*92+30;
+        this.entry_form.installment_to=new Date();
+        this.entry_form.installment_to.setDate(this.entry_form.installment_to.getDate() + number_of_days);
+      }
+      else if(this.entry_form.frequency=='bian'){
+        let number_of_days=this.entry_form.no_of_installment*183+30;
+        this.entry_form.installment_to=new Date();
+        this.entry_form.installment_to.setDate(this.entry_form.installment_to.getDate() + number_of_days);
+      }
+      else if(this.entry_form.frequency=='year'){
+        let number_of_days=this.entry_form.no_of_installment*365+30;
+        this.entry_form.installment_to=new Date();
+        this.entry_form.installment_to.setDate(this.entry_form.installment_to.getDate() + number_of_days);
+      }
+    },
     offlinePayment(e) {
       e.preventDefault();
       this.submit_spinner=true;
@@ -357,8 +393,6 @@ export default {
             this.entry_form.reset();
             this.entry_form.clear();
             this.entry_form.date=new Date();
-            this.entry_form.installment_from=new Date();
-            this.entry_form.installment_to=new Date();
             this.submit_spinner = false;
             if(data.call_type){
             location.href = `/api-view-only/${data.order_id}`;
@@ -378,8 +412,6 @@ export default {
             this.entry_form.reset();
             this.entry_form.clear();
             this.entry_form.date=new Date();
-            this.entry_form.installment_from=new Date();
-            this.entry_form.installment_to=new Date();
             this.submit_spinner = false;
             if(data.call_type){
             location.href = `/api-view/${data.order_id}`;

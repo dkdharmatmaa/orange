@@ -213,7 +213,7 @@
           <div class="mr-3 w-50">
           <div>
             <label for="input-12">EMI Start From</label><sup class="text-danger">*</sup>&nbsp;&nbsp;<i class="fa fa-info-circle" v-b-tooltip.hover title="The date from where deduction will start"></i>
-            <Datepicker v-model="entry_form.installment_from" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('installment_from') }" class="input-date"></Datepicker>
+            <Datepicker v-model="entry_form.installment_from" format="yyyy-MM-dd" :class="{ 'is-invalid': entry_form.errors.has('installment_from') }" class="input-date" @input="claculate_date"></Datepicker>
             <has-error :form="entry_form" field="installment_from"></has-error>
           </div>
           </div>
@@ -307,7 +307,7 @@ export default {
         membership_price: "",
         advance_payment: "",
         recurring_amount: "",
-        installment_from: new Date(),
+        installment_from:"",
         installment_to:"",
         installment_amount: "",
         no_of_installment: "",
@@ -335,36 +335,34 @@ export default {
   },
   methods: {
     claculate_date(){
-      this.entry_form.installment_from=new Date();
-      this.entry_form.installment_from.setDate(this.entry_form.installment_from.getDate() + 3);
       if(this.entry_form.frequency=='mnth'){
         let number_of_days=this.entry_form.no_of_installment*31+30;
-        this.entry_form.installment_to=new Date();
+        this.entry_form.installment_to=new Date(this.entry_form.installment_from);
         this.entry_form.installment_to.setDate(this.entry_form.installment_to.getDate() + number_of_days);
       }
       else if(this.entry_form.frequency=='week'){
         let number_of_days=this.entry_form.no_of_installment*7+30;
-        this.entry_form.installment_to=new Date();
+        this.entry_form.installment_to=new Date(this.entry_form.installment_from);
         this.entry_form.installment_to.setDate(this.entry_form.installment_to.getDate() + number_of_days);
       }
       else if(this.entry_form.frequency=='bimn'){
         let number_of_days=this.entry_form.no_of_installment*16+30;
-        this.entry_form.installment_to=new Date();
+        this.entry_form.installment_to=new Date(this.entry_form.installment_from);
         this.entry_form.installment_to.setDate(this.entry_form.installment_to.getDate() + number_of_days);
       }
       else if(this.entry_form.frequency=='qurt'){
         let number_of_days=this.entry_form.no_of_installment*92+30;
-        this.entry_form.installment_to=new Date();
+        this.entry_form.installment_to=new Date(this.entry_form.installment_from);
         this.entry_form.installment_to.setDate(this.entry_form.installment_to.getDate() + number_of_days);
       }
       else if(this.entry_form.frequency=='bian'){
         let number_of_days=this.entry_form.no_of_installment*183+30;
-        this.entry_form.installment_to=new Date();
+        this.entry_form.installment_to=new Date(this.entry_form.installment_from);
         this.entry_form.installment_to.setDate(this.entry_form.installment_to.getDate() + number_of_days);
       }
       else if(this.entry_form.frequency=='year'){
         let number_of_days=this.entry_form.no_of_installment*365+30;
-        this.entry_form.installment_to=new Date();
+        this.entry_form.installment_to=new Date(this.entry_form.installment_from);
         this.entry_form.installment_to.setDate(this.entry_form.installment_to.getDate() + number_of_days);
       }
     },
@@ -393,6 +391,8 @@ export default {
             this.entry_form.reset();
             this.entry_form.clear();
             this.entry_form.date=new Date();
+            this.entry_form.installment_from=new Date();
+            this.entry_form.installment_from.setDate(this.entry_form.installment_from.getDate() + 3);
             this.submit_spinner = false;
             if(data.call_type){
             location.href = `/api-view-only/${data.order_id}`;
@@ -412,6 +412,8 @@ export default {
             this.entry_form.reset();
             this.entry_form.clear();
             this.entry_form.date=new Date();
+            this.entry_form.installment_from=new Date();
+            this.entry_form.installment_from.setDate(this.entry_form.installment_from.getDate() + 3);
             this.submit_spinner = false;
             if(data.call_type){
             location.href = `/api-view/${data.order_id}`;
@@ -460,6 +462,8 @@ export default {
   mounted() {
     this.getBranches();
     this.getProduct();
+    this.entry_form.installment_from=new Date();
+    this.entry_form.installment_from.setDate(this.entry_form.installment_from.getDate() + 3);
   },
 };
 </script>

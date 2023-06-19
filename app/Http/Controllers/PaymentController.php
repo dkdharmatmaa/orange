@@ -16,7 +16,7 @@ use Exception;
 use Illuminate\Support\Facades\Mail;
 class PaymentController extends Controller
 {
-    public function createOrderId(){
+    public function createOrderId(Request $request){
         $headers = ["alg" => "HS256", "clientid" => env('client_id'), "kid" => "HMAC"];
         $secretkey=env('security_key');
         $orderid=uniqid();
@@ -42,8 +42,8 @@ class PaymentController extends Controller
                 "customer_refid"=>"hvh313",
                 "subscription_refid"=>"Sub266",
                 "subscription_desc"=>"Term insurance by Orangetheory fitness",
-                "start_date"=>"2023-06-18",
-                "end_date"=>"2023-12-18",
+                "start_date"=>$request->start,
+                "end_date"=>$request->end,
                 "frequency"=>"mnth",
                 "amount_type"=>"max",
                 "recurrence_rule"=>"after",
